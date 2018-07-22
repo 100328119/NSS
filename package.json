@@ -1,0 +1,32 @@
+{
+  "name": "nss",
+  "version": "1.0.0",
+  "description": "LDB Network Support Site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/100328119/NSS.git"
+  },
+  "keywords": [
+    "Node.js",
+    "Handlebar",
+    "SOL",
+    "ReactJs",
+    "Bootstrap"
+  ],
+  "author": "Kunyuan Huang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/100328119/NSS/issues"
+  },
+  "homepage": "https://github.com/100328119/NSS#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "npm": "^6.2.0"
+  }
+}
