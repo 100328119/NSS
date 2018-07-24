@@ -7,12 +7,12 @@ function popluateNavbar(){
   var bccs = $('#cannbieStore');
   $.ajax({
     type:'GET',
-    url:'/storedata/all'}).then(function(res){
+    url:'/Netdata/all'}).then(function(res){
         for(var i = 0; i<res.length; i++){
           if(res[i].type == 'BCLS'){
-            bcls.append('<li><a href="/store/'+res[i].type+'/'+res[i].S_ID+'">'+res[i].type+' - '+res[i].S_ID+'</a></li>');
+            bcls.append('<li><a href="/newtork/'+res[i].type+'/'+res[i].S_ID+'">'+res[i].type+' - '+res[i].S_ID+'</a></li>');
           }else{
-            bccs.append('<li><a href="/store/'+res[i].type+'/'+res[i].S_ID+'">'+res[i].type+' - '+res[i].S_ID+'</a></li>');
+            bccs.append('<li><a href="/newtork/'+res[i].type+'/'+res[i].S_ID+'">'+res[i].type+' - '+res[i].S_ID+'</a></li>');
           }
         }
     });

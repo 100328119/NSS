@@ -8,14 +8,13 @@ router.get('/dashboard', function(req,res,next){
   res.render('dashboard');
 });
 
-router.get('/store/:type/:id',function(req,res,nex){
-  //render store network info page
-    res.render('store');
-    res.send()
+router.get('/newtork/:type/:id',function(req,res,nex){
+  //render newtork network info page
+    res.render('network');
 });
 
-router.get('/store/new',function(req,res,nex){
-  //render create new store page
+router.get('/newtork/new',function(req,res,nex){
+  //render create new newtork page
     res.render('newstore');
 });
 
@@ -40,9 +39,9 @@ router.get('/support', function(req,res,nex){
 })
 
 //Restful api
-// store data minipuplate
-router.get('/storedata/all',function(req,res,nex){
-  //get all store information
+// newtork data minipuplate
+router.get('/Netdata/all',function(req,res,nex){
+  //get all newtork information
   let stores = [
     {
       'type':'BCLS',
@@ -65,19 +64,25 @@ router.get('/storedata/all',function(req,res,nex){
  let storeJSON = JSON.parse(storeObj);
  res.send(storeJSON);
 });
-router.get('/storedata/:storetype/:id', function(req,res,nex){
-  //get specific store data
+router.get('/Netdata/:storetype/:id', function(req,res,nex){
+  //get specific newtork data
+  let network = {
+    'Key':1,
+    'type':'BCLS',
+    'S_ID': 001
+  }
+  res.send(network);
 });
 
-router.post('/storedata/new', function(req,res,nex){
+router.post('/Netdata/new', function(req,res,nex){
   // add data
 });
 
-router.put('/storedata/update/:id',function(req,res,nex){
+router.put('/Netdata/update/:id',function(req,res,nex){
   //update
 });
 
-router.delete('/storedata/delete/:id', function(req,res,nex){
+router.delete('/Netdata/delete/:id', function(req,res,nex){
   //remove
 });
 
