@@ -39,7 +39,7 @@ class Network extends React.Component{
   render(){
     return(
       <div>
-        <h1>{this.state.network.type} - {this.state.network.S_ID}</h1>
+        <h1>{this.state.network.Category} - {this.state.network.ID}</h1>
         <hr/>
         <table>
           <thead>
@@ -53,15 +53,15 @@ class Network extends React.Component{
               <tr key = "1">
                 <td>{this.state.EditState ? (
                   <input
-                    defaultValue={this.state.network.type}
+                    defaultValue={this.state.network.Category}
                   />):(
-                    this.state.network.type
+                    this.state.network.Category
                   )}</td>
                   <td>{this.state.EditState ? (
                     <input
-                      defaultValue={this.state.network.S_ID}
+                      defaultValue={this.state.network.ID}
                     />):(
-                      this.state.network.S_ID
+                      this.state.network.ID
                     )}</td>
                 <td>
                   <button onClick={this.OnEdit}>{this.state.EditState ? "Save" : "Edit" }</button>
