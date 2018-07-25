@@ -1,0 +1,48 @@
+        <tr key = "1">
+            <td>{this.state.EditState ? (
+              <input
+                defaultValue={this.state.network.Category}
+              />):(
+                this.state.network.Category
+              )}</td>
+              <td>{this.state.EditState ? (
+                <input
+                  defaultValue={this.state.network.ID}
+                />):(
+                  this.state.network.ID
+                )}</td>
+            <td>
+              <button onClick={this.OnEdit}>{this.state.EditState ? "Save" : "Edit" }</button>
+              <button> Delete </button>
+            </td>
+          </tr>
+
+
+class TableRow extends React.Component{
+  constructor(props){
+    super(props);
+  }
+  render(){
+    const{IP,D_Name,VLAN,Port,Action,Description,Type,Make,Connected_Device}=this.props;
+    return(
+    <tr>
+        <td>{EditState ? (<input defaultValue={IP}/>):(IP)}</td>
+        <td>{EditState ? (<input defaultValue={D_Name}/>):(D_Name)}</td>
+        <td>{EditState ? (<input defaultValue={VLAN}/>):(VLAN)}</td>
+        <td>{EditState ? (<input defaultValue={Port}/>):(Port)}</td>
+        <td>{EditState ? (<input defaultValue={Action}/>):(Action)}</td>
+        <td>{EditState ? (<input defaultValue={Description}/>):(Description)}</td>
+        <td>{EditState ? (<input defaultValue={Type}/>):(Type)}</td>
+        <td>{EditState ? (<input defaultValue={Make}/>):(Make)}</td>
+        <td>{EditState ? (<input defaultValue={Model}/>):(Model)}</td>
+        <td>{EditState ? (<input defaultValue={Connected_Device}/>):(Connected_Device)}</td>
+        <td>
+        <button onClick={this.OnEdit}>{EditState ? "Save" : "Edit" }</button>
+        <button> Delete </button>
+        </td>
+    </tr>
+  );
+  }
+}
+
+<EndDeviceTable EndDevices={this.state.network.End_Device} EditState={this.state.EditState} OnEdit={this.OnEdit}/>

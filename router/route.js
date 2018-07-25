@@ -90,7 +90,7 @@ router.get('/Netdata/:storetype/:id', function(req,res,nex){
          'Type':'POS Register',
          'Make':'Zabar',
          'Model':'Register',
-         'Connected Device':'LDBRR002'
+         'Connected_Device':'LDBRR002'
        },
        {
          'IP':'10.44.2.17',
@@ -177,6 +177,48 @@ router.get('/Netdata/:storetype/:id', function(req,res,nex){
    ]
   }
   res.send(network);
+});
+
+router.get('/EndDevice/:netid',(req,res,nex)=>{
+   let ed = [
+       {
+         'IP':'10.44.2.2',
+         'D_Name':'LDR01002',
+         'VLAN':20,
+         'Port':'F0/3',
+         'Active':true,
+         'Description':"Register 1",
+         'Type':'POS Register',
+         'Make':'Zabar',
+         'Model':'Register',
+         'Connected Device':'LDBRR002'
+       },
+       {
+         'IP':'10.44.2.17',
+         'D_Name':'LDSDC002',
+         'VLAN':20,
+         'Port':'F0/13',
+         'Active':true,
+         'Description':"BCLDB RO Domain Controller",
+         'Type':'Server',
+         'Make':'Zabar',
+         'Model':'server',
+         'Connected Device':'LDBRR002'
+       },
+       {
+         'IP':'10.44.2.13',
+         'D_Name':'LDSDC002',
+         'VLAN':20,
+         'Port':'F0/13',
+         'Active':true,
+         'Description':"BCLDB RO Domain Controller",
+         'Type':'Server',
+         'Make':'Zabar',
+         'Model':'server',
+         'Connected Device':'LDBRR002'
+       }
+     ];
+   res.send(ed);
 });
 
 router.post('/Netdata/new', function(req,res,nex){
