@@ -184,19 +184,19 @@ router.get('/EndDevice/:netid',(req,res,nex)=>{
        {
          'IP':'10.44.2.2',
          'D_Name':'LDR01002',
-         'VLAN':20,
+         'VLAN':'20',
          'Port':'F0/3',
          'Active':'true',
          'Description':"Register 1",
          'Type':'POS Register',
          'Make':'Zabar',
          'Model':'Register',
-         'Connected_Device':'LDBRR002'
+         'Connected Device':'LDBRR002'
        },
        {
          'IP':'10.44.2.17',
          'D_Name':'LDSDC002',
-         'VLAN':20,
+         'VLAN':'20',
          'Port':'F0/13',
          'Active':'true',
          'Description':"BCLDB RO Domain Controller",
@@ -208,7 +208,7 @@ router.get('/EndDevice/:netid',(req,res,nex)=>{
        {
          'IP':'10.44.2.13',
          'D_Name':'LDSDC002',
-         'VLAN':20,
+         'VLAN':'20',
          'Port':'F0/13',
          'Active':'true',
          'Description':"BCLDB RO Domain Controller",

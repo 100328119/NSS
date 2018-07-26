@@ -54,9 +54,10 @@ class EndDeviceTable extends React.Component{
       EndDevices:[],
       EditState: false,
       CurrentEdit:-1
-    }
+    };
     this.getEndDevice = this.getEndDevice.bind(this);
     this.OnEdit = this.OnEdit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   getEndDevice(){
@@ -71,16 +72,27 @@ class EndDeviceTable extends React.Component{
     });
   }
 
-  OnEdit(){
+  OnEdit(index){
     if(this.state.EditState === false){
       this.setState({
-          EditState:true
+          EditState:true,
+          CurrentEdit:index
       })
     }else{
       this.setState({
-          EditState:false
-      })
+          EditState:false,
+          CurrentEdit:-1
+      });
     }
+  }
+
+  handleChange(e,name,i){
+    const { value } = e.target;
+    this.setState(state => ({
+      EndDevices: state.EndDevices.map(
+        (row, j) => (j === i ? {...row, [name]:value }:row)
+      )
+    }));
   }
 
   componentDidMount(){
@@ -91,18 +103,13 @@ class EndDeviceTable extends React.Component{
     // console.log(Sample);
     const End_DeviceRow = this.state.EndDevices.map((endDeice, index) =>
       <tr key={index}>
-          <td>{this.state.EditState ? (<input defaultValue={endDeice.IP}/>):(endDeice.IP)}</td>
-          <td>{this.state.EditState ? (<input defaultValue={endDeice.D_Name}/>):(endDeice.D_Name)}</td>
-          <td>{this.state.EditState ? (<input defaultValue={endDeice.VLAN}/>):(endDeice.VLAN)}</td>
-          <td>{this.state.EditState ? (<input defaultValue={endDeice.Port}/>):(endDeice.Port)}</td>
-          <td>{this.state.EditState ? (<input defaultValue={endDeice.Active}/>):(endDeice.Active)}</td>
-          <td>{this.state.EditState ? (<input defaultValue={endDeice.Description}/>):(endDeice.Description)}</td>
-          <td>{this.state.EditState ? (<input defaultValue={endDeice.Type}/>):(endDeice.Type)}</td>
-          <td>{this.state.EditState ? (<input defaultValue={endDeice.Make}/>):(endDeice.Make)}</td>
-          <td>{this.state.EditState ? (<input defaultValue={endDeice.Model}/>):(endDeice.Model)}</td>
-          <td>{this.state.EditState ? (<input defaultValue={endDeice.Connected_Device}/>):(endDeice.Connected_Device)}</td>
+          {Object.keys(endDeice).map((key) => {
+              return (
+                <td key={key}>{this.state.CurrentEdit === index  ? (<input name={key} onChange={(e)=> this.handleChange(e,key,index)} defaultValue={endDeice[key]}/>):(endDeice[key])}</td>
+              )
+          })}
           <td>
-          <button onClick={this.OnEdit}>{this.state.EditState ? "Save" : "Edit" }</button>
+          <button onClick={()=>this.OnEdit(index)}>{this.state.CurrentEdit === index ? "Save" : "Edit" }</button>
           <button> Delete </button>
           </td>
       </tr>
