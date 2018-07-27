@@ -17,7 +17,18 @@
             </td>
           </tr>
 
-
+          <th>IP</th>
+          <th>Device Name</th>
+          <th>VLAN</th>
+          <th>Port</th>
+          <th>Active</th>
+          <th>Description</th>
+          <th>Type</th>
+          <th>Make</th>
+          <th>Model</th>
+          <th>Connected Device</th>
+          <th>Action</th>
+          
 class TableRow extends React.Component{
   constructor(props){
     super(props);
