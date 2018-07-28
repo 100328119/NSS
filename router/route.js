@@ -93,7 +93,7 @@ router.get('/Netdata/:storetype/:id', function(req,res,nex){
          'Connected_Device':'LDBRR002'
        },
        {
-         'IP':'10.44.2.17',
+         'IP':'10.44.2.17',>
          'D_Name':'LDSDC002',
          'VLAN':20,
          'Port':'F0/13',
