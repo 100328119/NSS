@@ -13,9 +13,9 @@ router.get('/newtork/:type/:id',function(req,res,nex){
     res.render('network');
 });
 
-router.get('/newtork/new',function(req,res,nex){
+router.get('/network/new',function(req,res,nex){
   //render create new newtork page
-    res.render('newstore');
+    res.render('newNetwork');
 });
 
 router.get('/report/:id',function(req,res,next){
@@ -67,8 +67,8 @@ router.get('/Netdata/all',function(req,res,nex){
 router.get('/Netdata/:storetype/:id', function(req,res,nex){
   //get specific newtork data
   let network = {
-     'ID': 002,
-     'Circuit_ID':1137330,
+     'ID': '002',
+     'Circuit_ID':'1137330',
      'Category':'BCLS',
      'N_name':'Ashcroft',
      'address':"PO Box 368, 301 - 3rd Street Ashcroft , BC",
@@ -93,7 +93,7 @@ router.get('/Netdata/:storetype/:id', function(req,res,nex){
          'Connected_Device':'LDBRR002'
        },
        {
-         'IP':'10.44.2.17',>
+         'IP':'10.44.2.17',
          'D_Name':'LDSDC002',
          'VLAN':20,
          'Port':'F0/13',
@@ -102,7 +102,7 @@ router.get('/Netdata/:storetype/:id', function(req,res,nex){
          'Type':'Server',
          'Make':'Zabar',
          'Model':'server',
-         'Connected Device':'LDBRR002'
+         'Connected_Device':'LDBRR002'
        },
        {
          'IP':'10.44.2.13',
@@ -114,7 +114,7 @@ router.get('/Netdata/:storetype/:id', function(req,res,nex){
          'Type':'Server',
          'Make':'Zabar',
          'Model':'server',
-         'Connected Device':'LDBRR002'
+         'Connected_Device':'LDBRR002'
        }
      ],
      'WAN':[
@@ -124,11 +124,11 @@ router.get('/Netdata/:storetype/:id', function(req,res,nex){
          'Upload':'6M',
          'Download':'100m',
          'UploadShaping':395000,
-         'WAN Network':'10.46.0.0/29',
-         'WAN IP':'10.46.0.2',
-         'ADSL/OOB':'604-261-0410',
-         'LOC ID':'ASH130-00',
-         'ASSET TAG':1137346,
+         'WAN_Network':'10.46.0.0/29',
+         'WAN_IP':'10.46.0.2',
+         'ADSL_OOB':'604-261-0410',
+         'LOC_ID':'ASH130-00',
+         'ASSET_TAG':1137346,
          'CSID':1433915
        },
        {
@@ -137,16 +137,17 @@ router.get('/Netdata/:storetype/:id', function(req,res,nex){
          'Upload':'150M',
          'Download':'170m',
          'UploadShaping':395000,
-         'WAN Network':'184.71.40.192/30',
-         'WAN IP':'184.71.40.194',
-         'ADSL/OOB':'',
-         'LOC ID':'',
-         'ASSET TAG':'',
+         'WAN_Network':'184.71.40.192/30',
+         'WAN_IP':'184.71.40.194',
+         'ADSL_OOB':'',
+         'LOC_ID':'',
+         'ASSET_TAG':'',
          'CSID':1881148784
        }
      ],
      'Net_Device':[
        {
+       'type':'Switch',
        'Name':'LDBRR017',
        'Loopback':'10.44.17.250',
        'Make':'	Cisco',
@@ -154,6 +155,7 @@ router.get('/Netdata/:storetype/:id', function(req,res,nex){
        'Serial':'FHK1439F2TT'
       },
       {
+      'type':'Router',
       'Name':'LDBRS017',
       'Loopback':'10.44.17.254',
       'Make':'Cisco',

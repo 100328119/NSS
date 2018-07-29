@@ -1,0 +1,188 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1>New Network</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group mr-2">
+        <button class="btn btn-sm btn-outline-secondary">Save</button>
+        <button class="btn btn-sm btn-outline-secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+ <hr>
+<div class="card mb-3">
+   <div class="card-header">Network Information
+     <div class="btn-group pull-right" role="group">
+       <button id="btnGroupDrop1" type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         BCLS Template
+       </button>
+       <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+         <a class="dropdown-item" href="#">BCLS</a>
+         <a class="dropdown-item" href="#">BCCS</a>
+       </div>
+     </div>
+   </div>
+   <div class="card-body">
+     <form>
+       <div class="form-group">
+         <div class="form-row">
+           <div class="col-md-3">
+             <label for="NetworkName">Network Name</label>
+             <input class="form-control" id="NetworkName" type="text" aria-describedby="nameHelp" placeholder="Enter Network Name">
+           </div>
+           <div class="col-md-3">
+             <label for="NetworkNumber">Network Number</label>
+             <input class="form-control" id="NetworkNumber" type="number" aria-describedby="nameHelp" placeholder="Enter Network Number">
+           </div>
+           <div class="col-md-3">
+             <label for="Category">Category</label>
+             <select class="form-control">
+                <option>BCLS</option>
+                <option>BCCS</option>
+            </select>
+           </div>
+           <div class="col-md-3">
+             <label for="Class">Class</label>
+             <select class="form-control">
+                <option>Class A Signature</option>
+                <option>Class A</option>
+                <option>Class B</option>
+                <option>Class C</option>
+            </select>
+           </div>
+           </div>
+         </div>
+       <div class="form-group">
+         <div class="form-row">
+           <div class="col-md-4">
+             <label for="Circuit_ID">Circuit ID</label>
+             <input class="form-control" id="Circuit_ID" type="number" placeholder="Contact Number">
+           </div>
+           <div class="col-md-4">
+             <label for="PhoneNumber">Phone Number</label>
+             <input class="form-control" id="PhoneNumber" type="number" placeholder="Contact Number">
+           </div>
+           <div class="col-md-4">
+             <label for="FaxNumber">Fax Number</label>
+             <input class="form-control" id="FaxNumber" type="numbers" placeholder="Fax number">
+           </div>
+         </div>
+       </div>
+       <div class="form-group">
+         <div class="form-row">
+          <div class ="col-md-8">
+            <label for="Address">Address</label>
+            <input class="form-control" id="Address" type="address" aria-describedby="emailHelp" placeholder="Enter Address">
+         </div>
+         <div class="col-md-4">
+           <label for="PostalCode">Postal Code</label>
+           <input class="form-control" id="PostalCode" type="text" aria-describedby="nameHelp" placeholder="Enter Postal Code">
+         </div>
+       </div>
+      </div>
+     </form>
+   </div>
+ </div>
+  <div class="card mb-3">
+ 		<div class="card-header">
+ 			<i class="fa fa-table"></i> End Device
+ 			<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#myModalDelete" ng-click="selectUser(user)">New</button>
+ 			</div>
+ 		<div class="card-body">
+ 			<div class="table-responsive">
+ 				<table class="table table-striped table-bordered table-hover table-sm" id="new_End_Table" width="100%" cellspacing="0">
+ 					<thead>
+ 						<tr>
+ 							<th>IP</th>
+ 							<th>Device Name</th>
+ 							<th>VLAN</th>
+ 							<th>Port</th>
+ 							<th>Active</th>
+ 							<th>Description</th>
+ 							<th>Type</th>
+ 							<th>Make</th>
+ 							<th>Model</th>
+ 							<th>Connected Device</th>
+ 						</tr>
+ 					</thead>
+ 					<tbody>
+ 					</tbody>
+ 				</table>
+ 			</div>
+ 		</div>
+ 	</div>
+  <div class="card mb-3">
+    <div class="card-header">
+      <i class="fa fa-table"></i> WAN</div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover table-sm" id="WANTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Provider</th>
+              <th>WAN Type</th>
+              <th>Upload</th>
+              <th>DownLoad</th>
+              <th>UploadShaping</th>
+              <th>WAN Network</th>
+              <th>WAN IP</th>
+              <th>ADSL/OOB</th>
+              <th>LOC ID</th>
+              <th>ASSET TAG</th>
+              <th>CSID</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class = "col-lg-6" >
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-table"></i> Router/Switch</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover table-sm" id="NDeviceTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Name</th>
+                  <th>Loopback</th>
+                  <th>Make</th>
+                  <th>Model</th>
+                  <th>Serial Number</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class = "col-lg-6" >
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-table"></i> VLANS</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover table-sm" id="VLANTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>VlAN</th>
+                  <th>description</th>
+                  <th>Gateway</th>
+                  <th>Subnet</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>

@@ -28,7 +28,7 @@
           <th>Model</th>
           <th>Connected Device</th>
           <th>Action</th>
-          
+
 class TableRow extends React.Component{
   constructor(props){
     super(props);
@@ -57,3 +57,13 @@ class TableRow extends React.Component{
 }
 
 <EndDeviceTable EndDevices={this.state.network.End_Device} EditState={this.state.EditState} OnEdit={this.OnEdit}/>
+
+<div class="btn-group pull-right" role="group">
+  <button id="btnGroupDrop1" type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Template
+  </button>
+  <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+    <a class="dropdown-item" href="#">Store</a>
+    <a class="dropdown-item" href="#">Data Center</a>
+  </div>
+</div>
