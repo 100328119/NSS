@@ -23,7 +23,7 @@ router.get('/report/:id',function(req,res,next){
     res.render('report');
 });
 
-router.get('/report/new',function(req,res,nex){
+router.get('/newreport',function(req,res,nex){
   //render create new report page
     res.render('newreport');
 });
