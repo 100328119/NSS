@@ -1,0 +1,44 @@
+Model	DeviceType	Make
+2911	Router	Cisco
+2960-24LC-S	Switch	Cisco
+2960X-48LPS-L	Switch	Cisco
+3250	Printer	Xerox
+3560-24TS	Switch	Cisco
+3560-48TS	Switch	Cisco
+3635	Printer	Xerox
+3656	Printer	Xerox
+4510	Printer	Xerox
+6180	Printer	Xerox
+6280	Printer	Xerox
+7435	Printer	Xerox
+Alarm	Alarm Panel	NULL
+AP7131	Access Point	Motorola
+DVR	DVR	NULL
+ESX	ESX	NULL
+IPCamera	IP Camera	NULL
+Laptop	Laptop	NULL
+MFD	Printer	NULL
+NVR	NVR	NULL
+PP	Pinpad	NULL
+Register	POS Register	NULL
+RSA	RSA Adapter	NULL
+Server	Server	NULL
+WIPS	WIPS	NULL
+Workstation	Workstation	NULL
+WS2000	Access Point	NULL
+MR42	Access Point	Cisco
+5665	Printer	Xerox
+Phaser4510	Printer	Xerox
+3845	Router	Cisco
+Can2Go HVAC	HVAC Controller	Can2Go
+Reliable HVAC	HVAC Controller	Reliable
+3320	Printer	Xerox
+3655	Printer	Xerox
+PORRegister	POR Register	NULL
+AP7532	Access Point	Zebra
+2960L-24PS-LL	Switch	Cisco
+2960L	Switch	Cisco
+Cisco 2960L	LCLB Switch	Cisco
+C405	Printer	Xerox
+3330	Printer	Xerox
+5P	UPS	Eaton

@@ -7,16 +7,29 @@ myApp.controller("myController", function($scope, $http){
 	$scope.newUser = {};
 	$scope.info = "";
 	$scope.Network = {};
+  $scope.NewEndevice = {};
+  $scope.NewVlAN = {};
+  $scope.NewNetDevice ={};
 	$http.get('/Netdata/bcls/1')
 		.then(function(response){
 			$scope.Network = response.data;
-		});
+	});
+
 	console.log($scope.Network);
+
 	$scope.users = [
 		{username: "rimon", fullName: "Md. Mamunur Rashid Rimon", email:"rimonmath@gmail.com"},
 		{username: "shamim", fullName: "Md. Tamim Hossain", email:"shamim@gmail.com"},
 		{username: "tamim", fullName: "Tamim Iqbal", email:"tamim@gmail.com"}
 	];
+
+  $scope.addEndDevice = function(){
+    console.log($scope.NewEndevice);
+    $scope.Network.End_Device.push($scope.NewEndevice);
+    console.log($scope.NewEndevice);
+    console.log($scope.Network.End_Device);
+    $scope.NewEndDevice = {};
+  }
 
 	$scope.saveUser = function(){
 		console.log("Saving...");
