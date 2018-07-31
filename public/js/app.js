@@ -17,19 +17,19 @@ myApp.controller("myController", function($scope, $http){
 
 	console.log($scope.Network);
 
-	$scope.users = [
-		{username: "rimon", fullName: "Md. Mamunur Rashid Rimon", email:"rimonmath@gmail.com"},
-		{username: "shamim", fullName: "Md. Tamim Hossain", email:"shamim@gmail.com"},
-		{username: "tamim", fullName: "Tamim Iqbal", email:"tamim@gmail.com"}
-	];
-
   $scope.addEndDevice = function(){
-    console.log($scope.NewEndevice);
+    //should add on a new field to to declear the new data
     $scope.Network.End_Device.push($scope.NewEndevice);
-    console.log($scope.NewEndevice);
-    console.log($scope.Network.End_Device);
-    $scope.NewEndDevice = {};
-  }
+    $scope.NewEndevice = {};
+  };
+
+  $scope.editEndDevice = function(EndDevice){
+
+  };
+
+  $scope.selectEndDevice = function(EndDevice){
+    $scope.selectedEndDevice = EndDevice;
+  };
 
 	$scope.saveUser = function(){
 		console.log("Saving...");
