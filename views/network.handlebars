@@ -40,19 +40,19 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="End_Device in Network.End_Device">
-							<td/>{[{End_Device.IP}]}</td>
-							<td>{[{End_Device.D_Name}]}</td>
-							<td>{[{End_Device.VLAN}]}</td>
-							<td>{[{End_Device.Port}]}</td>
-							<td>{[{End_Device.Active}]}</td>
-							<td>{[{End_Device.Description}]}</td>
-							<td>{[{End_Device.Type}]}</td>
-							<td>{[{End_Device.Make}]}</td>
-							<td>{[{End_Device.Model}]}</td>
-							<td>{[{End_Device.Connected_Device}]}</td>
-							<td> <button class="btn btn-info btn-sm"  type="button" data-toggle="modal" data-target="#EditEndDevice" ng-click="selectEndDevice(End_Device)">Edit</button> </td>
-							<td> <button class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#myModalDelete" ng-click="selectEndDevice(End_Device)">Delete</button> </td>
+						<tr ng-repeat="End_Device in Network.End_Device" ng-show ="End_Device.Status != '-1'">
+								<td>{[{End_Device.IP}]}</td>
+								<td>{[{End_Device.D_Name}]}</td>
+								<td>{[{End_Device.VLAN}]}</td>
+								<td>{[{End_Device.Port}]}</td>
+								<td>{[{End_Device.Active}]}</td>
+								<td>{[{End_Device.Description}]}</td>
+								<td>{[{End_Device.Type}]}</td>
+								<td>{[{End_Device.Make}]}</td>
+								<td>{[{End_Device.Model}]}</td>
+								<td>{[{End_Device.Connected_Device}]}</td>
+								<td> <button class="btn btn-info btn-sm"  type="button" data-toggle="modal" data-target="#EditEndDevice" ng-click="selectItem(End_Device,$index)">Edit</button> </td>
+								<td> <button class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#myModalDelete" ng-click="selectItem(End_Device,$index)">Delete</button> </td>
 						</tr>
 					</tbody>
 				</table>
@@ -263,15 +263,15 @@
 							<div class="row" >
 								<div class="col-md-4">
 						    	<label for="inputEmail3"><strong>IP</strong></label>
-						      <input type="text" class="form-control" id="inputEmail3" placeholder="IP Address" ng-model="selectedEndDevice.IP">
+						      <input type="text" class="form-control" id="inputEmail3" placeholder="IP Address" ng-model="selectedItem.IP">
 								</div>
 								<div class="col-md-4">
 						    	<label for="DeviceName"><strong>Device Name</strong></label>
-						      <input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="selectedEndDevice.D_Name">
+						      <input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="selectedItem.D_Name">
 								</div>
 								<div class="col-md-4">
 								<label for="inputEmail3" ><strong>VLAN</strong></label>
-								<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="selectedEndDevice.VLAN">
+								<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="selectedItem.VLAN">
 							</div>
 							</div>
 						</div>
@@ -279,15 +279,15 @@
 							<div class="row">
 								<div class="col-md-2">
 										<label for="inputEmail3" class="control-label"><strong>Port</strong></label>
-										<input type="text" class="form-control" id="inputEmail3" placeholder="Port" ng-model="selectedEndDevice.Port">
+										<input type="text" class="form-control" id="inputEmail3" placeholder="Port" ng-model="selectedItem.Port">
 									</div>
 									<div class="col-md-2">
 										<label for="inputEmail3" class="control-label"><strong>Active</strong></label>
-										<input type="text" class="form-control" id="inputEmail3" placeholder="Active" ng-model="selectedEndDevice.Active">
+										<input type="text" class="form-control" id="inputEmail3" placeholder="Active" ng-model="selectedItem.Active">
 									</div>
 									<div class="col-md-8">
 										<label for="inputEmail3" class="control-label"><strong>Description</strong></label>
-										<input type="text" class="form-control" id="inputEmail3" placeholder="Description" ng-model="selectedEndDevice.Description">
+										<input type="text" class="form-control" id="inputEmail3" placeholder="Description" ng-model="selectedItem.Description">
 									</div>
 								</div>
 							</div>
@@ -295,19 +295,19 @@
 								<div class="row">
 									<div class="col-md-3">
 										<label for="inputEmail3" class="control-label"><strong>Type</strong></label>
-										<input type="text" class="form-control" id="inputEmail3" placeholder="Type" ng-model="selectedEndDevice.Type">
+										<input type="text" class="form-control" id="inputEmail3" placeholder="Type" ng-model="selectedItem.Type">
 									</div>
 										<div class="col-md-3">
 											<label for="inputEmail3" class="ccontrol-label"><strong>Make</strong></label>
-											<input type="text" class="form-control" id="inputEmail3" placeholder="Make" ng-model="selectedEndDevice.Make">
+											<input type="text" class="form-control" id="inputEmail3" placeholder="Make" ng-model="selectedItem.Make">
 										</div>
 										<div class="col-md-3">
 											<label for="inputEmail3" class="control-label"><strong>Model</strong></label>
-											<input type="text" class="form-control" id="inputEmail3" placeholder="Model" ng-model="selectedEndDevice.Model">
+											<input type="text" class="form-control" id="inputEmail3" placeholder="Model" ng-model="selectedItem.Model">
 										</div>
 											<div class="col-md-3">
 												<label for="inputEmail3" class=" control-label"> <strong>Connected Device</strong></label>
-												<input type="text" class="form-control" id="inputEmail3" placeholder="Connected Device" ng-model="selectedEndDevice.Connected_Device">
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Connected Device" ng-model="selectedItem.Connected_Device">
 											</div>
 								</div>
 							</div>
@@ -315,7 +315,7 @@
 
 		  <div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-10">
-		      <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
+		      <button type="button" class="btn btn-default" data-dismiss="modal"ng-click="editEndDevice()">Save</button>
 		    </div>
 		  </div>
 		</form>
@@ -327,27 +327,26 @@
   </div>
 </div>
 
-<!-- Modal -->
-<div id="myModalDelete" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Are You Sure?</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <h3 style='color: red'>{[{clickedUser.fullName}]}</h3>
-        <br/>
-      </div>
-      <div class="modal-footer">
-      <button type="button" class="btn btn-default pull-left" data-dismiss="modal" ng-click="deleteUser()">Yes</button>
-        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">No</button>
-      </div>
-    </div>
-  </div>
-</div>
-
+	<!-- Modal -->
+	<div id="myModalDelete" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Are You Sure?</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	      <div class="modal-body">
+	        <h3 style='color: red'>{[{selectedItem.D_Name}]}</h3>
+	        <br/>
+	      </div>
+	      <div class="modal-footer">
+	      <button type="button" class="btn btn-default pull-left" data-dismiss="modal" ng-click="deleteEndDevice()">Yes</button>
+	        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">No</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
 <script type="text/JavaScript" src="/js/app.js"></script>

@@ -10,45 +10,59 @@ myApp.controller("myController", function($scope, $http){
   $scope.NewEndevice = {};
   $scope.NewVlAN = {};
   $scope.NewNetDevice ={};
+  $scope.CurrentIndex="";
+  $scope.selectedItem = "";
 	$http.get('/Netdata/bcls/1')
 		.then(function(response){
 			$scope.Network = response.data;
 	});
 
-	console.log($scope.Network);
+  $scope.selectItem = function(SelectedItem,index){
+    console.log(SelectedItem);
+    $scope.CurrentIndex = index;
+    $scope.selectedItem = angular.copy(SelectedItem);
+  };
 
+  //End Device function add, update, Delete
+  // status of object add = 1 ;update = 0; Delete = -1;
   $scope.addEndDevice = function(){
-    //should add on a new field to to declear the new data
+    $scope.NewEndevice['Status'] = 1;
     $scope.Network.End_Device.push($scope.NewEndevice);
     $scope.NewEndevice = {};
+    console.log($scope.Network.End_Device);
   };
 
-  $scope.editEndDevice = function(EndDevice){
-
+  $scope.editEndDevice = function(){
+      $scope.selectedItem['Status'] = 0;
+      $scope.Network.End_Device[$scope.CurrentIndex]=$scope.selectedItem;
+      console.log($scope.Network.End_Device);
   };
 
-  $scope.selectEndDevice = function(EndDevice){
-    $scope.selectedEndDevice = EndDevice;
+  $scope.deleteEndDevice = function(){
+      $scope.selectedItem['Status'] = -1;
+      $scope.Network.End_Device[$scope.CurrentIndex]=$scope.selectedItem;
+      console.log($scope.Network.End_Device);
   };
 
-	$scope.saveUser = function(){
-		console.log("Saving...");
-		$scope.users.push($scope.newUser);
-		$scope.info = "New User Added Successfully!";
-		$scope.newUser = {};
-	};
 
-	$scope.selectUser = function(user){
-		$scope.clickedUser = user;
-	};
-
-	$scope.deleteUser = function(){
-		console.log($scope.users.indexOf($scope.clickedUser));
-		$scope.users.splice($scope.users.indexOf($scope.clickedUser), 1);
-		$scope.info = "User Deleted Successfully!";
-	};
-
-	$scope.clearInfo = function(){
-		$scope.info = "";
-	};
+	// $scope.saveUser = function(){
+	// 	console.log("Saving...");
+	// 	$scope.users.push($scope.newUser);
+	// 	$scope.info = "New User Added Successfully!";
+	// 	$scope.newUser = {};
+	// };
+  //
+	// $scope.selectUser = function(user){
+	// 	$scope.clickedUser = user;
+	// };
+  //
+	// $scope.deleteUser = function(){
+	// 	console.log($scope.users.indexOf($scope.clickedUser));
+	// 	$scope.users.splice($scope.users.indexOf($scope.clickedUser), 1);
+	// 	$scope.info = "User Deleted Successfully!";
+	// };
+  //
+	// $scope.clearInfo = function(){
+	// 	$scope.info = "";
+	// };
 });
