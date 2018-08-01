@@ -11,16 +11,17 @@ myApp.controller("myController", function($scope, $http){
   $scope.NewVlAN = {};
   $scope.NewNetDevice ={};
   $scope.CurrentIndex="";
-  $scope.selectedItem = "";
+  $scope.selectedItem = {};
 	$http.get('/Netdata/bcls/1')
 		.then(function(response){
 			$scope.Network = response.data;
 	});
 
-  $scope.selectItem = function(SelectedItem,index){
-    console.log(SelectedItem);
-    $scope.CurrentIndex = index;
+  $scope.selectItem = function(SelectedItem){
+    $scope.CurrentIndex = $scope.Network.End_Device.indexOf(SelectedItem);
     $scope.selectedItem = angular.copy(SelectedItem);
+    console.log($scope.CurrentIndex);
+    console.log($scope.selectedItem);
   };
 
   //End Device function add, update, Delete
@@ -33,15 +34,15 @@ myApp.controller("myController", function($scope, $http){
   };
 
   $scope.editEndDevice = function(){
-      $scope.selectedItem['Status'] = 0;
-      $scope.Network.End_Device[$scope.CurrentIndex]=$scope.selectedItem;
+      //$scope.Network.End_Device[$scope.CurrentIndex] = $scope.selectedItem;
+      $scope.Network.End_Device.splice($scope.Network.End_Device.indexOf($scope.selectedItem), 1);
+      $scope.selectedItem.Status = 0;
+      $scope.Network.End_Device.push($scope.selectedItem);
       console.log($scope.Network.End_Device);
   };
 
   $scope.deleteEndDevice = function(){
-      $scope.selectedItem['Status'] = -1;
-      $scope.Network.End_Device[$scope.CurrentIndex]=$scope.selectedItem;
-      console.log($scope.Network.End_Device);
+    $scope.Network.End_Device[$scope.CurrentIndex].Status = -1;
   };
 
 
