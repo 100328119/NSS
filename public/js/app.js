@@ -12,11 +12,12 @@ myApp.controller("myController", function($scope, $http){
   $scope.selectedItem = {};
 	$http.get('/Netdata/bcls/1')
 		.then(function(response){
-			$scope.Network = response.data;
+			$scope.Network = angular.copy(response.data);
 	});
 
   $scope.SaveNetwork = function(){
     console.log("save fired");
+    console.log($scope.Network);
      $http.put('/Netdata/update/1',$scope.Network)
       .then(function successCallback(response){
          console.log(response);

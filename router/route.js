@@ -254,7 +254,7 @@ router.post('/Netdata/new', function(req,res,nex){
 router.put('/Netdata/update/:id',function(req,res,nex){
   //update
   console.log(req.body);
-
+  res.sendStatus(200);
 });
 
 router.delete('/Netdata/delete/:id', function(req,res,nex){

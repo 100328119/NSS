@@ -10,7 +10,8 @@ app.set('view engine', 'handlebars');
 
 //frontend middleware
 app.use(express.static(__dirname + '/public'));
-
+//get post body
+app.use(bodyParser.json());
 //page redirection
 app.use('/', require('./router/route'));
 

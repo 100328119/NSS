@@ -18,7 +18,7 @@
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fa fa-table"></i> End Device
-			<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewEndDevice">New</button>
+			<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewEndDevice"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
 			</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -35,8 +35,7 @@
 							<th>Make</th>
 							<th>Model</th>
 							<th>Connected Device</th>
-							<th>Edit</th>
-							<th>Delete</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -51,8 +50,10 @@
 								<td>{[{End_Device.Make}]}</td>
 								<td>{[{End_Device.Model}]}</td>
 								<td>{[{End_Device.Connected_Device}]}</td>
-								<td> <button class="btn btn-info btn-sm"  type="button" ng-click="selectItem(End_Device)" data-toggle="modal" data-target="#EditEndDevice" >Edit</button> </td>
-								<td> <button class="btn btn-danger btn-sm" type="button" ng-click="selectItem(End_Device)" data-toggle="modal" data-target="#myModalDelete" >Delete</button> </td>
+								<td>
+									<button class="btn btn-default btn-sm"  type="button" ng-click="selectItem(End_Device)" data-toggle="modal" data-target="#EditEndDevice" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+								<button class="btn btn-danger btn-sm" type="button" ng-click="selectItem(End_Device)" data-toggle="modal" data-target="#myModalDelete" ><i class="fa fa-trash" aria-hidden="true"></i></button>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -63,7 +64,7 @@
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fa fa-table"></i> WAN
-			<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewWAN">New</button>
+			<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewWAN"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -81,8 +82,7 @@
 							<th>LOC ID</th>
 							<th>ASSET TAG</th>
 							<th>CSID</th>
-							<th>Edit</th>
-							<th>Delete</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -98,8 +98,10 @@
 							<td>{[{WAN.LOC_ID}]}</td>
 							<td>{[{WAN.ASSET_TAG}]}</td>
 							<td>{[{WAN.CSID}]}</td>
-							<td> <button class="btn btn-info btn-sm"  type="button" ng-click="selectWAN(WAN)" data-toggle="modal" data-target="#EditWAN" >Edit</button> </td>
-							<td> <button class="btn btn-danger btn-sm" type="button" ng-click="selectWAN(WAN)" data-toggle="modal" data-target="#DeleteWAN" >Delete</button> </td>
+							<td>
+								 <button class="btn btn-default btn-sm"  type="button" ng-click="selectWAN(WAN)" data-toggle="modal" data-target="#EditWAN" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+									<button class="btn btn-danger btn-sm" type="button" ng-click="selectWAN(WAN)" data-toggle="modal" data-target="#DeleteWAN" ><i class="fa fa-trash" aria-hidden="true"></i></button>
+								 </td>
 						</tr>
 					</tbody>
 				</table>
@@ -112,7 +114,7 @@
 			<div class="card mb-3">
 				<div class="card-header">
 					<i class="fa fa-table"></i> Router/Switch
-					<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewNetDevice">New</button>
+					<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewNetDevice"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -125,8 +127,7 @@
 									<th>Make</th>
 									<th>Model</th>
 									<th>Serial Number</th>
-									<th>Edit</th>
-									<th>Delete</th>
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -137,8 +138,10 @@
 									<td>{[{Net_Device.Make}]}</td>
 									<td>{[{Net_Device.Model}]}</td>
 									<td>{[{Net_Device.Serial}]}</td>
-									<td> <button class="btn btn-info btn-sm"  type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#EditNetDevice" >Edit</button> </td>
-									<td> <button class="btn btn-danger btn-sm" type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#DeleteNetDevice" >Delete</button> </td>
+									<td>
+										  <button class="btn btn-default btn-sm"  type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#EditNetDevice" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+											<button class="btn btn-danger btn-sm" type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#DeleteNetDevice" ><i class="fa fa-trash" aria-hidden="true"></i></button>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -151,7 +154,7 @@
 			<div class="card mb-3">
 				<div class="card-header">
 					<i class="fa fa-table"></i> VLANS
-					<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewVLAN">New</button>
+					<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewVLAN"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -162,8 +165,7 @@
 									<th>description</th>
 									<th>Gateway</th>
 									<th>Subnet</th>
-									<th>Edit</th>
-									<th>Delete</th>
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -172,8 +174,10 @@
 									<td>{[{vlan.Description}]}</td>
 									<td>{[{vlan.Gateway}]}</td>
 									<td>{[{vlan.Subnet}]}</td>
-									<td> <button class="btn btn-info btn-sm"  type="button" ng-click="selectedVLAN(vlan)" data-toggle="modal" data-target="#editVlan" >Edit</button> </td>
-									<td> <button class="btn btn-danger btn-sm" type="button" ng-click="selectedVLAN(vlan)" data-toggle="modal" data-target="#deleteVlan" >Delete</button> </td>
+									<td>
+										<button class="btn btn-default btn-sm"  type="button" ng-click="selectedVLAN(vlan)" data-toggle="modal" data-target="#editVlan" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+										<button class="btn btn-danger btn-sm" type="button" ng-click="selectedVLAN(vlan)" data-toggle="modal" data-target="#deleteVlan" ><i class="fa fa-trash" aria-hidden="true"></i></button>
+									 </td>
 								</tr>
 							</tbody>
 						</table>
@@ -250,7 +254,7 @@
 						</div>
 			      </div>
 			      <div class="modal-footer">
-							<button type="button" class="btn btn-primary pull-left" data-dismiss="modal" ng-click="addEndDevice();">Save</button>
+							<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="addEndDevice();">Save</button>
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			      </div>
 						</form>
@@ -325,12 +329,13 @@
 				      </div>
 					  <div class="form-group">
 					    <div class="col-sm-offset-2 col-sm-10">
-					      <button type="button" class="btn btn-default" data-dismiss="modal"ng-click="editEndDevice()">Save</button>
+
 					    </div>
 					  </div>
 					</form>
 			      </div>
 			      <div class="modal-footer">
+							<button type="button" class="btn btn-default mr-auto" data-dismiss="modal"ng-click="editEndDevice()">Save</button>
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			      </div>
 			    </div>
@@ -351,7 +356,7 @@
 	        <br/>
 	      </div>
 	      <div class="modal-footer">
-	      <button type="button" class="btn btn-default pull-left" data-dismiss="modal" ng-click="deleteEndDevice()">Yes</button>
+	      <button type="button" class="btn btn-default mr-auto" data-dismiss="modal" ng-click="deleteEndDevice()">Yes</button>
 	        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">No</button>
 	      </div>
 	    </div>
@@ -427,7 +432,7 @@
 							</div>
 				      </div>
 				      <div class="modal-footer">
-								<button type="button" class="btn btn-primary pull-left" data-dismiss="modal" ng-click="addWAN();">Save</button>
+								<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="addWAN();">Save</button>
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				      </div>
 
@@ -503,7 +508,7 @@
 									</div>
 					      </div>
 					      <div class="modal-footer">
-									<button type="button" class="btn btn-primary" data-dismiss="modal"ng-click="editWAN()">Save</button>
+									<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="editWAN()">Save</button>
 					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					      </div>
 				    </div>
@@ -524,7 +529,7 @@
 		        <br/>
 		      </div>
 		      <div class="modal-footer">
-		      <button type="button" class="btn btn-default pull-left" data-dismiss="modal" ng-click="deleteWAN()">Yes</button>
+		      <button type="button" class="btn btn-default mr-auto" data-dismiss="modal" ng-click="deleteWAN()">Yes</button>
 		        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">No</button>
 		      </div>
 		    </div>
@@ -576,7 +581,7 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-primary pull-left" data-dismiss="modal" ng-click="addNetDevice();">Save</button>
+								<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="addNetDevice();">Save</button>
 								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 							</div>
 
@@ -628,7 +633,7 @@
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-primary" data-dismiss="modal"ng-click="EditNetDevice()">Save</button>
+									<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="EditNetDevice()">Save</button>
 									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 								</div>
 						</div>
@@ -649,7 +654,7 @@
 						<br/>
 					</div>
 					<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left" data-dismiss="modal" ng-click="deleteNewNetDevice()">Yes</button>
+					<button type="button" class="btn btn-default mr-auto" data-dismiss="modal" ng-click="deleteNewNetDevice()">Yes</button>
 						<button type="button" class="btn btn-default pull-right" data-dismiss="modal">No</button>
 					</div>
 				</div>
@@ -690,7 +695,7 @@
 							</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-primary pull-left" data-dismiss="modal" ng-click="addNetDevice();">Save</button>
+								<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="addNetDevice();">Save</button>
 								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 							</div>
 				</div>
@@ -729,7 +734,7 @@
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-primary" data-dismiss="modal"ng-click="editVlan()">Save</button>
+									<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="editVlan()">Save</button>
 									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 								</div>
 						</div>
@@ -750,8 +755,8 @@
 						<br/>
 					</div>
 					<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left" data-dismiss="modal" ng-click="deleteVlan()">Yes</button>
-						<button type="button" class="btn btn-default pull-right" data-dismiss="modal">No</button>
+					<button type="button" class="btn btn-danger mr-auto" data-dismiss="modal" ng-click="deleteVlan()">Yes</button>
+						<button type="button" class="btn btn-primary pull-right" data-dismiss="modal">No</button>
 					</div>
 				</div>
 			</div>
