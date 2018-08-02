@@ -4,8 +4,6 @@ var myApp = angular.module("myApp", []).config(function($interpolateProvider){
 
 myApp.controller("myController", function($scope, $http){
 	console.log("in controller...");
-	$scope.newUser = {};
-	$scope.info = "";
 	$scope.Network = {};
   $scope.NewEndevice = {};
   $scope.NewVlAN = {};
@@ -17,53 +15,105 @@ myApp.controller("myController", function($scope, $http){
 			$scope.Network = response.data;
 	});
 
-  $scope.selectItem = function(SelectedItem){
-    $scope.CurrentIndex = $scope.Network.End_Device.indexOf(SelectedItem);
-    $scope.selectedItem = angular.copy(SelectedItem);
-    console.log($scope.CurrentIndex);
-    console.log($scope.selectedItem);
-  };
+  $scope.SaveNetwork = function(){
+    console.log("save fired");
+     $http.put('/Netdata/update/1',$scope.Network)
+      .then(function successCallback(response){
+         console.log(response);
+      },function errorCallback(response){
+          console.log(response);
+      });
 
+  };
   //End Device function add, update, Delete
   // status of object add = 1 ;update = 0; Delete = -1;
+  $scope.selectItem = function(SelectedItem){
+    console.log("item selected");
+    $scope.CurrentIndex = $scope.Network.End_Device.indexOf(SelectedItem);
+    $scope.selectedItem = angular.copy(SelectedItem);
+  };
+
   $scope.addEndDevice = function(){
-    $scope.NewEndevice['Status'] = 1;
+    $scope.NewEndevice.Status = 1;
     $scope.Network.End_Device.push($scope.NewEndevice);
     $scope.NewEndevice = {};
-    console.log($scope.Network.End_Device);
   };
 
   $scope.editEndDevice = function(){
       //$scope.Network.End_Device[$scope.CurrentIndex] = $scope.selectedItem;
-      $scope.Network.End_Device.splice($scope.Network.End_Device.indexOf($scope.selectedItem), 1);
       $scope.selectedItem.Status = 0;
-      $scope.Network.End_Device.push($scope.selectedItem);
-      console.log($scope.Network.End_Device);
+      $scope.Network.End_Device[$scope.CurrentIndex]=$scope.selectedItem;
   };
 
   $scope.deleteEndDevice = function(){
     $scope.Network.End_Device[$scope.CurrentIndex].Status = -1;
+    console.log($scope.Network.End_Device);
+  };
+  //end of EnddEVICE Section
+
+  //start WAN function
+  $scope.selectWAN = function(wan){
+    $scope.CurrentIndex = $scope.Network.WAN.indexOf(wan);
+    $scope.selectedItem = angular.copy(wan);
   };
 
+  $scope.addWAN = function(){
+    $scope.NewWAN.Status = 1;
+    $scope.Network.WAN.push($scope.NewWAN);
+    $scope.NewWAN = {};
+  };
 
-	// $scope.saveUser = function(){
-	// 	console.log("Saving...");
-	// 	$scope.users.push($scope.newUser);
-	// 	$scope.info = "New User Added Successfully!";
-	// 	$scope.newUser = {};
-	// };
-  //
-	// $scope.selectUser = function(user){
-	// 	$scope.clickedUser = user;
-	// };
-  //
-	// $scope.deleteUser = function(){
-	// 	console.log($scope.users.indexOf($scope.clickedUser));
-	// 	$scope.users.splice($scope.users.indexOf($scope.clickedUser), 1);
-	// 	$scope.info = "User Deleted Successfully!";
-	// };
-  //
-	// $scope.clearInfo = function(){
-	// 	$scope.info = "";
-	// };
+  $scope.editWAN = function(){
+      //$scope.Network.End_Device[$scope.CurrentIndex] = $scope.selectedItem;
+      $scope.selectedItem.Status = 0;
+      $scope.Network.WAN[$scope.CurrentIndex]=$scope.selectedItem;
+  };
+
+  $scope.deleteWAN = function(){
+    $scope.Network.WAN[$scope.CurrentIndex].Status = -1;
+  };
+
+  //start Router/switch
+  $scope.selectNetDevice = function(netdevice){
+    $scope.CurrentIndex = $scope.Network.Net_Device.indexOf(netdevice);
+    $scope.selectedItem = angular.copy(netdevice);
+  };
+
+  $scope.addNetDevice = function(){
+    $scope.NewNetDevice.Status = 1;
+    $scope.Network.Net_Device.push($scope.NewNetDevice);
+    $scope.NewNetDevice = {};
+  };
+
+  $scope.editNewNetDevice = function(){
+      //$scope.Network.End_Device[$scope.CurrentIndex] = $scope.selectedItem;
+      $scope.selectedItem.Status = 0;
+      $scope.Network.Net_Device[$scope.CurrentIndex]=$scope.selectedItem;
+  };
+
+  $scope.deleteNewNetDevice = function(){
+    $scope.Network.Net_Device[$scope.CurrentIndex].Status = -1;
+  };
+
+  //start VLAN
+  $scope.selectedVLAN = function(vlan){
+    $scope.CurrentIndex = $scope.Network.VLANs.indexOf(vlan);
+    $scope.selectedItem = angular.copy(vlan);
+  };
+
+  $scope.addVLAN = function(){
+    $scope.NewVLAN.Status = 1;
+    $scope.Network.VLANs.push($scope.NewNetDevice);
+    $scope.NewVLAN = {};
+  };
+
+  $scope.editVlan = function(){
+      //$scope.Network.End_Device[$scope.CurrentIndex] = $scope.selectedItem;
+      $scope.selectedItem.Status = 0;
+      $scope.Network.VLANs[$scope.CurrentIndex]=$scope.selectedItem;
+  };
+
+  $scope.deleteVlan = function(){
+    $scope.Network.VLANs[$scope.CurrentIndex].Status = -1;
+  };
 });

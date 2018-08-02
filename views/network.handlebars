@@ -9,7 +9,7 @@
 			<h2 class="h2">{[{Network.Category}]} {[{Network.ID}]} - {[{Network.N_name}]}</h2>
 			<div class="btn-toolbar mb-2 mb-md-0">
 				<div class="btn-group mr-2">
-					<button class="btn btn-sm btn-outline-secondary">Save</button>
+					<button class="btn btn-sm btn-outline-secondary" ng-click="SaveNetwork()">Save</button>
 					<button class="btn btn-sm btn-outline-secondary">Export</button>
 				</div>
 			</div>
@@ -22,7 +22,7 @@
 			</div>
 		<div class="card-body">
 			<div class="table-responsive">
-				<table class="table table-striped table-hover table-sm" id="dataTable" width="100%" cellspacing="0">
+				<table class="table table-striped table-hover table-sm"  width="100%" cellspacing="0">
 					<thead>
 						<tr>
 							<th>IP</th>
@@ -62,7 +62,9 @@
 	</div>
 	<div class="card mb-3">
 		<div class="card-header">
-			<i class="fa fa-table"></i> WAN</div>
+			<i class="fa fa-table"></i> WAN
+			<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewWAN">New</button>
+		</div>
 		<div class="card-body">
 			<div class="table-responsive">
 				<table class="table table-striped  table-hover table-sm" id="WANTable" width="100%" cellspacing="0">
@@ -84,7 +86,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="WAN in Network.WAN">
+						<tr ng-repeat="WAN in Network.WAN | filter:{Status:'!-1'}">
 							<td>{[{WAN.Provider}]}</td>
 							<td>{[{WAN.WAN_Type}]}</td>
 							<td>{[{WAN.Upload}]}</td>
@@ -96,6 +98,8 @@
 							<td>{[{WAN.LOC_ID}]}</td>
 							<td>{[{WAN.ASSET_TAG}]}</td>
 							<td>{[{WAN.CSID}]}</td>
+							<td> <button class="btn btn-info btn-sm"  type="button" ng-click="selectWAN(WAN)" data-toggle="modal" data-target="#EditWAN" >Edit</button> </td>
+							<td> <button class="btn btn-danger btn-sm" type="button" ng-click="selectWAN(WAN)" data-toggle="modal" data-target="#DeleteWAN" >Delete</button> </td>
 						</tr>
 					</tbody>
 				</table>
@@ -107,7 +111,9 @@
 		<div class = "col-lg-6" >
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> Router/Switch</div>
+					<i class="fa fa-table"></i> Router/Switch
+					<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewNetDevice">New</button>
+				</div>
 				<div class="card-body">
 					<div class="table-responsive">
 						<table class="table table-striped table-hover table-sm" id="NDeviceTable" width="100%" cellspacing="0">
@@ -124,13 +130,15 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="Net_Device in Network.Net_Device">
+								<tr ng-repeat="Net_Device in Network.Net_Device | filter:{Status:'!-1'}">
 									<td>{[{Net_Device.type}]}</td>
 									<td>{[{Net_Device.Name}]}</td>
 									<td>{[{Net_Device.Loopback}]}</td>
 									<td>{[{Net_Device.Make}]}</td>
 									<td>{[{Net_Device.Model}]}</td>
 									<td>{[{Net_Device.Serial}]}</td>
+									<td> <button class="btn btn-info btn-sm"  type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#EditNetDevice" >Edit</button> </td>
+									<td> <button class="btn btn-danger btn-sm" type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#DeleteNetDevice" >Delete</button> </td>
 								</tr>
 							</tbody>
 						</table>
@@ -142,7 +150,9 @@
 		<div class = "col-lg-6" >
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> VLANS</div>
+					<i class="fa fa-table"></i> VLANS
+					<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewVLAN">New</button>
+				</div>
 				<div class="card-body">
 					<div class="table-responsive">
 						<table class="table table-striped  table-hover table-sm" id="VLANTable" width="100%" cellspacing="0">
@@ -157,11 +167,13 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="vlan in Network.VLANs">
+								<tr ng-repeat="vlan in Network.VLANs  | filter:{Status:'!-1'}">
 									<td>{[{vlan.VLAN}]}</td>
 									<td>{[{vlan.Description}]}</td>
 									<td>{[{vlan.Gateway}]}</td>
 									<td>{[{vlan.Subnet}]}</td>
+									<td> <button class="btn btn-info btn-sm"  type="button" ng-click="selectedVLAN(vlan)" data-toggle="modal" data-target="#editVlan" >Edit</button> </td>
+									<td> <button class="btn btn-danger btn-sm" type="button" ng-click="selectedVLAN(vlan)" data-toggle="modal" data-target="#deleteVlan" >Delete</button> </td>
 								</tr>
 							</tbody>
 						</table>
@@ -172,9 +184,8 @@
 		</div>
 	</div>
 
- <!-- Trigger the modal with a button -->
+ <!-- Trigger the END Device modal with a button -->
 
-<!-- Modal -->
 <div id="NewEndDevice" class="modal fade" role="dialog" >
   <div class="modal-dialog  modal-lg"  >
     <!-- Modal content-->
@@ -312,20 +323,19 @@
 								</div>
 							</div>
 				      </div>
-
-		  <div class="form-group">
-		    <div class="col-sm-offset-2 col-sm-10">
-		      <button type="button" class="btn btn-default" data-dismiss="modal"ng-click="editEndDevice()">Save</button>
-		    </div>
-		  </div>
-		</form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+					  <div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-10">
+					      <button type="button" class="btn btn-default" data-dismiss="modal"ng-click="editEndDevice()">Save</button>
+					    </div>
+					  </div>
+					</form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 
 	<!-- Modal -->
 	<div id="myModalDelete" class="modal fade" role="dialog">
@@ -347,6 +357,407 @@
 	    </div>
 	  </div>
 	</div>
+	<!-- END Device modal with a button -->
+
+	<!-- Start WAN Modal -->
+	<div id="NewWAN" class="modal fade" role="dialog" >
+	  <div class="modal-dialog  modal-lg"  >
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+					<h4 class="modal-title">New WAN</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	      <div class="modal-body">
+						<div class="container col-md-12">
+							<div class="row" >
+								<div class="col-md-4">
+						    	<label for="inputEmail3"><strong>Provider</strong></label>
+						      <input type="text" class="form-control" id="inputEmail3" placeholder="IP Address" ng-model="NewWAN.Provider">
+								</div>
+								<div class="col-md-4">
+						    	<label for="DeviceName"><strong>WAN Type</strong></label>
+						      <input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="NewWAN.WAN_Type">
+								</div>
+								<div class="col-md-4">
+								<label for="inputEmail3" ><strong>Upload</strong></label>
+								<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="NewWAN.Upload">
+							</div>
+							</div>
+						</div>
+						<div class="container col-md-12">
+							<div class="row">
+								<div class="col-md-2">
+										<label for="inputEmail3" class="control-label"><strong>Download</strong></label>
+										<input type="text" class="form-control" id="inputEmail3" placeholder="Port" ng-model="NewWAN.Download">
+									</div>
+									<div class="col-md-2">
+										<label for="inputEmail3" class="control-label"><strong>UploadShaping</strong></label>
+										<input type="text" class="form-control" id="inputEmail3" placeholder="Active" ng-model="NewWAN.UploadShaping">
+									</div>
+									<div class="col-md-8">
+										<label for="inputEmail3" class="control-label"><strong>WAN Network</strong></label>
+										<input type="text" class="form-control" id="inputEmail3" placeholder="Description" ng-model="NewWAN.WAN_Network">
+									</div>
+								</div>
+							</div>
+							<div class="container col-md-12">
+								<div class="row">
+									<div class="col-md-3">
+										<label for="inputEmail3" class="control-label"><strong>WAN IP</strong></label>
+										<input type="text" class="form-control" id="inputEmail3" placeholder="Type" ng-model="NewWAN.WAN_IP">
+									</div>
+										<div class="col-md-2">
+											<label for="inputEmail3" class="ccontrol-label"><strong>ADSL OOB</strong></label>
+											<input type="text" class="form-control" id="inputEmail3" placeholder="Make" ng-model="NewWAN.ADSL_OOB">
+										</div>
+										<div class="col-md-2">
+											<label for="inputEmail3" class="control-label"><strong>LOC ID</strong></label>
+											<input type="text" class="form-control" id="inputEmail3" placeholder="Model" ng-model="NewWAN.LOC_ID">
+										</div>
+											<div class="col-md-2">
+												<label for="inputEmail3" class=" control-label"> <strong>ASSET TAG</strong></label>
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Connected Device" ng-model="NewWAN.ASSET_TAG">
+											</div>
+											<div class="col-md-3">
+												<label for="inputEmail3" class=" control-label"> <strong>CSID</strong></label>
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Connected Device" ng-model="NewWAN.CSID">
+											</div>
+								</div>
+							</div>
+				      </div>
+				      <div class="modal-footer">
+								<button type="button" class="btn btn-primary pull-left" data-dismiss="modal" ng-click="addWAN();">Save</button>
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				      </div>
+
+						</div>
+				    </div>
+				  </div>
+
+	<!-- Modal -->
+	<div id="EditWAN" class="modal fade" role="dialog">
+	  <div class="modal-dialog modal-lg">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Edit WAN</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	      <div class="modal-body">
+								<div class="container col-md-12">
+									<div class="row" >
+										<div class="col-md-4">
+											<label for="inputEmail3"><strong>Provider</strong></label>
+											<input type="text" class="form-control" id="inputEmail3" placeholder="IP Address" ng-model="selectedItem.Provider">
+										</div>
+										<div class="col-md-4">
+											<label for="DeviceName"><strong>WAN Type</strong></label>
+											<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="selectedItem.WAN_Type">
+										</div>
+										<div class="col-md-4">
+										<label for="inputEmail3" ><strong>Upload</strong></label>
+										<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="selectedItem.Upload">
+									</div>
+									</div>
+								</div>
+								<div class="container col-md-12">
+									<div class="row">
+										<div class="col-md-3">
+												<label for="inputEmail3" class="control-label"><strong>Download</strong></label>
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Port" ng-model="selectedItem.Download">
+											</div>
+											<div class="col-md-3">
+												<label for="inputEmail3" class="control-label"><strong>UploadShaping</strong></label>
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Active" ng-model="selectedItem.UploadShaping">
+											</div>
+											<div class="col-md-3">
+												<label for="inputEmail3" class="control-label"><strong>WAN Network</strong></label>
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Description" ng-model="selectedItem.WAN_Network">
+											</div>
+											<div class="col-md-3">
+												<label for="inputEmail3" class="control-label"><strong>WAN IP</strong></label>
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Type" ng-model="selectedItem.WAN_IP">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="row">
+												<div class="col-md-3">
+													<label for="inputEmail3" class="ccontrol-label"><strong>ADSL OOB</strong></label>
+													<input type="text" class="form-control" id="inputEmail3" placeholder="Make" ng-model="selectedItem.ADSL_OOB">
+												</div>
+												<div class="col-md-3">
+													<label for="inputEmail3" class="control-label"><strong>LOC ID</strong></label>
+													<input type="text" class="form-control" id="inputEmail3" placeholder="Model" ng-model="selectedItem.LOC_ID">
+												</div>
+													<div class="col-md-3">
+														<label for="inputEmail3" class=" control-label"> <strong>ASSET TAG</strong></label>
+														<input type="text" class="form-control" id="inputEmail3" placeholder="Connected Device" ng-model="selectedItem.ASSET_TAG">
+													</div>
+													<div class="col-md-3">
+														<label for="inputEmail3" class=" control-label"> <strong>CSID</strong></label>
+														<input type="text" class="form-control" id="inputEmail3" placeholder="Connected Device" ng-model="selectedItem.CSID">
+													</div>
+										</div>
+									</div>
+					      </div>
+					      <div class="modal-footer">
+									<button type="button" class="btn btn-primary" data-dismiss="modal"ng-click="editWAN()">Save</button>
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+				    </div>
+				  </div>
+				</div>
+
+		<!-- Modal -->
+		<div id="DeleteWAN" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title">Are You WAN?</h4>
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      </div>
+		      <div class="modal-body">
+		        <h3 style='color: red'>{[{selectedItem.WAN_IP}]}</h3>
+		        <br/>
+		      </div>
+		      <div class="modal-footer">
+		      <button type="button" class="btn btn-default pull-left" data-dismiss="modal" ng-click="deleteWAN()">Yes</button>
+		        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">No</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	<!-- End WAN Modal -->
+
+	<!-- Start Router/Switch -->
+	<div id="NewNetDevice" class="modal fade" role="dialog" >
+		<div class="modal-dialog  modal-lg"  >
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">New WAN</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+							<div class="container col-md-12">
+								<div class="row" >
+									<div class="col-md-4">
+										<label for="inputEmail3"><strong>Type</strong></label>
+										<input type="text" class="form-control" id="inputEmail3" placeholder="IP Address" ng-model="NewNetDevice.type">
+									</div>
+									<div class="col-md-4">
+										<label for="DeviceName"><strong>Name</strong></label>
+										<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="NewNetDevice.Name">
+									</div>
+									<div class="col-md-4">
+									<label for="inputEmail3" ><strong>Loopback</strong></label>
+									<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="NewNetDevice.Loopback">
+								</div>
+								</div>
+							</div>
+							<div class="container col-md-12">
+								<div class="row">
+									<div class="col-md-4">
+											<label for="inputEmail3" class="control-label"><strong>Make</strong></label>
+											<input type="text" class="form-control" id="inputEmail3" placeholder="Port" ng-model="NewNetDevice.Make">
+										</div>
+										<div class="col-md-4">
+											<label for="inputEmail3" class="control-label"><strong>Model</strong></label>
+											<input type="text" class="form-control" id="inputEmail3" placeholder="Active" ng-model="NewNetDevice.Model">
+										</div>
+										<div class="col-md-4">
+											<label for="inputEmail3" class="control-label"><strong>Serial</strong></label>
+											<input type="text" class="form-control" id="inputEmail3" placeholder="Description" ng-model="NewNetDevice.Serial">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary pull-left" data-dismiss="modal" ng-click="addNetDevice();">Save</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+
+						</div>
+						</div>
+					</div>
+
+	<!-- Modal -->
+	<div id="EditNetDevice" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Edit Network Device</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+								<div class="container col-md-12">
+									<div class="row" >
+										<div class="col-md-4">
+											<label for="inputEmail3"><strong>type</strong></label>
+											<input type="text" class="form-control" id="inputEmail3" placeholder="IP Address" ng-model="selectedItem.type">
+										</div>
+										<div class="col-md-4">
+											<label for="DeviceName"><strong>Name</strong></label>
+											<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="selectedItem.Name">
+										</div>
+										<div class="col-md-4">
+										<label for="inputEmail3" ><strong>Loopback</strong></label>
+										<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="selectedItem.Loopback">
+									</div>
+									</div>
+								</div>
+								<div class=" col-md-12">
+									<div class="row">
+										<div class="col-md-4">
+												<label for="inputEmail3" class="control-label"><strong>Make</strong></label>
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Port" ng-model="selectedItem.Make">
+											</div>
+											<div class="col-md-4">
+												<label for="inputEmail3" class="control-label"><strong>Model</strong></label>
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Active" ng-model="selectedItem.Model">
+											</div>
+											<div class="col-md-4">
+												<label for="inputEmail3" class="control-label"><strong>Serial</strong></label>
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Description" ng-model="selectedItem.Serial">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" data-dismiss="modal"ng-click="EditNetDevice()">Save</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</div>
+						</div>
+					</div>
+				</div>
+
+		<!-- Modal -->
+		<div id="DeleteNetDevice" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Are You WAN?</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<h3 style='color: red'>{[{selectedItem.Serial}]}</h3>
+						<br/>
+					</div>
+					<div class="modal-footer">
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal" ng-click="deleteNewNetDevice()">Yes</button>
+						<button type="button" class="btn btn-default pull-right" data-dismiss="modal">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- End Router/Switch -->
+
+
+ 	<!-- Start VLAN Modal -->
+	<div id="NewVLAN" class="modal fade" role="dialog" >
+		<div class="modal-dialog  modal-lg"  >
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">New VlAN</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+							<div class="container col-md-12">
+								<div class="row" >
+									<div class="col-md-3">
+										<label for="inputEmail3"><strong>VLAN</strong></label>
+										<input type="text" class="form-control" id="inputEmail3" placeholder="IP Address" ng-model="NewVLAN.type">
+									</div>
+									<div class="col-md-3">
+										<label for="DeviceName"><strong>Description</strong></label>
+										<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="NewVLAN.Name">
+									</div>
+									<div class="col-md-3">
+									<label for="inputEmail3" ><strong>Gateway</strong></label>
+									<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="NewVLAN.Loopback">
+								</div>
+								<div class="col-md-3">
+										<label for="inputEmail3" class="control-label"><strong>Subnet</strong></label>
+										<input type="text" class="form-control" id="inputEmail3" placeholder="Port" ng-model="NewVLAN.Make">
+									</div>
+								</div>
+							</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary pull-left" data-dismiss="modal" ng-click="addNetDevice();">Save</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+				</div>
+				</div>
+			</div>
+
+	<!-- Modal -->
+	<div id="editVlan" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Edit Network Device</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+									<div class="container col-md-12">
+										<div class="row" >
+											<div class="col-md-3">
+												<label for="inputEmail3"><strong>VLAN</strong></label>
+												<input type="text" class="form-control" id="inputEmail3" placeholder="IP Address" ng-model="selectedItem.type">
+											</div>
+											<div class="col-md-3">
+												<label for="DeviceName"><strong>Description</strong></label>
+												<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="selectedItem.Name">
+											</div>
+											<div class="col-md-3">
+											<label for="inputEmail3" ><strong>Gateway</strong></label>
+											<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="selectedItem.Loopback">
+										</div>
+										<div class="col-md-3">
+												<label for="inputEmail3" class="control-label"><strong>Subnet</strong></label>
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Port" ng-model="selectedItem.Make">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" data-dismiss="modal"ng-click="editVlan()">Save</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</div>
+						</div>
+					</div>
+				</div>
+
+		<!-- Modal -->
+		<div id="deleteVlan" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Are You WAN?</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<h3 style='color: red'>{[{selectedItem.Serial}]}</h3>
+						<br/>
+					</div>
+					<div class="modal-footer">
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal" ng-click="deleteVlan()">Yes</button>
+						<button type="button" class="btn btn-default pull-right" data-dismiss="modal">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- End Vlan-->
+
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
 <script type="text/JavaScript" src="/js/app.js"></script>

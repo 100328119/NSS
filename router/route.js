@@ -115,6 +115,30 @@ router.get('/Netdata/:storetype/:id', function(req,res,nex){
          'Make':'Zabar',
          'Model':'server',
          'Connected_Device':'LDBRR002'
+       },
+       {
+         'IP':'10.44.2.56',
+         'D_Name':'LDSDC002',
+         'VLAN':20,
+         'Port':'F0/13',
+         'Active':true,
+         'Description':"BCLDB RO Domain Controller",
+         'Type':'Server',
+         'Make':'Zabar',
+         'Model':'server',
+         'Connected_Device':'LDBRR002'
+       },
+       {
+         'IP':'10.44.2.78',
+         'D_Name':'LDSDC002',
+         'VLAN':20,
+         'Port':'F0/13',
+         'Active':true,
+         'Description':"BCLDB RO Domain Controller",
+         'Type':'Server',
+         'Make':'Zabar',
+         'Model':'server',
+         'Connected_Device':'LDBRR002'
        }
      ],
      'WAN':[
@@ -150,7 +174,7 @@ router.get('/Netdata/:storetype/:id', function(req,res,nex){
        'type':'Switch',
        'Name':'LDBRR017',
        'Loopback':'10.44.17.250',
-       'Make':'	Cisco',
+       'Make':'Cisco',
        'Model':'2911',
        'Serial':'FHK1439F2TT'
       },
@@ -229,6 +253,8 @@ router.post('/Netdata/new', function(req,res,nex){
 
 router.put('/Netdata/update/:id',function(req,res,nex){
   //update
+  console.log(req.body);
+
 });
 
 router.delete('/Netdata/delete/:id', function(req,res,nex){
