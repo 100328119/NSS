@@ -1,4 +1,10 @@
 <div ng-app="NewSite" ng-controller="NewSiteController">
+  <ol class="breadcrumb">
+  	<li class="breadcrumb-item">
+  		<a href="#">Network</a>
+  	</li>
+  	<li class="breadcrumb-item active">NewSite</li>
+  </ol>
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       <h1>New Network</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
@@ -16,7 +22,7 @@
          BCLS Template
        </button>
        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-         <a class="dropdown-item" href="#">BCLS</a>
+         <a class="dropdown-item" ng-click ="getTemplate()">BCLS</a>
          <a class="dropdown-item" href="#">BCCS</a>
        </div>
      </div>
@@ -85,7 +91,7 @@
   <div class="card mb-3">
  		<div class="card-header">
  			<i class="fa fa-table"></i> End Device
- 			<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#myModalDelete" ng-click="NewEndDevice()">New</button>
+ 			<button class="btn btn-primary btn-sm pull-right" type="button" ng-click="NewEndDevice()">New</button>
  			</div>
  		<div class="card-body">
  			<div class="table-responsive">
@@ -107,7 +113,7 @@
  					</thead>
  					<tbody>
             <tr ng-repeat="EndDevice in End_Device ">
-              <td><input type="text" class="form-control" placeholder="IP" ng-model="EndDevice.IP"></td>
+              <td><input type="text" class="form-control"  placeholder="IP" ng-model="EndDevice.IP"></td>
               <td><input type="text" class="form-control" placeholder="Device" ng-model="EndDevice.Device_Name"></td>
               <td><input type="text" class="form-control" placeholder="VLAN" ng-model="EndDevice.VLAN"></td>
               <td><input type="text" class="form-control" placeholder="Port" ng-model="EndDevice.Port"></td>
@@ -129,7 +135,9 @@
  	</div>
   <div class="card mb-3">
     <div class="card-header">
-      <i class="fa fa-table"></i> WAN</div>
+      <i class="fa fa-table"></i> WAN
+      	<button class="btn btn-primary btn-sm pull-right" type="button" ng-click="NewWAN()">New</button>
+    </div>
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-sm" id="WANTable" width="100%" cellspacing="0">
@@ -150,6 +158,23 @@
             </tr>
           </thead>
           <tbody>
+            <tr ng-repeat="NewWAN in NewWANs">
+              <td><input type="text" class="form-control" placeholder="IP" ng-model="NewWAN.Provider"></td>
+              <td><input type="text" class="form-control" placeholder="Device" ng-model="NewWAN.WAN_Type"></td>
+              <td><input type="text" class="form-control" placeholder="VLAN" ng-model="NewWAN.Upload"></td>
+              <td><input type="text" class="form-control" placeholder="Port" ng-model="NewWAN.Download"></td>
+              <td><input type="text" class="form-control" placeholder="Active" ng-model="NewWAN.UploadShaping"></td>
+              <td><input type="text" class="form-control" placeholder="Description" ng-model="NewWAN.WAN_Network"></td>
+              <td><input type="text" class="form-control" placeholder="Type" ng-model="NewWAN.WAN_IP"></td>
+              <td><input type="text" class="form-control" placeholder="Make" ng-model="NewWAN.ADSL_OOB"></td>
+              <td><input type="text" class="form-control" placeholder="Model" ng-model="NewWAN.LOC_ID"></td>
+              <td><input type="text" class="form-control" placeholder="Connected Device" ng-model="NewWAN.ASSET_TAG"></td>
+              <td><input type="text" class="form-control" placeholder="Connected Device" ng-model="NewWAN.CSID"></td>
+              <td>
+                <button class="btn btn-default btn-sm"  type="button" ng-click="CloneWAN(NewWAN)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                <button class="btn btn-danger btn-sm" type="button" ng-click="RemoveWAN(NewWAN)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+              </td>
+              <tr>
           </tbody>
         </table>
       </div>
@@ -159,7 +184,9 @@
     <div class = "col-lg-6" >
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> Router/Switch</div>
+          <i class="fa fa-table"></i> Router/Switch
+          	<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#myModalDelete" ng-click="NewNetDevice()">New</button>
+        </div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover table-sm" id="NDeviceTable" width="100%" cellspacing="0">
@@ -175,6 +202,18 @@
                 </tr>
               </thead>
               <tbody>
+                <tr ng-repeat = "NewNetDevice in NewNetDevices">
+                  <td><input type="text" class="form-control" placeholder="IP" ng-model="NewNetDevice.type"></td>
+                  <td><input type="text" class="form-control" placeholder="Device" ng-model="NewNetDevice.Name"></td>
+                  <td><input type="text" class="form-control" placeholder="VLAN" ng-model="NewNetDevice.Loopback"></td>
+                  <td><input type="text" class="form-control" placeholder="Port" ng-model="NewNetDevice.Make"></td>
+                  <td><input type="text" class="form-control" placeholder="Active" ng-model="NewNetDevice.Model"></td>
+                  <td><input type="text" class="form-control" placeholder="Description" ng-model="NewNetDevice.Serial"></td>
+                  <td>
+                    <button class="btn btn-default btn-sm"  type="button" ng-click="CloneNetDevice(NewNetDevice)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button class="btn btn-danger btn-sm" type="button" ng-click="RemoveNetDevice(NewNetDevice)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                  </td>
+                <tr>
               </tbody>
             </table>
           </div>
@@ -184,7 +223,9 @@
     <div class = "col-lg-6" >
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> VLANS</div>
+          <i class="fa fa-table"></i> VLANS
+          	<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#myModalDelete" ng-click="NewVLAN()">New</button>
+        </div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover table-sm" id="VLANTable" width="100%" cellspacing="0">
@@ -198,6 +239,16 @@
                 </tr>
               </thead>
               <tbody>
+                <tr ng-repeat = "NewVLAN in NewVLANs">
+                  <td><input type="text" class="form-control" placeholder="IP" ng-model="NewVLAN.VLAN"></td>
+                  <td><input type="text" class="form-control" placeholder="Device" ng-model="NewVLAN.Description"></td>
+                  <td><input type="text" class="form-control" placeholder="VLAN" ng-model="NewVLAN.Gateway"></td>
+                  <td><input type="text" class="form-control" placeholder="Port" ng-model="NewVLAN.Subnet"></td>
+                  <td>
+                    <button class="btn btn-default btn-sm"  type="button" ng-click="CloneVLAN(NewVLAN)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button class="btn btn-danger btn-sm" type="button" ng-click="RemoveVLAN(NewVLAN)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                  </td>
+                <tr>
               </tbody>
             </table>
           </div>
@@ -207,4 +258,4 @@
   </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
-  <script type="text/JavaScript" src="/js/networkpage/NewSite.js"></script>
+  <script type="text/JavaScript" src="/js/Network/NewSite.js"></script>
