@@ -205,7 +205,7 @@ router.get('/Netdata/:storetype/:id', function(req,res,nex){
   res.send(network);
 });
 
-//migt
+//api/ will standard setup
 router.get('/EndDevice/:netid',(req,res,nex)=>{
    let ed = [
        {
@@ -248,8 +248,14 @@ router.get('/EndDevice/:netid',(req,res,nex)=>{
    res.send(ed);
 });
 
-router.post('/Netdata/new', function(req,res,nex){
+router.get('/api/Netdata/template/:Temp',(req,res,nex)=>{
+
+});
+
+router.post('/api/Netdata/new', function(req,res,nex){
   // add data
+  console.log(req.body);
+  res.sendStatus(200);
 });
 
 router.put('/Netdata/update/:id',function(req,res,nex){
