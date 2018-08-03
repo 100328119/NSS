@@ -44,5 +44,7 @@ NewSite.controller("NewSiteController",($scope,$http)=>{
   $scope.CloneVLAN = (Clone)=>{
     var index = $scope.NewSite.VLANs.indexOf(Clone);
     $scope.NetSite.VLANs.splice(index,0,Clone);
-  }
+  };
+
+  $
 });

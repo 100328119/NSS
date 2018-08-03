@@ -205,6 +205,7 @@ router.get('/Netdata/:storetype/:id', function(req,res,nex){
   res.send(network);
 });
 
+//migt
 router.get('/EndDevice/:netid',(req,res,nex)=>{
    let ed = [
        {
