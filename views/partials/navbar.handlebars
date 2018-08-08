@@ -26,9 +26,11 @@
                 </button>
               </span>
             </div>
+          {{#if isAuthenticated}}
           <li>
             <a href="/network/new">Create Network</a>
           </li>
+          {{/if}}
           <li>
             <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#liquorStore">Liquor Store</a>
             <ul class="sidenav-third-level collapse" id="liquorStore" >

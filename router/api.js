@@ -28,7 +28,8 @@ api.get('/Netdata/all',function(req,response,nex){
  let storeJSON = JSON.parse(storeObj);
    db.get_connection(qb=>{
      qb.select(['c.Category','n.N_Name']).from('network n').join('Category c','c.id=n.Category_id ','left').get((err,res)=>{
-       if(err) return console.error(err);
+       qb.release();
+      if(err) return console.error(err);
       return response.send(res);
     });
   });
@@ -216,49 +217,54 @@ api.post('/Netdata/new', function(req,response,nex){
   let End_Devices = req.body.End_Devices;
   let WANs = req.body.WANs;
   let VLANs = req.body.VLANs;
-  console.log(Net_Devices);
-  db.get_connection(qb => {
-    qb.insert("network", network_info, (err, res)=>{
-       if(err) return console.error(err);
-       let newId = res.insertId;
-       for(let i = 0, len = Net_Devices.length; i<len; i++){
-          Net_Devices[i].net_id = newId;
-       };
-       for(let i = 0, len = End_Devices.length; i<len; i++){
-         End_Devices[i].net_id = newId;
-       };
-       for(let i = 0, len = WANs.length; i<len; i++ ){
-          WANs[i].net_id = newId;
-       };
-       for(let i = 0, len = VLANs.length; i<len; i++){
-         VLANs[i].net_id = newId;
-       };
-       req.body.update_info.net_id = newId;
-       console.log(Net_Devices);
-       qb.insert_batch("Net_device",Net_Devices, (err, res)=>{
-          if(err) return console.error(err);
-          console.log("Netword Device ok");
-       });
-       qb.insert_batch("End_Device",End_Devices, (err, res)=>{
-          if(err) return console.error(err);
-          console.log("End_Device ok ");
-       });
-       qb.insert_batch("WAN",WANs,(err, res)=>{
-         if(err) return console.error(err);
-         console.log("WAN ok");
-       });
-       qb.insert_batch("VlanNetwork",VLANs,(err, res)=>{
-         if(err) return console.error(err);
-         console.log("VlanNetwork ok");
-       });
-       qb.insert('update_history',req.body.update_info,(err, res)=>{
-         db.release();
-         if(err) return console.error(err);
-         console.log("update_history ok");
-       })
-       return response.send('"' + newId + '"');
-    })
-  });
+  console.log(req.body);
+  if(req.isAuthenticated()){
+    network_info.user_id = req.user.user_id;
+    console.log(network_info);
+  // db.get_connection(qb => {
+  //   qb.insert("network", network_info, (err, res)=>{
+  //      if(err) return console.error(err);
+  //      let newId = res.insertId;
+  //      for(let i = 0, len = Net_Devices.length; i<len; i++){
+  //         Net_Devices[i].net_id = newId;
+  //      };
+  //      for(let i = 0, len = End_Devices.length; i<len; i++){
+  //        End_Devices[i].net_id = newId;
+  //      };
+  //      for(let i = 0, len = WANs.length; i<len; i++ ){
+  //         WANs[i].net_id = newId;
+  //      };
+  //      for(let i = 0, len = VLANs.length; i<len; i++){
+  //        VLANs[i].net_id = newId;
+  //      };
+  //      req.body.update_info.net_id = newId;
+  //      console.log(Net_Devices);
+  //      qb.insert_batch("Net_device",Net_Devices, (err, res)=>{
+  //         if(err) return console.error(err);
+  //         console.log("Netword Device ok");
+  //      });
+  //      qb.insert_batch("End_Device",End_Devices, (err, res)=>{
+  //         if(err) return console.error(err);
+  //         console.log("End_Device ok ");
+  //      });
+  //      qb.insert_batch("WAN",WANs,(err, res)=>{
+  //        if(err) return console.error(err);
+  //        console.log("WAN ok");
+  //      });
+  //      qb.insert_batch("VlanNetwork",VLANs,(err, res)=>{
+  //        db.release();
+  //        if(err) return console.error(err);
+  //        console.log("VlanNetwork ok");
+  //      });
+  //      // qb.insert('update_history',req.body.update_info,(err, res)=>{
+  //      //   db.release();
+  //      //   if(err) return console.error(err);
+  //      //   console.log("update_history ok");
+  //      // })
+  //      return response.sendStatus(200);
+  //   })
+  // });
+  }
 });
 
 api.put('/Netdata/update/:id',function(req,response,nex){
@@ -554,14 +560,32 @@ api.put('/Netdata/update/:id',function(req,response,nex){
   });
 });
 
-api.delete('/Netdata/delete/:id', function(req,res,nex){
+api.delete('/Netdata/delete/:id', function(req,response,nex){
   //remove
 
 });
 
 //api/ will standard setup
-api.get('/EndDevice/:netid',(req,res,nex)=>{
+api.get('/Netdata/category',(req,response,nex)=>{
+   db.get_connection(qb=>{
+     qb.select('*').get('Category',(err,res)=>{
+       qb.release();
+        if(err) return console.error(err);
+        console.log(res);
+        return response.send(res);
+     })
+   })
 });
+
+api.get('/Netdata/vlan', (res, response, nex)=>{
+   db.get_connection(qb=>{
+     qb.select('*').get('vlan',(err,res)=>{
+       qb.release();
+       if(err) return console.error(err);
+       return response.send(res);
+     })
+   })
+})
 
 api.get('/Netdata/template/:Temp',(req,res,nex)=>{
    let Template = {
@@ -691,11 +715,6 @@ api.get('/Netdata/template/:Temp',(req,res,nex)=>{
  res.send(Template);
 });
 
-api.put('/Netdata/update/:id',function(req,res,nex){
-  //update
-  console.log(req.body);
-  res.sendStatus(200);
-});
 
 api.delete('/Netdata/delete/:id', function(req,res,nex){
   //remove

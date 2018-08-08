@@ -47,6 +47,7 @@ create table Net_device
    id int  not null auto_increment primary key,
    net_id int not null,
    type varchar(50),
+   name varchar(50),
    Loopback varchar(50),
    Make varchar(50),
    Model varchar(50),
@@ -90,7 +91,7 @@ create table VlanNetwork
   vlan_id int not null,
   Gateway varchar(50),
   Submusk varchar(50),
-  FOREIGN KEY (Network_id)
+  FOREIGN KEY (Net_id)
      REFERENCES network(id),
   FOREIGN KEY (vlan_id)
     REFERENCES Vlan(id)
