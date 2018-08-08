@@ -1,5 +1,6 @@
 //import infrastructure package
 const express = require('express');
+const fs = require('fs');
 const router = express.Router();
 
 //page redirection
@@ -53,7 +54,13 @@ router.post('/fileupload', function (req, res) {
     if (files.filetoupload.length > 0) {
       let fileNames = [];
       files.filetoupload.forEach((file) => {
-        fileNames.push(file.path.split('/')[1]);
+        fileNames.push(file.name);
+
+        let oldpath = file.path;
+        let newpath = './uploads/' + file.name;
+        fs.rename(oldpath, newpath, function (err) {
+          if (err) throw err;
+        });
       });
       res.json({
         result: "ok",
