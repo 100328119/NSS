@@ -4,29 +4,49 @@ var NewSite = angular.module('NewSite', []).config(($interpolateProvider)=>{
 
 NewSite.controller("NewSiteController",($scope,$http)=>{
   $scope.NewSite = {};
+  $scope.network_info = {};
   $scope.End_Device = [];
   $scope.NewWANs = [];
   $scope.NewNetDevices = [];
   $scope.NewVLANs =[];
-  //New End Device Setup
-  $scope.getTemplate = ()=>{
-    console.log("get Template")
-    $http.get('/api/Netdata/template/BCCS')
-      .then((response)=>{
-        $scope.End_Device = angular.copy(response.data.End_Device);
-        $scope.NewWANs = angular.copy(response.data.WAN);
-        $scope.NewNetDevices = angular.copy(response.data.Net_Device);
-        $scope.NewVLANs = angular.copy(response.data.VLANs);
 
+  //get category
+  $http.get('/api/Netdata/category')
+    .then(function successCallback(res){
+      console.log(res.data);
+       $scope.category = angular.copy(res.data);
+    },function errorCallback(res){
+      console.log(res);
     });
-  };
+
+  //get vlan Information
+  $http.get('/api/Netdata/vlan')
+    .then(function successCallback(res){
+      console.log(res.data);
+      $scope.vlan = angular.copy(res.data);
+    }, function errorCallback(res){
+      console.log(res.data);
+    });
+
+  //New End Device Setup
+  // $scope.getTemplate = ()=>{
+  //   console.log("get Template")
+  //   $http.get('/api/Netdata/template/BCCS')
+  //     .then((response)=>{
+  //       $scope.End_Device = angular.copy(response.data.End_Device);
+  //       $scope.NewWANs = angular.copy(response.data.WAN);
+  //       $scope.NewNetDevices = angular.copy(response.data.Net_Device);
+  //       $scope.NewVLANs = angular.copy(response.data.VLANs);
+  //
+  //   });
+  // };
 
   $scope.SaveNewSite = ()=>{
-    $scope.NewSite.End_Device = angular.copy($scope.End_Device);
-    $scope.NewSite.WAN = angular.copy($scope.NewWANs);
-    $scope.NewSite.Net_Device = angular.copy($scope.NewNetDevices);
+    $scope.NewSite.network_info = angular.copy($scope.network_info);
+    $scope.NewSite.End_Devices = angular.copy($scope.End_Device);
+    $scope.NewSite.WANs = angular.copy($scope.NewWANs);
+    $scope.NewSite.Net_Devices = angular.copy($scope.NewNetDevices);
     $scope.NewSite.VLANs = angular.copy($scope.NewVLANs);
-    console.log($scope.NewSite);
     $http.post('/api/Netdata/new', $scope.NewSite)
       .then( function successCallback(response){
           console.log(response);

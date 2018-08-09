@@ -26,9 +26,11 @@
                 </button>
               </span>
             </div>
+          {{#if isAuthenticated}}
           <li>
             <a href="/network/new">Create Network</a>
           </li>
+          {{/if}}
           <li>
             <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#liquorStore">Liquor Store</a>
             <ul class="sidenav-third-level collapse" id="liquorStore" >
@@ -150,10 +152,17 @@
           <a class="dropdown-item small" href="#">View all alerts</a>
         </div>
       </li>
+      {{#if isAuthenticated}}
       <li class="nav-item">
-        <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-          <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+        <a class="nav-link" href="/secure/logout">
+          <i class="fa fa-sign-out"></i> Logout</a>
       </li>
+      {{else}}
+      <li class="nav-item">
+        <a class="nav-link" href="/login">
+          <i class="fa fa-sign-in"></i> Login</a>
+      </li>
+      {{/if}}
     </ul>
   </div>
 </nav>

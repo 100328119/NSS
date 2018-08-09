@@ -31,28 +31,18 @@
      <form>
        <div class="form-group">
          <div class="form-row">
-           <div class="col-md-3">
+           <div class="col-md-4">
              <label for="NetworkName">Network Name</label>
-             <input class="form-control" id="NetworkName" type="text" aria-describedby="nameHelp" placeholder="Enter Network Name" ng-model="NewSite.N_name">
+             <input class="form-control" id="NetworkName" type="text" aria-describedby="nameHelp" placeholder="Enter Network Name" ng-model="network_info.N_name">
            </div>
-           <div class="col-md-3">
+           <div class="col-md-4">
              <label for="NetworkNumber">Network Number</label>
-             <input class="form-control" id="NetworkNumber" type="number" aria-describedby="nameHelp" placeholder="Enter Network Number" ng-model="NewSite.ID">
+             <input class="form-control" id="NetworkNumber" type="number" aria-describedby="nameHelp" placeholder="Enter Network Number" ng-model="network_info.N_number">
            </div>
-           <div class="col-md-3">
+           <div class="col-md-4">
              <label for="Category">Category</label>
-             <select class="form-control" ng-model ="NewSite.Category">
-                <option >BCLS</option>
-                <option>BCCS</option>
-            </select>
-           </div>
-           <div class="col-md-3">
-             <label for="Class">Class</label>
-             <select class="form-control" ng-model="NewSite.Class">
-                <option>Class A Signature</option>
-                <option>Class A</option>
-                <option>Class B</option>
-                <option>Class C</option>
+             <select class="form-control" ng-model ="network_info.Category_id">
+                  <option ng-repeat="cate in category" value="{[{cate.id}]}" >{[{cate.Category}]}</option>
             </select>
            </div>
            </div>
@@ -61,15 +51,15 @@
          <div class="form-row">
            <div class="col-md-4">
              <label for="Circuit_ID">Circuit ID</label>
-             <input class="form-control" id="Circuit_ID" type="number" placeholder="Contact Number" ng-model="NewSite.Circuit_ID">
+             <input class="form-control" id="Circuit_ID" type="number" placeholder="Contact Number" ng-model="network_info.Circuit_ID">
            </div>
            <div class="col-md-4">
              <label for="PhoneNumber">Phone Number</label>
-             <input class="form-control" id="PhoneNumber" type="number" placeholder="Contact Number" ng-model="NewSite.Phone">
+             <input class="form-control" id="PhoneNumber" type="number" placeholder="Contact Number" ng-model="network_info.Phone">
            </div>
            <div class="col-md-4">
              <label for="FaxNumber">Fax Number</label>
-             <input class="form-control" id="FaxNumber" type="numbers" placeholder="Fax number" ng-model="NewSite.Fax">
+             <input class="form-control" id="FaxNumber" type="numbers" placeholder="Fax number" ng-model="network_info.Fax">
            </div>
          </div>
        </div>
@@ -77,11 +67,11 @@
          <div class="form-row">
           <div class ="col-md-8">
             <label for="Address">Address</label>
-            <input class="form-control" id="Address" type="address" aria-describedby="emailHelp" placeholder="Enter Address" ng-model="NewSite.address">
+            <input class="form-control" id="Address" type="address" aria-describedby="emailHelp" placeholder="Enter Address" ng-model="network_info.address">
          </div>
          <div class="col-md-4">
            <label for="PostalCode">Postal Code</label>
-           <input class="form-control" id="PostalCode" type="text" aria-describedby="nameHelp" placeholder="Enter Postal Code" ng-model="NewSite.Postal_Code">
+           <input class="form-control" id="PostalCode" type="text" aria-describedby="nameHelp" placeholder="Enter Postal Code" ng-model="network_info.Postal_Code">
          </div>
        </div>
       </div>
@@ -112,17 +102,17 @@
  						</tr>
  					</thead>
  					<tbody>
-            <tr ng-repeat="EndDevice in End_Device ">
+            <tr ng-repeat="EndDevice in End_Device">
               <td><input type="text" class="form-control"  placeholder="IP" ng-model="EndDevice.IP"></td>
-              <td><input type="text" class="form-control" placeholder="Device" ng-model="EndDevice.Device_Name"></td>
-              <td><input type="text" class="form-control" placeholder="VLAN" ng-model="EndDevice.VLAN"></td>
+              <td><input type="text" class="form-control" placeholder="Device" ng-model="EndDevice.Name"></td>
+              <td><input type="text" class="form-control" placeholder="VLAN" ng-model="EndDevice.VLAN_ID"></td>
               <td><input type="text" class="form-control" placeholder="Port" ng-model="EndDevice.Port"></td>
               <td><input type="text" class="form-control" placeholder="Active" ng-model="EndDevice.Active"></td>
               <td><input type="text" class="form-control" placeholder="Description" ng-model="EndDevice.Description"></td>
               <td><input type="text" class="form-control" placeholder="Type" ng-model="EndDevice.Type"></td>
               <td><input type="text" class="form-control" placeholder="Make" ng-model="EndDevice.Make"></td>
               <td><input type="text" class="form-control" placeholder="Model" ng-model="EndDevice.Model"></td>
-              <td><input type="text" class="form-control" placeholder="Connected Device" ng-model="EndDevice.Connected_Device"></td>
+              <td><input type="text" class="form-control" placeholder="Connected Device" ng-model="EndDevice.NetDevice"></td>
               <td>
                 <button class="btn btn-default btn-sm"  type="button" ng-click="CloneEndDevice(EndDevice)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                 <button class="btn btn-danger btn-sm" type="button" ng-click="RemoveEndDevice(EndDevice)"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -204,11 +194,11 @@
               <tbody>
                 <tr ng-repeat = "NewNetDevice in NewNetDevices">
                   <td><input type="text" class="form-control" placeholder="IP" ng-model="NewNetDevice.type"></td>
-                  <td><input type="text" class="form-control" placeholder="Device" ng-model="NewNetDevice.Name"></td>
+                  <td><input type="text" class="form-control" placeholder="Device" ng-model="NewNetDevice.name"></td>
                   <td><input type="text" class="form-control" placeholder="VLAN" ng-model="NewNetDevice.Loopback"></td>
                   <td><input type="text" class="form-control" placeholder="Port" ng-model="NewNetDevice.Make"></td>
                   <td><input type="text" class="form-control" placeholder="Active" ng-model="NewNetDevice.Model"></td>
-                  <td><input type="text" class="form-control" placeholder="Description" ng-model="NewNetDevice.Serial"></td>
+                  <td><input type="text" class="form-control" placeholder="Description" ng-model="NewNetDevice.Serial_Number"></td>
                   <td>
                     <button class="btn btn-default btn-sm"  type="button" ng-click="CloneNetDevice(NewNetDevice)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                     <button class="btn btn-danger btn-sm" type="button" ng-click="RemoveNetDevice(NewNetDevice)"><i class="fa fa-trash" aria-hidden="true"></i></button>
