@@ -15,13 +15,20 @@
         </div>
         <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload files</button>
       </div>
+
+      <!-- Drop Zone -->
+      <h4>drag and drop files below</h4>
+      <div class="upload-drop-zone" id="drop-zone" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+        <p>Drag and drop your files here</p>
+      </div>
     </form>
 
     <!-- Drop Zone -->
+    {{!--
     <h4>drag and drop files below</h4>
     <div class="upload-drop-zone" id="drop-zone">
-      Just drag and drop files here
-    </div>
+      Drag and drop your files here
+    </div> --}}
 
     <!-- <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload files</button> -->
 
@@ -42,4 +49,6 @@
           </div> -->
   </div>
 </div>
-<script src="/vendor/dropzone/dropzone.js"></script>
+{{!--
+<script src="/vendor/dropzone/dropzone.js"></script> --}}
+<script src="/js/dropzone.js"></script>

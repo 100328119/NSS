@@ -50,7 +50,7 @@ router.post('/fileupload', function (req, res) {
         message: `Cannot upload files. Error is ${err}`
       });
     }
-
+    console.log(files);
     if (files.filetoupload.length > 0) {
       let fileNames = [];
       files.filetoupload.forEach((file) => {
