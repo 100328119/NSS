@@ -16,12 +16,12 @@ router.get('/register',function(req,res,nex){
   res.render('register', {layout: false});
 });
 
-router.get('/newtork/:type/:id',function(req,res,nex){
+router.get('/network/:id',function(req,res,nex){
   //render newtork network info page
     res.render('network');
 });
 
-router.get('/network/new',function(req,res,nex){
+router.get('/network/Create/New',function(req,res,nex){
   //render create new newtork page
     res.render('newNetwork');
 });

@@ -27,9 +27,10 @@ api.get('/Netdata/all',function(req,response,nex){
  let storeObj = JSON.stringify(stores)
  let storeJSON = JSON.parse(storeObj);
    db.get_connection(qb=>{
-     qb.select(['c.Category','n.N_Name']).from('network n').join('Category c','c.id=n.Category_id ','left').get((err,res)=>{
+     qb.select("*").get("network",(err,res)=>{
        qb.release();
       if(err) return console.error(err);
+      console.log(res);
       return response.send(res);
     });
   });
@@ -220,50 +221,52 @@ api.post('/Netdata/new', function(req,response,nex){
   console.log(req.body);
   if(req.isAuthenticated()){
     network_info.user_id = req.user.user_id;
-    console.log(network_info);
-  // db.get_connection(qb => {
-  //   qb.insert("network", network_info, (err, res)=>{
-  //      if(err) return console.error(err);
-  //      let newId = res.insertId;
-  //      for(let i = 0, len = Net_Devices.length; i<len; i++){
-  //         Net_Devices[i].net_id = newId;
-  //      };
-  //      for(let i = 0, len = End_Devices.length; i<len; i++){
-  //        End_Devices[i].net_id = newId;
-  //      };
-  //      for(let i = 0, len = WANs.length; i<len; i++ ){
-  //         WANs[i].net_id = newId;
-  //      };
-  //      for(let i = 0, len = VLANs.length; i<len; i++){
-  //        VLANs[i].net_id = newId;
-  //      };
-  //      req.body.update_info.net_id = newId;
-  //      console.log(Net_Devices);
-  //      qb.insert_batch("Net_device",Net_Devices, (err, res)=>{
-  //         if(err) return console.error(err);
-  //         console.log("Netword Device ok");
-  //      });
-  //      qb.insert_batch("End_Device",End_Devices, (err, res)=>{
-  //         if(err) return console.error(err);
-  //         console.log("End_Device ok ");
-  //      });
-  //      qb.insert_batch("WAN",WANs,(err, res)=>{
-  //        if(err) return console.error(err);
-  //        console.log("WAN ok");
-  //      });
-  //      qb.insert_batch("VlanNetwork",VLANs,(err, res)=>{
-  //        db.release();
-  //        if(err) return console.error(err);
-  //        console.log("VlanNetwork ok");
-  //      });
-  //      // qb.insert('update_history',req.body.update_info,(err, res)=>{
-  //      //   db.release();
-  //      //   if(err) return console.error(err);
-  //      //   console.log("update_history ok");
-  //      // })
-  //      return response.sendStatus(200);
-  //   })
-  // });
+    // console.log(network_info);
+  db.get_connection(qb => {
+    qb.insert("network", network_info, (err, res)=>{
+       if(err) return console.error(err);
+       console.log('network insert ok');
+       let newId = res.insertId;
+       for(let i = 0, len = Net_Devices.length; i<len; i++){
+          Net_Devices[i].net_id = newId;
+       };
+       for(let i = 0, len = End_Devices.length; i<len; i++){
+         End_Devices[i].net_id = newId;
+       };
+       for(let i = 0, len = VLANs.length; i<len; i++ ){
+          delete VLANs[i].Description;
+          VLANs[i].net_id = newId;
+       };
+       for(let i = 0, len = WANs.length; i<len; i++){
+         WANs[i].net_id = newId;
+       };
+       // req.body.update_info.net_id = newId;
+       console.log(Net_Devices);
+       qb.insert_batch("Net_device",Net_Devices, (err, res)=>{
+          if(err) return console.error(err);
+          console.log("Netword Device ok");
+       });
+       qb.insert_batch("End_Device",End_Devices, (err, res)=>{
+          if(err) return console.error(err);
+          console.log("End_Device ok ");
+       });
+       qb.insert_batch("WAN",WANs,(err, res)=>{
+         if(err) return console.error(err);
+         console.log("WAN ok");
+       });
+       qb.insert_batch("VlanNetwork",VLANs,(err, res)=>{
+         qb.release();
+         if(err) return console.error(err);
+         console.log("VlanNetwork ok");
+       });
+       // qb.insert('update_history',req.body.update_info,(err, res)=>{
+       //   db.release();
+       //   if(err) return console.error(err);
+       //   console.log("update_history ok");
+       // })
+       return response.sendStatus(200);
+    })
+  });
   }
 });
 

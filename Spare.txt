@@ -67,3 +67,49 @@ class TableRow extends React.Component{
     <a class="dropdown-item" href="#">Data Center</a>
   </div>
 </div>
+
+qb.select(['c.Category','n.N_Name']).from('network n').join('Category c','c.id=n.Category_id ','left').get((err,res)=>{
+  qb.release();
+ if(err) return console.error(err);
+ console.log(res);
+ return response.send(res);
+});
+
+// $(document).ready(function(){
+//   popluateNavbar();
+// });
+//
+// function popluateNavbar(){
+//   var bcls = $('#liquorStore');
+//   var bccs = $('#cannbieStore');
+//   $.ajax({
+//     type:'GET',
+//     url:'/api/Netdata/all'}).then(function(res){
+//         for(var i = 0; i<res.length; i++){
+//           if(res[i].type == 'BCLS'){
+//             bcls.append('<li><a href="/newtork/'+res[i].type+'/'+res[i].S_ID+'">'+res[i].type+' - '+res[i].S_ID+'</a></li>');
+//           }else{
+//             bccs.append('<li><a href="/newtork/'+res[i].type+'/'+res[i].S_ID+'">'+res[i].type+' - '+res[i].S_ID+'</a></li>');
+//           }
+//         }
+//     });
+// };
+//
+// function SideSearch(){
+//   var input, filter, ul, li, a, i;
+//    input = document.getElementById("SearchInput");
+//    filter = input.value.toUpperCase();
+//    ul_bcls = document.getElementById("liquorStore");
+//    ul_bccs = document.getElementById("cannbieStore");
+//    ul_report = document.getElementById("reports");
+//    li = ul_bcls.getElementsByTagName("li");
+//    console.log(li);
+//    for (i = 0; i < li.length; i++) {
+//        a = li[i].getElementsByTagName("a")[0];
+//        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+//            li[i].style.display = "";
+//        } else {
+//            li[i].style.display = "none";
+//        }
+//    }
+// }

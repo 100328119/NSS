@@ -23,7 +23,7 @@ NewSite.controller("NewSiteController",($scope,$http)=>{
   $http.get('/api/Netdata/vlan')
     .then(function successCallback(res){
       console.log(res.data);
-      $scope.vlan = angular.copy(res.data);
+      $scope.vlans = angular.copy(res.data);
     }, function errorCallback(res){
       console.log(res.data);
     });
@@ -118,5 +118,14 @@ NewSite.controller("NewSiteController",($scope,$http)=>{
     $scope.index = $scope.NewVLANs.indexOf(Clone);
     $scope.NewVLANs.splice($scope.index,1);
   };
+
+  $scope.VlanChange = (NewVLAN, vlan)=>{
+    console.log(NewVLAN);
+    console.log(vlan)
+    NewVLAN.Description = vlan.Description;
+    NewVLAN.vlan_id = vlan.id;
+    // console.log($scope.selectedVLAN);
+    // NewVLAN.Description = VlanDescription;
+  }
 
 });

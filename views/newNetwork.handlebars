@@ -193,7 +193,7 @@
               </thead>
               <tbody>
                 <tr ng-repeat = "NewNetDevice in NewNetDevices">
-                  <td><input type="text" class="form-control" placeholder="IP" ng-model="NewNetDevice.type"></td>
+                  <td><input type="text" class="form-control" placeholder="Device" ng-model="NewNetDevice.type"></td>
                   <td><input type="text" class="form-control" placeholder="Device" ng-model="NewNetDevice.name"></td>
                   <td><input type="text" class="form-control" placeholder="VLAN" ng-model="NewNetDevice.Loopback"></td>
                   <td><input type="text" class="form-control" placeholder="Port" ng-model="NewNetDevice.Make"></td>
@@ -230,10 +230,12 @@
               </thead>
               <tbody>
                 <tr ng-repeat = "NewVLAN in NewVLANs">
-                  <td><input type="text" class="form-control" placeholder="IP" ng-model="NewVLAN.VLAN"></td>
-                  <td><input type="text" class="form-control" placeholder="Device" ng-model="NewVLAN.Description"></td>
+                  <td>
+                    <select class="form-control" ng-options="vlan.vlan_number for vlan in vlans" ng-change="VlanChange(NewVLAN,selectedVLAN)" ng-model ="selectedVLAN"></select>
+                  </td>
+                  <td><input type="text" class="form-control" placeholder="Device" ng-model="NewVLAN.Description" disabled></td>
                   <td><input type="text" class="form-control" placeholder="VLAN" ng-model="NewVLAN.Gateway"></td>
-                  <td><input type="text" class="form-control" placeholder="Port" ng-model="NewVLAN.Subnet"></td>
+                  <td><input type="text" class="form-control" placeholder="Port" ng-model="NewVLAN.Submusk"></td>
                   <td>
                     <button class="btn btn-default btn-sm"  type="button" ng-click="CloneVLAN(NewVLAN)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                     <button class="btn btn-danger btn-sm" type="button" ng-click="RemoveVLAN(NewVLAN)"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -247,5 +249,5 @@
     </div>
   </div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
+
   <script type="text/JavaScript" src="/js/Network/NewSite.js"></script>

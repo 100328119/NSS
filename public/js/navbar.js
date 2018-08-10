@@ -1,38 +1,14 @@
-$(document).ready(function(){
-  popluateNavbar();
+var navbar = angular.module("navbar", []).config(function($interpolateProvider){
+ $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 });
 
-function popluateNavbar(){
-  var bcls = $('#liquorStore');
-  var bccs = $('#cannbieStore');
-  $.ajax({
-    type:'GET',
-    url:'/api/Netdata/all'}).then(function(res){
-        for(var i = 0; i<res.length; i++){
-          if(res[i].type == 'BCLS'){
-            bcls.append('<li><a href="/newtork/'+res[i].type+'/'+res[i].S_ID+'">'+res[i].type+' - '+res[i].S_ID+'</a></li>');
-          }else{
-            bccs.append('<li><a href="/newtork/'+res[i].type+'/'+res[i].S_ID+'">'+res[i].type+' - '+res[i].S_ID+'</a></li>');
-          }
-        }
-    });
-};
+navbar.controller("NavController", function($scope, $http){
+  $scope.networks = [];
+  $scope.search_net = "";
 
-function SideSearch(){
-  var input, filter, ul, li, a, i;
-   input = document.getElementById("SearchInput");
-   filter = input.value.toUpperCase();
-   ul_bcls = document.getElementById("liquorStore");
-   ul_bccs = document.getElementById("cannbieStore");
-   ul_report = document.getElementById("reports");
-   li = ul_bcls.getElementsByTagName("li");
-   console.log(li);
-   for (i = 0; i < li.length; i++) {
-       a = li[i].getElementsByTagName("a")[0];
-       if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-           li[i].style.display = "";
-       } else {
-           li[i].style.display = "none";
-       }
-   }
-}
+  $http.get('/api/Netdata/all')
+    .then(function(res){
+      $scope.networks = angular.copy(res.data);
+      console.log($scope.networks);
+    });
+});
