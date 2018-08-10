@@ -1,8 +1,8 @@
-var navbar = angular.module("navbar", []).config(function($interpolateProvider){
- $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-});
+// var navbar = angular.module("navbar", []).config(function($interpolateProvider){
+//  $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+// });
 
-navbar.controller("NavController", function($scope, $http){
+nss.controller("NavController", function($scope, $http){
   $scope.networks = [];
   $scope.search_net = "";
 

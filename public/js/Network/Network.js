@@ -1,8 +1,8 @@
-var myApp = angular.module("myApp", []).config(function($interpolateProvider){
- $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-});
+// var myApp = angular.module("myApp", []).config(function($interpolateProvider){
+//  $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+// });
 
-myApp.controller("myController", function($scope, $http){
+nss.controller("myController", function($scope, $http){
 	console.log("in controller...");
 	$scope.Network = {};
   $scope.NewEndevice = {};

@@ -1,1 +1,3 @@
-var root = angular.module('root', ['navbar','NewSite','myApp']);
+var nss = angular.module('nss', []).config(($interpolateProvider)=>{
+  $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+});

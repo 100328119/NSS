@@ -1,8 +1,8 @@
-var NewSite = angular.module('NewSite', []).config(($interpolateProvider)=>{
-  $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-});
+// var NewSite = angular.module('NewSite', []).config(($interpolateProvider)=>{
+//   $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+// });
 
-NewSite.controller("NewSiteController",($scope,$http)=>{
+nss.controller("NewSiteController",($scope,$http)=>{
   $scope.NewSite = {};
   $scope.network_info = {};
   $scope.End_Device = [];
@@ -47,6 +47,7 @@ NewSite.controller("NewSiteController",($scope,$http)=>{
     $scope.NewSite.WANs = angular.copy($scope.NewWANs);
     $scope.NewSite.Net_Devices = angular.copy($scope.NewNetDevices);
     $scope.NewSite.VLANs = angular.copy($scope.NewVLANs);
+    console.log($scope.NewSite);
     $http.post('/api/Netdata/new', $scope.NewSite)
       .then( function successCallback(response){
           console.log(response);
@@ -120,8 +121,8 @@ NewSite.controller("NewSiteController",($scope,$http)=>{
   };
 
   $scope.VlanChange = (NewVLAN, vlan)=>{
-    console.log(NewVLAN);
-    console.log(vlan)
+    // console.log(NewVLAN);
+    // console.log(vlan)
     NewVLAN.Description = vlan.Description;
     NewVLAN.vlan_id = vlan.id;
     // console.log($scope.selectedVLAN);

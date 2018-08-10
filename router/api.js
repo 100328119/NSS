@@ -6,26 +6,6 @@ const db = require('../model/db');
 // newtork data minipuplate
 api.get('/Netdata/all',function(req,response,nex){
   //get all newtork information
- let stores = [
-    {
-      'type':'BCLS',
-      'S_ID':'001'
-    },
-    {
-      'type':'BCLS',
-      'S_ID':'002'
-    },
-    {
-      'type':'BCCS',
-      'S_ID':'001'
-    },
-    {
-      'type':'BCCS',
-      'S_ID':'002'
-    }
-  ];
- let storeObj = JSON.stringify(stores)
- let storeJSON = JSON.parse(storeObj);
    db.get_connection(qb=>{
      qb.select("*").get("network",(err,res)=>{
        qb.release();
@@ -246,6 +226,7 @@ api.post('/Netdata/new', function(req,response,nex){
           if(err) return console.error(err);
           console.log("Netword Device ok");
        });
+       console.log(End_Devices);
        qb.insert_batch("End_Device",End_Devices, (err, res)=>{
           if(err) return console.error(err);
           console.log("End_Device ok ");

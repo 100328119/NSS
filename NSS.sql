@@ -77,8 +77,6 @@ create table End_Device
   Make varchar(50),
   Model varchar(50),
   NetDevice varchar(50),
-  FOREIGN KEY (network_id)
-     REFERENCES network(id),
   FOREIGN KEY (VLAN_ID)
      REFERENCES Vlan(id)
 ) ENGINE=INNODB;
