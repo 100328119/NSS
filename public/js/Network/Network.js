@@ -2,18 +2,25 @@
 //  $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 // });
 
-nss.controller("myController", function($scope, $http){
+nss.controller("myController", function($scope, $http,$location,$routeParams,$route){
 	console.log("in controller...");
+	// console.log($routeParams.id);
 	$scope.Network = {};
   $scope.NewEndevice = {};
   $scope.NewVlAN = {};
   $scope.NewNetDevice ={};
   $scope.CurrentIndex="";
   $scope.selectedItem = {};
-	$http.get('/api/Netdata/bcls/1')
-		.then(function(response){
-			$scope.Network = angular.copy(response.data);
-	});
+	//page initial
+	$scope.NetworkInit = function(){
+			var url = $location.absUrl().split('/');
+			$scope.id = url[4];
+			$http.get('/api/Netdata/bcls/'+$scope.id)
+				.then(function(response){
+					$scope.Network = angular.copy(response.data);
+					console.log($scope.Network);
+			});
+	};
 
   $scope.SaveNetwork = function(){
     console.log("save fired");

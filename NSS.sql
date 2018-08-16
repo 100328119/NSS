@@ -59,7 +59,7 @@ create table Net_device
 create table Vlan
 (
   id int  not null auto_increment primary key,
-  vlan_number varchar(50) nut null,
+  vlan_number varchar(50) not null,
   Description varchar(50) not null
 ) ENGINE=INNODB;
 
@@ -76,9 +76,7 @@ create table End_Device
   Type varchar(50),
   Make varchar(50),
   Model varchar(50),
-  NetDevice varchar(50),
-  FOREIGN KEY (VLAN_ID)
-     REFERENCES Vlan(id)
+  NetDevice varchar(50)
 ) ENGINE=INNODB;
 
 
@@ -121,7 +119,7 @@ create table Update_history
   user_id int not null,
   Update_date date not null,
   Description varchar(250),
-  FOREIGN KEY (Network_id)
+  FOREIGN KEY (net_id)
      REFERENCES network(id),
   FOREIGN KEY (user_id)
      REFERENCES users(id)

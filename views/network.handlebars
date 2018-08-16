@@ -1,13 +1,13 @@
 <!-- ng-app="myApp" -->
-<div ng-controller="myController">
+<div ng-controller="myController" ng-init="NetworkInit()">
 <ol class="breadcrumb">
 	<li class="breadcrumb-item">
-		<a href="#">Networek</a>
+		<a href="#">Network</a>
 	</li>
-	<li class="breadcrumb-item active">{[{Network.N_name}]}</li>
+	<li class="breadcrumb-item active">{[{Network.network_info.N_Name}]}</li>
 </ol>
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-			<h2 class="h2">{[{Network.Category}]} {[{Network.ID}]} - {[{Network.N_name}]}</h2>
+			<h2 class="h2">{[{Network.network_info.N_Number}]} - {[{Network.network_info.N_Name}]}</h2>
 			<div class="btn-toolbar mb-2 mb-md-0">
 				<div class="btn-group mr-2">
 					<button class="btn btn-sm btn-outline-secondary" ng-click="SaveNetwork()">Save</button>
@@ -40,7 +40,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="End_Device in Network.End_Device | filter:{Status:'!-1'}">
+						<tr ng-repeat="End_Device in Network.End_Devices | filter:{Status:'!-1'}">
 								<td>{[{End_Device.IP}]}</td>
 								<td>{[{End_Device.D_Name}]}</td>
 								<td>{[{End_Device.VLAN}]}</td>
@@ -87,7 +87,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="WAN in Network.WAN | filter:{Status:'!-1'}">
+						<tr ng-repeat="WAN in Network.WANs | filter:{Status:'!-1'}">
 							<td>{[{WAN.Provider}]}</td>
 							<td>{[{WAN.WAN_Type}]}</td>
 							<td>{[{WAN.Upload}]}</td>
@@ -132,7 +132,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="Net_Device in Network.Net_Device | filter:{Status:'!-1'}">
+								<tr ng-repeat="Net_Device in Network.Net_devices | filter:{Status:'!-1'}">
 									<td>{[{Net_Device.type}]}</td>
 									<td>{[{Net_Device.Name}]}</td>
 									<td>{[{Net_Device.Loopback}]}</td>
@@ -170,7 +170,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="vlan in Network.VLANs  | filter:{Status:'!-1'}">
+								<tr ng-repeat="vlan in Network.VlanNetwork  | filter:{Status:'!-1'}">
 									<td>{[{vlan.VLAN}]}</td>
 									<td>{[{vlan.Description}]}</td>
 									<td>{[{vlan.Gateway}]}</td>
