@@ -1,19 +1,50 @@
-/* layout.css Style */
-.upload-drop-zone {
-  height: 200px;
-  border-width: 2px;
-  margin-bottom: 20px;
+fieldset {
+  text-align: center;
+  font-size: 14pt;
 }
 
-/* skin.css Style*/
-.upload-drop-zone {
-  color: #ccc;
-  border-style: dashed;
-  border-color: #ccc;
-  line-height: 200px;
-  text-align: center
+fieldset ol {
+  list-style: none;
 }
-.upload-drop-zone.drop {
-  color: #222;
-  border-color: #222;
+
+fieldset li {
+  display: flex;
+  justify-content: space-between;
+  background: yellow;
+  margin-bottom: 15px;
+  padding: 0 15px; 
+}
+
+.removeBtn {
+  align-content: center;
+  width: 30px;
+  height: 30px;
+  margin: auto 0;
+  padding: 5px;
+}
+
+#uploadBtn {
+  display: flex;
+  justify-content: center;
+  margin: 10px auto;
+}
+
+#dropbox {
+  width: 600px;
+  background: yellowgreen;
+  text-align: center;
+  margin: 20px auto;
+  padding: 50px 0;
+}
+
+#lblDrop {
+  color: blue;
+  font-weight: bold;
+  font-size: 16pt;
+}
+
+#lblSelect {
+  color: black;
+  font-weight: none;
+  font-size: 14pt;
 }

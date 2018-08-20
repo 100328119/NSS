@@ -1,43 +1,22 @@
 <h1>New Report</h1>
 <hr>
-<div class="card card-default">
-        <div class="card-header"><strong>Upload Files</strong> <small>Bootstrap files upload</small></div>
-        <div class="card-body">
-
-          <!-- Standar Form -->
-          <h4>Select files from your computer</h4>
-          <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
-            <div class="form-inline">
-              <div class="form-group">
-                <input type="file" name="files[]" id="js-upload-files" multiple>
-              </div>
-              <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload files</button>
-            </div>
-          </form>
-
-          <!-- Drop Zone -->
-              <h4>drag and drop files below</h4>
-              <div class="upload-drop-zone" id="drop-zone">
-                Just drag and drop files here
-              </div>
-
-              <!-- <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload files</button> -->
-
-          <!-- Progress Bar -->
-          <!-- <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-              <span class="sr-only">60% Complete</span>
-            </div>
-          </div> -->
-
-          <!-- Upload Finished -->
-          <!-- <div class="js-upload-finished">
-            <h3>Processed files</h3>
-            <div class="list-group">
-              <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-01.jpg</a>
-              <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-02.jpg</a>
-            </div>
-          </div> -->
-        </div>
-      </div>
-      <script src="/vendor/dropzone/dropzone.js"></script>
+<fieldset>
+  <legend>File Uploader</legend>
+  <form id='fileUploads' method='POST' enctype='multipart/form-data'>
+    <input id='selectBtn' type='file' multiple accept='application/pdf' style='display: none;' onchange='handleFiles(this.files)'>
+    <div id='dropbox'>
+      <p id='lblDrop'>Drag & Drop your files here
+        <span id='lblSelect'>(or click to select files)</span>
+      </p>
+    </div>
+    <div id='preview'>
+      <p id='noFileMessage'>No files currently selected for upload</p>
+    </div>
+    <div>
+      <p id='totalFiles'>Total Files: 0</p>
+      <button id='rmAllBtn' type='button'>Remove All Files</button>
+      <button id='uploadBtn' type='button'>Submit</button>
+    </div>
+  </form>
+</fieldset>
+<script src="/vendor/dropbox/dropbox.js"></script>
