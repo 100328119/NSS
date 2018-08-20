@@ -1,12 +1,12 @@
 <h1>New Report</h1>
 <hr>
 <div class="card card-default">
-        <div class="card-header"><strong>Upload Files</strong> <small>Bootstrap files upload</small></div>
+        <div class="card-header"><strong>Upload Files</strong> </div>
         <div class="card-body">
 
           <!-- Standar Form -->
           <h4>Select files from your computer</h4>
-          <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
+          <form action="/reportdata/new" method="post" enctype="multipart/form-data" id="js-upload-form">
             <div class="form-inline">
               <div class="form-group">
                 <input type="file" name="files[]" id="js-upload-files" multiple>
@@ -20,7 +20,6 @@
               <div class="upload-drop-zone" id="drop-zone">
                 Just drag and drop files here
               </div>
-
               <!-- <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload files</button> -->
 
           <!-- Progress Bar -->

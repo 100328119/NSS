@@ -33,15 +33,16 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 //page redirection
-
 app.use(function(req,res,nex){
    res.locals.isAuthenticated = req.isAuthenticated();
    nex();
 })
-app.use('/', require('./router/route'));
+
 //restful api
-app.use('/api', require('./router/api'));
-//secure api
+app.use('/', require('./router/route'));
+app.use('/api/Netdata', require('./router/Netdata'));
+app.use('/api/reportdata',require('./router/Report'));
+app.use('/api/tooldata',require('./router/Tool'));
 app.use('/secure', require('./router/secure'));
 
 passport.use('local', new LocalStrategy({
