@@ -1,4 +1,4 @@
-var nss = angular.module('nss', ['ngRoute']).config(($interpolateProvider,$routeProvider)=>{
+var nss = angular.module('nss', ['ngRoute',"ngTable"]).config(($interpolateProvider,$routeProvider)=>{
   $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 
 });
