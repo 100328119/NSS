@@ -1,7 +1,7 @@
 // var myApp = angular.module("myApp", []).config(function($interpolateProvider){
 //  $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 // });
-
+// "use strict";
 nss.controller("myController", function($scope, $http,$location,$routeParams,$route){
 	console.log("in controller...");
 	// console.log($routeParams.id);

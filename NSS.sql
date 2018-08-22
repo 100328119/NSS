@@ -76,7 +76,9 @@ create table End_Device
   Type varchar(50),
   Make varchar(50),
   Model varchar(50),
-  NetDevice varchar(50)
+  NetDevice varchar(50),
+  FOREIGN KEY (net_id)
+     REFERENCES network(id)
 ) ENGINE=INNODB;
 
 
@@ -87,7 +89,7 @@ create table VlanNetwork
   vlan_id int not null,
   Gateway varchar(50),
   Submusk varchar(50),
-  FOREIGN KEY (Net_id)
+  FOREIGN KEY (net_id)
      REFERENCES network(id),
   FOREIGN KEY (vlan_id)
     REFERENCES Vlan(id)
@@ -151,7 +153,7 @@ INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('410','External Tablet'
 INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('420','External Workstation');
 INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('430','Public WiFi');
 INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('500','Retail Test Store');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('501`','Retail Test Store');
+INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('501','Retail Test Store');
 INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('502','Retail Test Store');
 INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('503','Retail Test Store');
 INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('506','Retail Test Store');

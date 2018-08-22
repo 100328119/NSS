@@ -113,3 +113,19 @@ qb.select(['c.Category','n.N_Name']).from('network n').join('Category c','c.id=n
 //        }
 //    }
 // }
+
+// $scope.vlans[$scope.currentIndex] = angular.copy($scope.selectedItem);
+// $.each($scope.vlans,(k,v)=>{
+//     if(v[0]===$scope.selectedItem[0]){
+//       $scope.vlans[k]=$scope.selectedItem;
+//     }
+//   });
+// $scope.selectedItem = [];
+// angular.element(document).ready(function () {
+ // angular.element('#VlanTable').DataTable().ajax.reload();
+// });
+// angular.element('#VlanTable').DataTable();
+// let length = angular.element('#VlanTable').DataTable().page.info().length;
+// console.log(length);
+// angular.element('#VlanTable').DataTable().destroy();
+// angular.element('#VlanTable').DataTable({"PageLength":10});

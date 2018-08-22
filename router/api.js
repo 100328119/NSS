@@ -4,7 +4,7 @@ const network = require('../model/network');
 const db = require('../model/db');
 //Restful api
 // newtork data minipuplate
-api.get('/all',function(req,response,nex){
+api.get('/Netdata/all',function(req,response,nex){
   //get all newtork information
    db.get_connection(qb=>{
      qb.select("*").get("network",(err,res)=>{
@@ -16,18 +16,7 @@ api.get('/all',function(req,response,nex){
   });
 });
 
-api.get('/networkinfor', function(req, response, nex){
-   db.get_connection(qb=>{
-      qb.select(['n.id','n.N_Name','n.N_Number','n.address','n.Postal_Code','n.Phone','n.Fax','n.Circuit_ID','c.Category']).from('network n').join('Category c','c.id=n.Category_id ','left').get((err,res)=>{
-          qb.release();
-          if(err) return console.error(err);
-          console.log(res);
-          return response.send(res);
-      });
-   })
-});
-
-api.get('/Site/:id', function(req,response,nex){
+api.get('/Netdata/:storetype/:id', function(req,response,nex){
   //get specific newtork data
   let Net_id = req.params.id;
   let Network = {};
@@ -62,7 +51,8 @@ api.get('/Site/:id', function(req,response,nex){
   });
 });
 
-api.post('/new', function(req,response,nex){
+
+api.post('/Netdata/new', function(req,response,nex){
   // add data
   let network_example = {
     "network_info":{
@@ -262,7 +252,7 @@ api.post('/new', function(req,response,nex){
   }
 });
 
-api.put('/update/:id',function(req,response,nex){
+api.put('/Netdata/update/:id',function(req,response,nex){
   //update
   const temp ={
     "network_info": {
@@ -546,26 +536,22 @@ api.put('/update/:id',function(req,response,nex){
         console.log("VlanNetwork ok");
       });
     };
-    if(req.body.Update_history != undefined ){
       qb.insert('update_history',req.body.Update_history,(err, res)=>{
           qb.release();
           if(err) return console.error(err);
           console.log("update_history ok");
           return response.sendStatus(200);
       });
-    }else{
-      return response.sendStatus(200);
-    }
   });
 });
 
-api.delete('/delete/:id', function(req,response,nex){
+api.delete('/Netdata/delete/:id', function(req,response,nex){
   //remove
 
 });
 
-//category relate feature.
-api.get('/category',(req,response,nex)=>{
+//api/ will standard setup
+api.get('/Netdata/category',(req,response,nex)=>{
    db.get_connection(qb=>{
      qb.select('*').get('Category',(err,res)=>{
        qb.release();
@@ -575,54 +561,8 @@ api.get('/category',(req,response,nex)=>{
      })
    })
 });
-api.get('/NetCategoryGroup', (res, response, nex)=>{
-  db.get_connection(qb=>{
-    qb.select(["c.Category as label",'count(n.id) as value']).from('network n').join('Category c','c.id=n.Category_id ','left').group_by('Category_id').get((err,res)=>{
-      qb.release();
-       if(err) return console.error(err);
-       return response.send(res);
-    });
-  })
-});
-api.put('/UpdateCate',(req,response,nex)=>{
-  db.get_connection(qb=>{
-    qb.update('category',req.body,{id:req.body.id},(err, res)=>{
-      if(err){
-         console.log(err);
-         return response.sendStatus(400);
-      }
-      qb.select('*').get('Category', (err, res)=>{
-        qb.release();
-        if(err){
-           console.log(err);
-           return response.sendStatus(400);
-        }
-        return response.send(res);
-      })
-    });
-  });
-})
-api.post('/NewCategory', (req,response, nex)=>{
-  db.get_connection(qb=>{
-    qb.insert('Category',req.body,(err,res)=>{
-      if(err){
-        console.log(err);
-        return response.sendStatus(400);
-      }
-      qb.select('*').get('Category',(err, res)=>{
-         qb.release();
-         if(err) {
-           console.error(err);
-           return response.sendStatus(400);
-         }
-         return response.send(res);
-      })
-    })
-  })
-})
 
-// vlan relate api
-api.get('/vlan', (res, response, nex)=>{
+api.get('/Netdata/vlan', (res, response, nex)=>{
    db.get_connection(qb=>{
      qb.select('*').get('vlan',(err,res)=>{
        qb.release();
@@ -630,21 +570,9 @@ api.get('/vlan', (res, response, nex)=>{
        return response.send(res);
      })
    })
-});
-api.put('/UpdataVlan', (req, response, nex)=>{
-  db.get_connection(qb=>{
-    qb.update('vlan',req.body,{id:req.body.id},(err, res)=>{
-       if(err) return console.error(err);
-       qb.select('*').get('vlan', (err, res)=>{
-          if(err) return console.log(err);
-          return response.send(res);
-       })
-    });
-  });
-});
+})
 
-//
-api.get('/template/:Temp',(req,res,nex)=>{
+api.get('/Netdata/template/:Temp',(req,res,nex)=>{
    let Template = {
      'End_Device':[
        {
@@ -772,5 +700,43 @@ api.get('/template/:Temp',(req,res,nex)=>{
  res.send(Template);
 });
 
+
+api.delete('/Netdata/delete/:id', function(req,res,nex){
+  //remove
+});
+
+//report data minipuplate
+api.get('/reportdata/:id', function(req, res,nex){
+
+});
+
+api.post('/reportdata/new', function(req,res,nex){
+
+});
+
+api.put('/reportdata/update/:id',function(req,res,nex){
+
+});
+
+api.delete('/reportdata/delete/:id', function(req,res,nex){
+
+});
+
+//tool data minipuplate
+api.get('/tooldata/:id', function(req, res,nex){
+
+});
+
+api.post('/tooldata/new', function(req,res,nex){
+
+});
+
+api.put('/tooldata/update/:id',function(req,res,nex){
+
+});
+
+api.delete('/tooldata/delete/:id', function(req,res,nex){
+
+});
 
 module.exports = api;

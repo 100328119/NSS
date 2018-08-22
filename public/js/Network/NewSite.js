@@ -1,7 +1,7 @@
 // var NewSite = angular.module('NewSite', []).config(($interpolateProvider)=>{
 //   $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 // });
-
+// "use strict";
 nss.controller("NewSiteController",($scope,$http)=>{
   $scope.NewSite = {};
   $scope.network_info = {};

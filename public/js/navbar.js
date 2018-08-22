@@ -1,7 +1,7 @@
 // var navbar = angular.module("navbar", []).config(function($interpolateProvider){
 //  $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 // });
-
+"use strict";
 nss.controller("NavController", function($scope, $http){
   $scope.networks = [];
   $scope.search_net = "";

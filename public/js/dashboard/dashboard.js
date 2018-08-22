@@ -62,23 +62,36 @@ nss.controller("dashController", function($scope,$http,$window,NgTableParams){
       };
 
       $scope.editVlan = function(){
-          $scope.vlans[$scope.currentIndex] = angular.copy($scope.selectedItem);
-          // $.each($scope.vlans,(k,v)=>{
-          //     if(v[0]===$scope.selectedItem[0]){
-          //       $scope.vlans[k]=$scope.selectedItem;
-          //     }
-          //   });
-          // $scope.selectedItem = [];
-          // angular.element(document).ready(function () {
-           // angular.element('#VlanTable').DataTable().ajax.reload();
-          // });
-          // angular.element('#VlanTable').DataTable();
-          let length = angular.element('#VlanTable').DataTable().page.info().length;
-          console.log(length);
-          angular.element('#VlanTable').DataTable().destroy();
-          angular.element('#VlanTable').DataTable({"PageLength":10});
-          // angular.element('#VlanTable').DataTable().draw();
+          $http.put('/api/Netdata/UpdataVlan', $scope.selectedItem)
+            .then(function successCallback(res){
+                $scope.vlans = angular.copy(res.data);
+            }, function errorCallback(res){
+                console.log(res);
+            });
+        };
 
-      }
+    // vlan function
+    $scope.addCate = function(){
+       $http.post('/api/Netdata/NewCategory',$scope.newCate)
+        .then(function successCallback(res){
+           $scope.Cates = res.data;
+        }, function errorCallback(res){
+          console.log(res);
+        });
+    }
+
+    $scope.selectCate = function(cate){
+        $scope.selectedItem = angular.copy(cate);
+    };
+
+    $scope.editCate = function(){
+          $http.put('/api/Netdata/UpdateCate', $scope.selectedItem)
+            .then(function successCallback(res){
+                $scope.Cates = angular.copy(res.data);
+            }, function errorCallback(res){
+                console.log(res);
+            });
+    };
+
 
 });

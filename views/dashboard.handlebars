@@ -61,7 +61,7 @@
     <div class="card mb-3">
       <div class="card-header">
         <i class="fa fa-table"></i> VLAN
-        <button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewNetDevice"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
+        <button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#addVlanModal"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
       </div>
       <div class="card-body">
         <div class="table-responsive" >
@@ -71,7 +71,9 @@
                 <th>#</th>
                 <th>Number</th>
                 <th>Description</th>
+              {{#if isAuthenticated}}
                 <th>Action</th>
+              {{/if}}
               </tr>
             </thead>
             <tbody>
@@ -79,21 +81,14 @@
                 <td>{[{vlan.id}]}</td>
                 <td>{[{vlan.vlan_number}]}</td>
                 <td>{[{vlan.Description}]}</td>
-                <td>
-                    <button class="btn btn-default btn-sm"  type="button" ng-click="selectVlan(vlan)" data-toggle="modal" data-target="#editVlan" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                    <button class="btn btn-danger btn-sm" type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#DeleteNetDevice" ><i class="fa fa-trash" aria-hidden="true"></i></button>
-                </td>
+                {{#if isAuthenticated}}
+                  <td>
+                      <button class="btn btn-default btn-sm"  type="button" ng-click="selectVlan(vlan)" data-toggle="modal" data-target="#editVlan" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                      <button class="btn btn-danger btn-sm" type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#DeleteNetDevice" ><i class="fa fa-trash" aria-hidden="true"></i></button>
+                  </td>
+                {{/if}}
               </tr>
             </tbody>
-            <!-- <tr ng-repeat="vlan in $data">
-              <td data-title="'#'">{[{vlan.id}]}</td>
-              <td data-title="Number">{[{vlan.vlan_number}]}</td>
-              <td data-title="Description">{[{vlan.Description}]}</td>
-              <td data-title="Action">
-                  <button class="btn btn-default btn-sm"  type="button" ng-click="selectVlan(vlan)" data-toggle="modal" data-target="#editVlan" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                  <button class="btn btn-danger btn-sm" type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#DeleteNetDevice" ><i class="fa fa-trash" aria-hidden="true"></i></button>
-              </td>
-            </tr> -->
           </table>
         </div>
       </div>
@@ -103,7 +98,7 @@
     <div class="card mb-3">
       <div class="card-header">
         <i class="fa fa-table"></i> Category
-        <button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewNetDevice"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
+        <button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#newCateModal"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -112,17 +107,21 @@
               <tr>
                 <th>#</th>
                 <th>Description</th>
-                <th>Action</th>
+                {{#if isAuthenticated}}
+                  <th>Action</th>
+                {{/if}}
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat=" cate in Cates">
                 <td>{[{cate.id}]}</td>
                 <td>{[{cate.Category}]}</td>
+                {{#if isAuthenticated}}
                 <td>
-                    <button class="btn btn-default btn-sm"  type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#EditNetDevice" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button class="btn btn-default btn-sm"  type="button" ng-click="selectCate(cate)" data-toggle="modal" data-target="#editCate" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
                     <button class="btn btn-danger btn-sm" type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#DeleteNetDevice" ><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </td>
+                {{/if}}
               </tr>
             </tbody>
           </table>
@@ -132,27 +131,95 @@
   </div>
 </div>
 <div id="editVlan" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-sm">
+  <div class="modal-dialog modal-sms">
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Edit Network Device</h4>
+        <h4 class="modal-title">Edit Vlan</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-                <div class="container col-sm-12">
+              <div class="container col-sm-12">
                       <label for="vlan_number"><strong>Vlan Number</strong></label>
                       <input type="text" class="form-control" id="vlan_number" placeholder="Vlan Number" ng-model="selectedItem.vlan_number" disabled>
                     <label for="inputEmail3" ><strong>Description</strong></label>
                     <input type="text" class="form-control" id="inputEmail3" placeholder="Description" ng-model="selectedItem.Description">
                 </div>
               </div>
-              <div class="modal-footer">
+            <div class="modal-footer">
                 <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="editVlan()">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+      </div>
+  </div>
+  <div id="editCate" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sms">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Edit Category</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+                <div class="container col-sm-12">
+                        <label for="vlan_number"><strong>Category ID</strong></label>
+                        <input type="text" class="form-control" id="vlan_number" placeholder="Vlan Number" ng-model="selectedItem.id" disabled>
+                      <label for="inputEmail3" ><strong>Description</strong></label>
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="Description" ng-model="selectedItem.Category">
+                  </div>
+                </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="editCate()">Save</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               </div>
           </div>
         </div>
+    </div>
+</div>
+<div id="addVlanModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-sms">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">New Vlan</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
+      <div class="modal-body">
+              <div class="container col-sm-12">
+                      <label for="vlan_number"><strong>Vlan Number</strong></label>
+                      <input type="text" class="form-control" id="vlan_number" placeholder="Vlan Number" ng-model="newVlan.vlan_number">
+                    <label for="inputEmail3" ><strong>Description</strong></label>
+                    <input type="text" class="form-control" id="inputEmail3" placeholder="Description" ng-model="newVlan.Description">
+                </div>
+              </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="addVlan()">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+      </div>
+  </div>
+  <div id="newCateModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sms">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">New Category</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+                <div class="container col-sm-12">
+                      <label for="inputEmail3" ><strong>Category</strong></label>
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="Description" ng-model="newCate.Category">
+                  </div>
+                </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="addCate()">Save</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+        </div>
+    </div>
 </div>
 <script type="text/JavaScript" src="/js/dashboard/dashboard.js"></script>
