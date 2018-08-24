@@ -2,7 +2,7 @@
 //  $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 // });
 // "use strict";
-nss.controller("myController", function($scope, $http,$location,$routeParams,$route){
+nss.controller("myController", function($scope, $http,$location,$routeParams,$route,$window,$filter){
 	console.log("in controller...");
 	// console.log($routeParams.id);
 	$scope.Network = {};
@@ -11,6 +11,7 @@ nss.controller("myController", function($scope, $http,$location,$routeParams,$ro
   $scope.NewNetDevice ={};
   $scope.CurrentIndex="";
   $scope.selectedItem = {};
+	$scope.newUpdate = {};
 	var loading = angular.element('#loading');
 	//page initial
 	$scope.NetworkInit = function(){
@@ -21,11 +22,6 @@ nss.controller("myController", function($scope, $http,$location,$routeParams,$ro
 				.then(function(response){
 					$scope.Network = angular.copy(response.data);
 					console.log($scope.Network);
-			}).finally(function(){
-				console.log("finally");
-				// // loading.removeClass('in');
-				// angular.element(".modal-backdrop").remove();
-				// loading.hide();
 			});
 			//get vlan Information
 			$http.get('/api/Netdata/vlan')
@@ -35,19 +31,36 @@ nss.controller("myController", function($scope, $http,$location,$routeParams,$ro
 				}, function errorCallback(res){
 					console.log(res.data);
 				});
-	};
 
-  $scope.SaveNetwork = function(){
-    console.log("save fired");
-    console.log($scope.Network);
-     $http.put('/api/Netdata/update/'+$scope.id,$scope.Network)
-      .then(function successCallback(response){
-         console.log(response);
-      },function errorCallback(response){
-          console.log(response);
-      });
+			$http.get('/api/Netdata/category')
+				.then(function successCallback(res){
+					$scope.cates = angular.copy(res.data);
+					console.log($scope.cates);
+				}, function errorCallback(res){
+					console.log(res.data);
+				});
 
-  };
+				$scope.newUpdate.Update_date = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+			};
+
+		  $scope.SaveNetwork = function(){
+		    console.log("save fired");
+		    console.log($scope.Network);
+				$scope.newUpdate.Update_date = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+				$scope.newUpdate.net_id = $scope.id;
+				$scope.Network.Update_history = $scope.newUpdate;
+				delete $scope.Network.network_info.Category;
+				console.log($scope.Network);
+		     $http.put('/api/Netdata/update/'+$scope.id,$scope.Network)
+		      .then(function successCallback(response){
+		         console.log(response);
+						 if(response.status === 200){
+							  $window.location.reload();
+						 }
+		      },function errorCallback(response){
+		          console.log(response);
+		      });
+				};
   //End Device function add, update, Delete
   // status of object add = 1 ;update = 0; Delete = -1;
   $scope.selectItem = function(SelectedItem){
@@ -157,8 +170,18 @@ nss.controller("myController", function($scope, $http,$location,$routeParams,$ro
     $scope.Network.VlanNetwork[$scope.CurrentIndex].Status = -1;
   };
 
-	$scope.showtest = function(){
-		$scope.show = !$scope.show;
-		console.log($scope.show);
-	}
+	$scope.selectNetwork = function(){
+		$scope.selectedItem = angular.copy($scope.Network.network_info);
+		$scope.selectedCate = $scope.selectedItem.Category_id;
+	};
+
+	$scope.NetChange = function(cate){
+		 	console.log(cate);
+			$scope.selectedItem.Category_id = cate;
+	};
+
+	$scope.editNetwork = function(){
+		$scope.Network.network_info = angular.copy($scope.selectedItem);
+		console.log($scope.Network.network_info)
+	};
 });

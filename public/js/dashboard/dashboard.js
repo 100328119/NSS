@@ -72,6 +72,7 @@ nss.controller("dashController", function($scope,$http,$window,NgTableParams){
 
     // vlan function
     $scope.addCate = function(){
+      console.log("add new cate");
        $http.post('/api/Netdata/NewCategory',$scope.newCate)
         .then(function successCallback(res){
            $scope.Cates = res.data;

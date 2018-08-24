@@ -12,6 +12,7 @@ create table users
 (
   id int not null auto_increment primary key,
   email varchar(50) not null,
+  username varchar(50) not null
   admin_id int not null,
   password text not null,
   FOREIGN KEY (admin_id)
@@ -119,7 +120,7 @@ create table Update_history
   id int  not null auto_increment primary key,
   net_id int not null,
   user_id int not null,
-  Update_date date not null,
+  Update_date datetime not null,
   Description varchar(250),
   FOREIGN KEY (net_id)
      REFERENCES network(id),

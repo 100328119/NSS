@@ -12,7 +12,7 @@ fieldset li {
   justify-content: space-between;
   background: yellow;
   margin-bottom: 15px;
-  padding: 0 15px; 
+  padding: 0 15px;
 }
 
 .removeBtn {
@@ -23,18 +23,20 @@ fieldset li {
   padding: 5px;
 }
 
-#uploadBtn {
+/* #uploadBtn {
   display: flex;
   justify-content: center;
   margin: 10px auto;
-}
+} */
 
 #dropbox {
-  width: 600px;
-  background: yellowgreen;
+  width: auto;
+  background: white;
   text-align: center;
   margin: 20px auto;
   padding: 50px 0;
+  border: 1px double #aaaaaa;
+  border-radius: 12px;
 }
 
 #lblDrop {

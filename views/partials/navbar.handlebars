@@ -69,8 +69,8 @@
         </a>
       </li>
     </ul>
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item dropdown">
+     <ul class="navbar-nav ml-auto">
+      <!--<li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-fw fa-envelope"></i>
           <span class="d-lg-none">Messages
@@ -145,12 +145,19 @@
           </a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item small" href="#">View all alerts</a>
-        </div>
+        </div> -->
       </li>
       {{#if isAuthenticated}}
       <li class="nav-item">
-        <a class="nav-link" href="/secure/logout">
-          <i class="fa fa-sign-out"></i> Logout</a>
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary bg-dark dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{useremail}}</button>
+          <div class="dropdown-menu  bg-secondary  dropdown-menu-right">
+            <a class="dropdown-item bg-secondary  text-white fa fa-user-o"  href="/management">User Managemnet</a>
+            <a class="dropdown-item bg-secondary  text-white fa fa-sign-out"  href="/secure/logout"> Logout</a>
+          </div>
+        </div>
+        <!-- <a class="nav-link" href="/secure/logout">
+          <i class="fa fa-sign-out"></i> Logout</a> -->
       </li>
       {{else}}
       <li class="nav-item">

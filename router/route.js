@@ -4,11 +4,10 @@ const router = express.Router();
 var multer = require('multer');
 var upload = multer({ dest: 'uploads/' });
 var fs = require('fs');
-
+const db = require('../model/db');
 //page redirection
-router.get('/dashboard', function (req, res, next) {
-  // render dashborad page
-  res.render('dashboard');
+router.get('/dashboard', function (req, response, next) {
+      response.render('dashboard');
 });
 
 router.get('/login', function (req, res, nex) {
@@ -18,6 +17,10 @@ router.get('/login', function (req, res, nex) {
 router.get('/register', function (req, res, nex) {
   res.render('register', { layout: false });
 });
+
+router.get('/management', function(req, res, nex){
+  res.render('management');
+})
 
 router.get('/network/:id', function (req, res, nex) {
   //render newtork network info page
@@ -62,6 +65,6 @@ router.get('/tool', function (req, res, nex) {
 router.get('/support', function (req, res, nex) {
   // render support page
   res.render('support');
-})
+});
 
 module.exports = router;

@@ -9,6 +9,7 @@ const MySQLStore = require('express-mysql-session')(session);
 const app = express();
 const options = require('./config/dbconfig.json');
 const bcrypt = require('bcrypt');
+const db = require('./model/db');
 //handlebars front end framework
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -33,9 +34,23 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 //page redirection
-app.use(function(req,res,nex){
-   res.locals.isAuthenticated = req.isAuthenticated();
-   nex();
+app.use(function(req,response,nex){
+   if(req.isAuthenticated()){
+     response.locals.isAuthenticated = req.isAuthenticated();
+     console.log(req.user.user_id);
+     db.get_connection(qb=>{
+       qb.select("email").where({id:req.user.user_id}).get('`users',(err,res)=>{
+         qb.release();
+         if(err) return console.error(err);
+         response.locals.useremail = res[0].email;
+         console.log(response.locals.useremail);
+          nex();
+       })
+     })
+  }else{
+    response.locals.isAuthenticated = req.isAuthenticated();
+    nex();
+  }
 })
 
 //restful api
@@ -51,7 +66,6 @@ passport.use('local', new LocalStrategy({
    session: false
  },
 function(username, password, done) {
-     const db = require('./model/db');
      db.get_connection(qb=>{
        qb.select("*").where({'email':username}).get('users',(err,res)=>{
          qb.release();

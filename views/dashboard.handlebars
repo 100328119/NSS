@@ -61,7 +61,9 @@
     <div class="card mb-3">
       <div class="card-header">
         <i class="fa fa-table"></i> VLAN
+        {{#if isAuthenticated}}
         <button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#addVlanModal"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
+        {{/if}}
       </div>
       <div class="card-body">
         <div class="table-responsive" >
@@ -98,7 +100,9 @@
     <div class="card mb-3">
       <div class="card-header">
         <i class="fa fa-table"></i> Category
+        {{#if isAuthenticated}}
         <button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#newCateModal"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
+        {{/if}}
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -176,7 +180,7 @@
           </div>
         </div>
     </div>
-</div>
+
 <div id="addVlanModal" class="modal fade" role="dialog">
   <div class="modal-dialog modal-sms">
     <!-- Modal content-->
@@ -215,7 +219,7 @@
                   </div>
                 </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="addCate()">Save</button>
+                  <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="addCate()">Save</button>
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               </div>
           </div>

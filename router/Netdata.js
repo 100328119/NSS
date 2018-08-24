@@ -33,7 +33,11 @@ api.get('/Site/:id', function(req,response,nex){
   let Network = {};
   console.log(Net_id);
   db.get_connection(qb=>{
-    qb.select('*').where({'id':Net_id}).get('network',(err,res)=>{
+    // qb.select('*').where({'id':Net_id}).get('network',(err,res)=>{
+    //   if(err) return console.error(err);
+    //   Network.network_info =  res[0];
+    // });
+    qb.select(['n.*',"c.Category"]).from('network n').where({'n.id':Net_id}).join('Category c','c.id=n.Category_id ','left').get((err,res)=>{
       if(err) return console.error(err);
       Network.network_info =  res[0];
     });
@@ -53,10 +57,11 @@ api.get('/Site/:id', function(req,response,nex){
       if(err) return console.error(err);
       Network.WANs =  res;
     });
-    qb.select('*').where({'net_id':Net_id}).get('Update_history',(err,res)=>{
+    qb.select('*').where({'net_id':Net_id}).order_by('Update_date', 'desc').get('Update_history',(err,res)=>{
       qb.release();
       if(err) return console.error(err);
-      Network.Update_history =  res[0];
+      Network.Update_history = res;
+      console.log(Network.Update_history);
       return response.send(Network);
     });
   });
@@ -212,6 +217,7 @@ api.post('/new', function(req,response,nex){
   console.log(req.body);
   if(req.isAuthenticated()){
     network_info.user_id = req.user.user_id;
+    req.body.update_info = req.user.user_id;
     // console.log(network_info);
   db.get_connection(qb => {
     qb.insert("network", network_info, (err, res)=>{
@@ -251,11 +257,11 @@ api.post('/new', function(req,response,nex){
          if(err) return console.error(err);
          console.log("VlanNetwork ok");
        });
-       // qb.insert('update_history',req.body.update_info,(err, res)=>{
-       //   db.release();
-       //   if(err) return console.error(err);
-       //   console.log("update_history ok");
-       // })
+       qb.insert('update_history',req.body.update_info,(err, res)=>{
+         db.release();
+         if(err) return console.error(err);
+         console.log("update_history ok");
+       })
        return response.sendStatus(200);
     })
   });
@@ -547,6 +553,7 @@ api.put('/update/:id',function(req,response,nex){
       });
     };
     if(req.body.Update_history != undefined ){
+      req.body.Update_history.user_id = req.user.user_id;
       qb.insert('update_history',req.body.Update_history,(err, res)=>{
           qb.release();
           if(err) return console.error(err);

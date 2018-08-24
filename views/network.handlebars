@@ -7,19 +7,25 @@
 	<li class="breadcrumb-item active">{[{Network.network_info.N_Name}]}</li>
 </ol>
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-			<h2 class="h2">{[{Network.network_info.N_Number}]} - {[{Network.network_info.N_Name}]}</h2>
+			<h2 class="h2">#{[{Network.network_info.N_Number}]} - {[{Network.network_info.N_Name}]}   {[{Network.network_info.Category}]}</h2>
+			{{#if isAuthenticated}}
 			<div class="btn-toolbar mb-2 mb-md-0">
 				<div class="btn-group mr-2">
-					<button class="btn btn-sm btn-outline-secondary" ng-click="SaveNetwork()">Save</button>
+					<button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#SaveNetwork" >Save</button>
 					<button class="btn btn-sm btn-outline-secondary" ng-click="showtest()">Export</button>
 				</div>
 			</div>
+			{{/if}}
 		</div>
 		<hr>
+	<div class = "row">
+		<div class = "col-lg-8">
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fa fa-table"></i> End Device
+			{{#if isAuthenticated}}
 			<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewEndDevice"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
+			{{/if}}
 			</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -36,7 +42,9 @@
 							<th>Make</th>
 							<th>Model</th>
 							<th>Connected Device</th>
+							{{#if isAuthenticated}}
 							<th>Action</th>
+							{{/if}}
 						</tr>
 					</thead>
 					<tbody>
@@ -51,21 +59,64 @@
 								<td>{[{End_Device.Make}]}</td>
 								<td>{[{End_Device.Model}]}</td>
 								<td>{[{End_Device.NetDevice}]}</td>
+								{{#if isAuthenticated}}
 								<td>
 									<button class="btn btn-default btn-sm"  type="button" ng-click="selectItem(End_Device)" data-toggle="modal" data-target="#EditEndDevice" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
 								<button class="btn btn-danger btn-sm" type="button" ng-click="selectItem(End_Device)" data-toggle="modal" data-target="#myModalDelete" ><i class="fa fa-trash" aria-hidden="true"></i></button>
 							</td>
+							{{/if}}
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
-		<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+		<div class="card-footer small text-muted">Updated at {[{Network.Update_history[0].Update_date}]}</div>
 	</div>
+</div>
+<div class = "col-lg-4">
+		<div class=" card mb-3">
+		<div class="card-header">
+			<i class="fa fa-table"></i> Network Information
+			{{#if isAuthenticated}}
+			<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#editNetwork" ng-click = "selectNetwork()"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
+			{{/if}}
+			</div>
+			<div class="card-body">
+				<table class="table">
+				    <tbody>
+							<tr>
+							<th>Address</th>
+								<td>{[{Network.network_info.address}]}</td>
+						</tr>
+						<tr>
+							<th>Postal Code</th>
+								<td>{[{Network.network_info.Postal_Code}]}</td>
+						</tr>
+						<tr>
+							<th>Phone</th>
+								<td>{[{Network.network_info.Phone}]}</td>
+						</tr>
+						<tr>
+							<th>Fax</th>
+								<td>{[{Network.network_info.Fax}]}</td>
+						</tr>
+						<tr>
+							<th>Circuit_ID</th>
+								<td>{[{Network.network_info.Circuit_ID}]}</td>
+						</tr>
+						</tbody>
+					</table>
+	</div>
+	<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+	</div>
+</div>
+</div>
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fa fa-table"></i> WAN
+			{{#if isAuthenticated}}
 			<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewWAN"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
+			{{/if}}
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -83,7 +134,9 @@
 							<th>LOC ID</th>
 							<th>ASSET TAG</th>
 							<th>CSID</th>
+							{{#if isAuthenticated}}
 							<th>Action</th>
+							{{/if}}
 						</tr>
 					</thead>
 					<tbody>
@@ -99,11 +152,13 @@
 							<td>{[{WAN.LOC_ID}]}</td>
 							<td>{[{WAN.ASSET_TAG}]}</td>
 							<td>{[{WAN.CSID}]}</td>
+							{{#if isAuthenticated}}
 							<td>
 								 <button class="btn btn-default btn-sm"  type="button" ng-click="selectWAN(WAN)" data-toggle="modal" data-target="#EditWAN" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
 									<button class="btn btn-danger btn-sm" type="button" ng-click="selectWAN(WAN)" data-toggle="modal" data-target="#DeleteWAN" ><i class="fa fa-trash" aria-hidden="true"></i></button>
 								 </td>
 						</tr>
+						{{/if}}
 					</tbody>
 				</table>
 			</div>
@@ -115,7 +170,9 @@
 			<div class="card mb-3">
 				<div class="card-header">
 					<i class="fa fa-table"></i> Router/Switch
+					{{#if isAuthenticated}}
 					<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewNetDevice"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
+					{{/if}}
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -128,7 +185,9 @@
 									<th>Make</th>
 									<th>Model</th>
 									<th>Serial Number</th>
+									{{#if isAuthenticated}}
 									<th>Action</th>
+									{{/if}}
 								</tr>
 							</thead>
 							<tbody>
@@ -139,10 +198,12 @@
 									<td>{[{Net_Device.Make}]}</td>
 									<td>{[{Net_Device.Model}]}</td>
 									<td>{[{Net_Device.Serial_Number}]}</td>
+									{{#if isAuthenticated}}
 									<td>
 										  <button class="btn btn-default btn-sm"  type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#EditNetDevice" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
 											<button class="btn btn-danger btn-sm" type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#DeleteNetDevice" ><i class="fa fa-trash" aria-hidden="true"></i></button>
 									</td>
+									{{/if}}
 								</tr>
 							</tbody>
 						</table>
@@ -155,7 +216,9 @@
 			<div class="card mb-3">
 				<div class="card-header">
 					<i class="fa fa-table"></i> VLANS
+					{{#if isAuthenticated}}
 					<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewVLAN"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
+					{{/if}}
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -166,7 +229,9 @@
 									<th>description</th>
 									<th>Gateway</th>
 									<th>Subnet</th>
+									{{#if isAuthenticated}}
 									<th>Action</th>
+									{{/if}}
 								</tr>
 							</thead>
 							<tbody>
@@ -175,10 +240,12 @@
 									<td>{[{vlans[vlan.vlan_id-1].Description}]}</td>
 									<td>{[{vlan.Gateway}]}</td>
 									<td>{[{vlan.Submusk}]}</td>
+									{{#if isAuthenticated}}
 									<td>
 										<button class="btn btn-default btn-sm"  type="button" ng-click="selectedVLAN(vlan)" data-toggle="modal" data-target="#editVlan" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
 										<button class="btn btn-danger btn-sm" type="button" ng-click="selectedVLAN(vlan)" data-toggle="modal" data-target="#deleteVlan" ><i class="fa fa-trash" aria-hidden="true"></i></button>
 									 </td>
+									 {{/if}}
 								</tr>
 							</tbody>
 						</table>
@@ -719,7 +786,6 @@
 												<label for="inputEmail3"><strong>VLAN</strong></label>
 												<!-- <input type="text" class="form-control" id="inputEmail3" placeholder="IP Address" ng-model="vlans[selectedItem.vlan_id-1].vlan_number"> -->
 												<select class="form-control"  ng-model="selectedVlan_number" ng-options="vlan.id as vlan.vlan_number for vlan in vlans" ng-change="VlanChange(selectedVlan_number)" ></select>
-
 											</div>
 											<div class="col-md-3">
 												<label for="DeviceName"><strong>Description</strong></label>
@@ -764,6 +830,92 @@
 			</div>
 		</div>
 
+		<div id="editNetwork" class="modal fade" role="dialog">
+			<div class="modal-dialog modal-lg">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Edit Network</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+										<div class="container col-md-12">
+											<div class="row" >
+												<div class="col-md-4">
+													<label for="DeviceName"><strong>Network</strong></label>
+													<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="selectedItem.N_Name">
+												</div>
+												<div class="col-md-4">
+													<label for="DeviceName"><strong>Network Number</strong></label>
+													<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="selectedItem.N_Number">
+												</div>
+												<div class="col-md-4">
+													<label for="inputEmail3"><strong>Category</strong></label>
+													<!-- <input type="text" class="form-control" id="inputEmail3" placeholder="IP Address" ng-model="vlans[selectedItem.vlan_id-1].vlan_number"> -->
+													<select class="form-control"  ng-model="selectedCate" ng-options="cate.id as cate.Category for cate in cates"  ng-change="NetChange(selectedCate)"></select>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<label for="DeviceName"><strong>Post Code</strong></label>
+													<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="selectedItem.Postal_Code">
+												</div>
+												<div class="col-md-4">
+												<label for="inputEmail3" ><strong>Phone</strong></label>
+												<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="selectedItem.Phone">
+											</div>
+											<div class="col-md-4">
+													<label for="inputEmail3" class="control-label"><strong>Fax</strong></label>
+													<input type="text" class="form-control" id="inputEmail3" placeholder="Port" ng-model="selectedItem.Fax">
+												</div>
+											</div>
+										<div class="row">
+											<div class="col-md-9">
+												<label for="DeviceName"><strong>Address</strong></label>
+												<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="selectedItem.address">
+											</div>
+											<div class="col-md-3">
+												<label for="inputEmail3" ><strong>Circuit ID</strong></label>
+												<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="selectedItem.Circuit_ID">
+											</div>
+										</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="editNetwork()">Save</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" id="SaveNetwork" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <form>
+				          <div class="form-group">
+				            <label for="recipient-name" class="col-form-label">Update Date:</label>
+				            <input type="text" class="form-control" id="recipient-name" ng-model="newUpdate.Update_date" required isabled>
+				          </div>
+				          <div class="form-group">
+				            <label for="message-text" class="col-form-label">Message:</label>
+				            <textarea class="form-control" id="message-text" ng-model="newUpdate.Description"></textarea>
+				          </div>
+				        </form>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary" ng-click="SaveNetwork()" >Save Network</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 		<div id="loading" class="modal fade" >
 				<span class="fa fa-spinner fa-spin fa-3x" style=" line-height: 50px; vertical-align: middle;"></span>
 	 </div>

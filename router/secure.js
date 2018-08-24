@@ -9,7 +9,6 @@ secure.post('/register',function(req,response,nex){
     let newUser = {};
     newUser.email = req.body.email;
     newUser.admin_id = req.body.admin_id;
-
       bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
         newUser.password = hash;
         db.get_connection(qb=>{
@@ -38,7 +37,7 @@ secure.post('/login',function(req, res, next) {
 secure.get('/logout',function(req,res,next){
     req.logout();
     req.session.destroy();
-    res.redirect('/login');
+    res.redirect('/dashboard');
 })
 passport.serializeUser(function(user_id, done) {
   done(null, user_id);
