@@ -12,7 +12,7 @@ create table users
 (
   id int not null auto_increment primary key,
   email varchar(50) not null,
-  username varchar(50) not null
+  username varchar(50),
   admin_id int not null,
   password text not null,
   FOREIGN KEY (admin_id)
@@ -128,54 +128,62 @@ create table Update_history
      REFERENCES users(id)
 ) ENGINE=INNODB;
 
+create table Report
+(
+    id int not null auto_increment primary key,
+    user_id int not null,
+    ReportName varchar(250),
+    ReportDate date,
+    ReportPath varchar(300)
+)
 //admin table
 INSERT INTO `admin`(`type`) VALUES ('admin');
 INSERT INTO `admin`(`type`) VALUES ('super_admin');
 
 
 //Category table
-INSERT INTO `category`(`Category`) VALUES ('Class A signature');
-INSERT INTO `category`(`Category`) VALUES ('Class A');
-INSERT INTO `category`(`Category`) VALUES ('Class B');
-INSERT INTO `category`(`Category`) VALUES ('Class C');
-INSERT INTO `category`(`Category`) VALUES ('Unassigned');
-INSERT INTO `category`(`Category`) VALUES ('Office');
-INSERT INTO `category`(`Category`) VALUES ('Test Lab');
-INSERT INTO `category`(`Category`) VALUES ('Wine Festival');
-INSERT INTO `category`(`Category`) VALUES ('Closed');
+INSERT INTO `Category`(`Category`) VALUES ('Class A signature');
+INSERT INTO `Category`(`Category`) VALUES ('Class A');
+INSERT INTO `Category`(`Category`) VALUES ('Class B');
+INSERT INTO `Category`(`Category`) VALUES ('Class C');
+INSERT INTO `Category`(`Category`) VALUES ('Unassigned');
+INSERT INTO `Category`(`Category`) VALUES ('Office');
+INSERT INTO `Category`(`Category`) VALUES ('Test Lab');
+INSERT INTO `Category`(`Category`) VALUES ('Wine Festival');
+INSERT INTO `Category`(`Category`) VALUES ('Closed');
 
 //Vlan table
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('20','Retail Store');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('40','Retail Test Store');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('50','Area Manager');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('110','HVAC/Fridge');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('150','Management Vlan');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('410','External Tablet');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('420','External Workstation');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('430','Public WiFi');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('500','Retail Test Store');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('501','Retail Test Store');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('502','Retail Test Store');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('503','Retail Test Store');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('506','Retail Test Store');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('530','MFD');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('550','Pinpad');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('551','Pinpad Bordeaux');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('552','Pinpad Test Store');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('553','Pinpad Test Store');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('552','Pinpad Test Store');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('620','DVR');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('621','DVR Test');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('630','Alarm Panel');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('640','Wholesale Customer Centre');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('670','Loss Prevention');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('710','Internet Only');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('721','Wireless Sw Test');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('730','Wireless Mgmt and WIPS');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('731','Wireless Sw Test');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('740','Wireless Mobile Unit');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('750','WIPS');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('751','WIPS Test');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('888','Management');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('889','Management Test');
-INSERT INTO `vlan`(`vlan_number`, `Description`) VALUES ('WLAN','Wireless mobile units');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('20','Retail Store');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('40','Retail Test Store');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('50','Area Manager');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('110','HVAC/Fridge');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('150','Management Vlan');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('410','External Tablet');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('420','External Workstation');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('430','Public WiFi');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('500','Retail Test Store');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('501','Retail Test Store');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('502','Retail Test Store');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('503','Retail Test Store');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('506','Retail Test Store');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('530','MFD');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('550','Pinpad');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('551','Pinpad Bordeaux');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('552','Pinpad Test Store');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('553','Pinpad Test Store');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('552','Pinpad Test Store');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('620','DVR');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('621','DVR Test');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('630','Alarm Panel');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('640','Wholesale Customer Centre');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('670','Loss Prevention');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('710','Internet Only');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('721','Wireless Sw Test');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('730','Wireless Mgmt and WIPS');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('731','Wireless Sw Test');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('740','Wireless Mobile Unit');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('750','WIPS');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('751','WIPS Test');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('888','Management');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('889','Management Test');
+INSERT INTO `Vlan`(`vlan_number`, `Description`) VALUES ('WLAN','Wireless mobile units');

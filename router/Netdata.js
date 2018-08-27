@@ -1,10 +1,12 @@
 const express = require('express');
-const api = express.Router();
+const Netdata = express.Router();
 const network = require('../model/network');
 const db = require('../model/db');
-//Restful api
+
+
+//Restful Netdata
 // newtork data minipuplate
-api.get('/all',function(req,response,nex){
+Netdata.get('/all',function(req,response,nex){
   //get all newtork information
    db.get_connection(qb=>{
      qb.select("*").get("network",(err,res)=>{
@@ -16,7 +18,7 @@ api.get('/all',function(req,response,nex){
   });
 });
 
-api.get('/networkinfor', function(req, response, nex){
+Netdata.get('/networkinfor', function(req, response, nex){
    db.get_connection(qb=>{
       qb.select(['n.id','n.N_Name','n.N_Number','n.address','n.Postal_Code','n.Phone','n.Fax','n.Circuit_ID','c.Category']).from('network n').join('Category c','c.id=n.Category_id ','left').get((err,res)=>{
           qb.release();
@@ -27,16 +29,12 @@ api.get('/networkinfor', function(req, response, nex){
    })
 });
 
-api.get('/Site/:id', function(req,response,nex){
+Netdata.get('/Site/:id', function(req,response,nex){
   //get specific newtork data
   let Net_id = req.params.id;
   let Network = {};
   console.log(Net_id);
   db.get_connection(qb=>{
-    // qb.select('*').where({'id':Net_id}).get('network',(err,res)=>{
-    //   if(err) return console.error(err);
-    //   Network.network_info =  res[0];
-    // });
     qb.select(['n.*',"c.Category"]).from('network n').where({'n.id':Net_id}).join('Category c','c.id=n.Category_id ','left').get((err,res)=>{
       if(err) return console.error(err);
       Network.network_info =  res[0];
@@ -67,7 +65,7 @@ api.get('/Site/:id', function(req,response,nex){
   });
 });
 
-api.post('/new', function(req,response,nex){
+Netdata.post('/new', function(req,response,nex){
   // add data
   let network_example = {
     "network_info":{
@@ -217,7 +215,7 @@ api.post('/new', function(req,response,nex){
   console.log(req.body);
   if(req.isAuthenticated()){
     network_info.user_id = req.user.user_id;
-    req.body.update_info = req.user.user_id;
+    // req.body.update_info.user_id = req.user.user_id;
     // console.log(network_info);
   db.get_connection(qb => {
     qb.insert("network", network_info, (err, res)=>{
@@ -239,36 +237,41 @@ api.post('/new', function(req,response,nex){
        };
        // req.body.update_info.net_id = newId;
        console.log(Net_Devices);
+       if (!(Net_Devices === undefined || Net_Devices == 0)) {
        qb.insert_batch("Net_device",Net_Devices, (err, res)=>{
           if(err) return console.error(err);
           console.log("Netword Device ok");
-       });
+       })};
        console.log(End_Devices);
+       if (!(End_Devices === undefined || End_Devices == 0)) {
        qb.insert_batch("End_Device",End_Devices, (err, res)=>{
           if(err) return console.error(err);
           console.log("End_Device ok ");
-       });
+       })};
+       if (!(WANs === undefined || WANs == 0)) {
        qb.insert_batch("WAN",WANs,(err, res)=>{
          if(err) return console.error(err);
          console.log("WAN ok");
-       });
+       })};
+       if (!(VLANs === undefined || VLANs == 0)) {
        qb.insert_batch("VlanNetwork",VLANs,(err, res)=>{
          qb.release();
          if(err) return console.error(err);
          console.log("VlanNetwork ok");
-       });
-       qb.insert('update_history',req.body.update_info,(err, res)=>{
-         db.release();
-         if(err) return console.error(err);
-         console.log("update_history ok");
-       })
-       return response.sendStatus(200);
+       })};
+       // qb.insert('update_history',req.body.update_info,(err, res)=>{
+       //   db.release();
+       //   if(err) return console.error(err);
+       //   console.log("update_history ok");
+       // })
+       console.log(res);
+       return response.send(res);
     })
   });
   }
 });
 
-api.put('/update/:id',function(req,response,nex){
+Netdata.put('/update/:id',function(req,response,nex){
   //update
   const temp ={
     "network_info": {
@@ -566,13 +569,13 @@ api.put('/update/:id',function(req,response,nex){
   });
 });
 
-api.delete('/delete/:id', function(req,response,nex){
+Netdata.delete('/delete/:id', function(req,response,nex){
   //remove
 
 });
 
 //category relate feature.
-api.get('/category',(req,response,nex)=>{
+Netdata.get('/category',(req,response,nex)=>{
    db.get_connection(qb=>{
      qb.select('*').get('Category',(err,res)=>{
        qb.release();
@@ -582,7 +585,7 @@ api.get('/category',(req,response,nex)=>{
      })
    })
 });
-api.get('/NetCategoryGroup', (res, response, nex)=>{
+Netdata.get('/NetCategoryGroup', (res, response, nex)=>{
   db.get_connection(qb=>{
     qb.select(["c.Category as label",'count(n.id) as value']).from('network n').join('Category c','c.id=n.Category_id ','left').group_by('Category_id').get((err,res)=>{
       qb.release();
@@ -591,7 +594,7 @@ api.get('/NetCategoryGroup', (res, response, nex)=>{
     });
   })
 });
-api.put('/UpdateCate',(req,response,nex)=>{
+Netdata.put('/UpdateCate',(req,response,nex)=>{
   db.get_connection(qb=>{
     qb.update('category',req.body,{id:req.body.id},(err, res)=>{
       if(err){
@@ -609,7 +612,7 @@ api.put('/UpdateCate',(req,response,nex)=>{
     });
   });
 })
-api.post('/NewCategory', (req,response, nex)=>{
+Netdata.post('/NewCategory', (req,response, nex)=>{
   db.get_connection(qb=>{
     qb.insert('Category',req.body,(err,res)=>{
       if(err){
@@ -628,8 +631,8 @@ api.post('/NewCategory', (req,response, nex)=>{
   })
 })
 
-// vlan relate api
-api.get('/vlan', (res, response, nex)=>{
+// vlan relate Netdata
+Netdata.get('/vlan', (res, response, nex)=>{
    db.get_connection(qb=>{
      qb.select('*').get('vlan',(err,res)=>{
        qb.release();
@@ -638,7 +641,7 @@ api.get('/vlan', (res, response, nex)=>{
      })
    })
 });
-api.put('/UpdataVlan', (req, response, nex)=>{
+Netdata.put('/UpdataVlan', (req, response, nex)=>{
   db.get_connection(qb=>{
     qb.update('vlan',req.body,{id:req.body.id},(err, res)=>{
        if(err) return console.error(err);
@@ -651,7 +654,7 @@ api.put('/UpdataVlan', (req, response, nex)=>{
 });
 
 //
-api.get('/template/:Temp',(req,res,nex)=>{
+Netdata.get('/template/:Temp',(req,res,nex)=>{
    let Template = {
      'End_Device':[
        {
@@ -780,4 +783,4 @@ api.get('/template/:Temp',(req,res,nex)=>{
 });
 
 
-module.exports = api;
+module.exports = Netdata;

@@ -1,11 +1,13 @@
 //import infrastructure package
 const express = require('express');
 const router = express.Router();
-var multer = require('multer');
-var upload = multer({ dest: 'uploads/' });
-var fs = require('fs');
 const db = require('../model/db');
+
 //page redirection
+router.get('/', function (req, response, next) {
+      response.render('dashboard');
+});
+
 router.get('/dashboard', function (req, response, next) {
       response.render('dashboard');
 });
@@ -32,29 +34,27 @@ router.get('/network/Create/New', function (req, res, nex) {
   res.render('newNetwork');
 });
 
-router.get('/report/:id', function (req, res, next) {
+router.get('/report/:id', function (req, response, next) {
   //render Operation report page
-  res.render('report');
+  db.get_connection(qb=>{
+    qb.select("ReportPath").where({id:req.params.id}).get('report',(err,res)=>{
+       if(err) return response.sendStatus(400);
+      response.render('ReportView',{path:res[0].ReportPath});
+    })
+  })
 });
+
+router.get('/ReportTable', function(req, response, nex){
+  response.render('ReportTable');
+})
 
 router.get('/newreport', function (req, res, nex) {
   //render create new report page
   res.render('newreport');
 });
 
-router.post('/newreport', upload.array('pdfs'), function (req, res, next) {
-  const files = req.files;
-
-  for (let i = 0, len = files.length; i < len; i++) {
-    let oldpath = files[i].path;
-    let newpath = files[i].destination + files[i].originalname;
-
-    fs.rename(oldpath, newpath, function (err) {
-      if (err) return err;
-    });
-  }
-
-  res.json(req.files);
+router.get('/ReportView', function(req, response, nex){
+  response.render('ReportView');
 });
 
 router.get('/tool', function (req, res, nex) {

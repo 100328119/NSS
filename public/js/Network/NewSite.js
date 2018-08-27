@@ -59,6 +59,7 @@ nss.controller("NewSiteController",($scope,$http,$window)=>{
     $http.post('/api/Netdata/new', $scope.NewSite)
       .then( function successCallback(response){
           console.log(response);
+          $window.location.href = '/Network/'+response.data.insertId;
       }, function errorCallback(response){
           console.log(response);
       });

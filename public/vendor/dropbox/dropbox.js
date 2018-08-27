@@ -194,11 +194,10 @@ window.addEventListener('drop', preventDrop, false);
 
 submit.addEventListener('click', (ev) => {
   ev.preventDefault();
-
   sendFiles('/api/reportdata/new', allFilesList);
 }, false);
 
-function sendFiles(url = ``, data) {
+function sendFiles(url, data) {
   let len = data.length;
   if (len > 0) {
     var formData = new FormData();
@@ -208,13 +207,14 @@ function sendFiles(url = ``, data) {
     }
 
     fetch(url, {
-      method: 'POST',
-      body: formData
-    })
-      .then(response => {
-        return response.json()
+        method: 'POST',
+        credentials: "same-origin",
+        body: formData
       })
-      .then(response => console.log('Success:', response))
-      .catch(error => console.error('Error:', error));
+      .then(response => {
+        console.log(response);
+        window.location.href = "/ReportTable"
+      })
+      .catch(function(error) {console.error('Error:', error)});
   }
 }

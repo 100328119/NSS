@@ -3,7 +3,6 @@
 // });
 // "use strict";
 nss.controller("myController", function($scope, $http,$location,$routeParams,$route,$window,$filter){
-	console.log("in controller...");
 	// console.log($routeParams.id);
 	$scope.Network = {};
   $scope.NewEndevice = {};

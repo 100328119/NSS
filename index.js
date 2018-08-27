@@ -22,16 +22,14 @@ app.use(session({
   secret: 'fdsjkherw',
   resave: false,
   store: sessionStore,
-  saveUninitialized: false,
+  saveUninitialized: true,
   // cookie: { secure: true }
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 //get post body
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 //page redirection
 app.use(function(req,response,nex){
@@ -51,14 +49,8 @@ app.use(function(req,response,nex){
     response.locals.isAuthenticated = req.isAuthenticated();
     nex();
   }
-})
+});
 
-//restful api
-app.use('/', require('./router/route'));
-app.use('/api/Netdata', require('./router/Netdata'));
-app.use('/api/reportdata',require('./router/Report'));
-app.use('/api/tooldata',require('./router/Tool'));
-app.use('/secure', require('./router/secure'));
 
 passport.use('local', new LocalStrategy({
    usernameField: 'email',
@@ -84,7 +76,12 @@ function(username, password, done) {
      });
   }
 ));
-
+//restful api
+app.use('/', require('./router/route'));
+app.use('/api/reportdata',require('./router/Report'));
+app.use('/api/Netdata', require('./router/Netdata'));
+app.use('/api/tooldata',require('./router/Tool'));
+app.use('/secure', require('./router/secure'));
 //Set app listening port
 app.set('port', process.env.PORT || 4000);
 app.listen(app.get('port'), function(){
