@@ -16,7 +16,7 @@ api.get('/Netdata/all',function(req,response,nex){
   });
 });
 
-api.get('/Netdata/Sitee/:id', function(req,response,nex){
+api.get('/Netdata/Site/:id', function(req,response,nex){
   //get specific newtork data
   let Net_id = req.params.id;
   let Network = {};
