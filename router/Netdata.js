@@ -555,7 +555,7 @@ Netdata.put('/update/:id',function(req,response,nex){
         console.log("VlanNetwork ok");
       });
     };
-    if(req.body.Update_history != undefined ){
+    if(!(req.body.Update_history === undefined)){
       req.body.Update_history.user_id = req.user.user_id;
       qb.insert('update_history',req.body.Update_history,(err, res)=>{
           qb.release();
@@ -632,7 +632,7 @@ Netdata.post('/NewCategory', (req,response, nex)=>{
 })
 
 // vlan relate Netdata
-Netdata.get('/vlan', (res, response, nex)=>{
+Netdata.get('/Vlan', (res, response, nex)=>{
    db.get_connection(qb=>{
      qb.select('*').get('vlan',(err,res)=>{
        qb.release();
@@ -641,6 +641,26 @@ Netdata.get('/vlan', (res, response, nex)=>{
      })
    })
 });
+
+Netdata.post('/NewVlan', (req,response, nex)=>{
+  db.get_connection(qb=>{
+    qb.insert('vlan',req.body,(err,res)=>{
+      if(err){
+        console.log(err);
+        return response.sendStatus(400);
+      }
+      qb.select('*').get('vlan',(err, res)=>{
+         qb.release();
+         if(err) {
+           console.error(err);
+           return response.sendStatus(400);
+         }
+         return response.send(res);
+      })
+    })
+  })
+})
+
 Netdata.put('/UpdataVlan', (req, response, nex)=>{
   db.get_connection(qb=>{
     qb.update('vlan',req.body,{id:req.body.id},(err, res)=>{

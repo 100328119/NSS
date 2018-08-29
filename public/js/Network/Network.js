@@ -2,7 +2,7 @@
 //  $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 // });
 // "use strict";
-nss.controller("myController", function($scope, $http,$location,$routeParams,$route,$window,$filter){
+nss.controller("myController", function($scope, $http,$location,$window,$filter){
 	// console.log($routeParams.id);
 	$scope.Network = {};
   $scope.NewEndevice = {};
@@ -20,6 +20,12 @@ nss.controller("myController", function($scope, $http,$location,$routeParams,$ro
 			$http.get('/api/Netdata/Site/'+$scope.id)
 				.then(function(response){
 					$scope.Network = angular.copy(response.data);
+					angular.element(document).ready(function () {
+						angular.element('#EndDtable').DataTable();
+						angular.element('#WANTable').DataTable();
+						angular.element('#NDeviceTable').DataTable();
+						angular.element('#VLANTable').DataTable();
+						});
 					console.log($scope.Network);
 			});
 			//get vlan Information

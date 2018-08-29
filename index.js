@@ -8,7 +8,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const MySQLStore = require('express-mysql-session')(session);
 const app = express();
 const options = require('./config/dbconfig.json');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const db = require('./model/db');
 //handlebars front end framework
 app.engine('handlebars', handlebars.engine);
