@@ -1,6 +1,6 @@
 create database NSS;
 
-use NSS;
+use nss;
 
 create table admin
 (
@@ -12,7 +12,6 @@ create table users
 (
   id int not null auto_increment primary key,
   email varchar(50) not null,
-  username varchar(50),
   admin_id int not null,
   password text not null,
   FOREIGN KEY (admin_id)
