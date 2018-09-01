@@ -1,7 +1,8 @@
 const express = require('express');
 const secure = express.Router();
 const db = require('../model/db');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const saltRounds = 10;
 

@@ -1,5 +1,5 @@
 
-nss.controller("dashController", function($scope,$http,$window,NgTableParams){
+nss.controller("dashController", function($scope,$http,$window){
   console.log("dashController");
 
   $scope.vlantable = angular.element('#VlanTable');
@@ -21,7 +21,6 @@ nss.controller("dashController", function($scope,$http,$window,NgTableParams){
           angular.element('#VlanTable').DataTable();
 
         });
-        // $scope.VlanTable = new NgTableParams({}, { dataset: $scope.vlans});
       }, function errorCallback(res){
         console.log(res.data);
       });
@@ -54,12 +53,21 @@ nss.controller("dashController", function($scope,$http,$window,NgTableParams){
           data:CateData
           });
       };
-
+      // vlan function
       $scope.selectVlan = function(vlan){
         $scope.selectedItem = angular.copy(vlan);
         $scope.currentIndex = $scope.vlans.indexOf(vlan);
         console.log($scope.selectedItem);
       };
+
+      $scope.addVlan = function(){
+         $http.post('/api/Netdata/NewVlan',$scope.newVlan)
+          .then(function successCallback(res){
+             $scope.newVlan = res.data;
+          }, function errorCallback(res){
+            console.log(res);
+          });
+      }
 
       $scope.editVlan = function(){
           $http.put('/api/Netdata/UpdataVlan', $scope.selectedItem)
@@ -70,7 +78,11 @@ nss.controller("dashController", function($scope,$http,$window,NgTableParams){
             });
         };
 
-    // vlan function
+      //Category Function
+    $scope.selectCate = function(cate){
+        $scope.selectedItem = angular.copy(cate);
+    };
+
     $scope.addCate = function(){
       console.log("add new cate");
        $http.post('/api/Netdata/NewCategory',$scope.newCate)
@@ -80,10 +92,6 @@ nss.controller("dashController", function($scope,$http,$window,NgTableParams){
           console.log(res);
         });
     }
-
-    $scope.selectCate = function(cate){
-        $scope.selectedItem = angular.copy(cate);
-    };
 
     $scope.editCate = function(){
           $http.put('/api/Netdata/UpdateCate', $scope.selectedItem)
