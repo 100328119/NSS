@@ -38,11 +38,17 @@ app.use(function(req,response,nex){
      response.locals.isAuthenticated = req.isAuthenticated();
      console.log(req.user.user_id);
      db.get_connection(qb=>{
-       qb.select("email").where({id:req.user.user_id}).get('`users',(err,res)=>{
+       qb.select(["email","admin_id"]).where({id:req.user.user_id}).get('`users',(err,res)=>{
          qb.release();
          if(err) return console.error(err);
          response.locals.useremail = res[0].email;
-         console.log(response.locals.useremail);
+         if(res[0].admin_id == 2){
+            response.locals.super_admin = true;
+         }else{
+           response.locals.super_admin = false;
+         }
+         console.log(res[0].admin_id);
+         console.log(response.locals.super_admin);
           nex();
        })
      })
@@ -60,7 +66,7 @@ passport.use('local', new LocalStrategy({
  },
 function(username, password, done) {
      db.get_connection(qb=>{
-       qb.select("*").where({'email':username}).get('users',(err,res)=>{
+       qb.select("*").where({'email':username,'status':1}).get('users',(err,res)=>{
          qb.release();
          if(err) {done(err)};
          if(res.length === 0){

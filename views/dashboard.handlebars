@@ -86,7 +86,7 @@
                 {{#if isAuthenticated}}
                   <td>
                       <button class="btn btn-default btn-sm"  type="button" ng-click="selectVlan(vlan)" data-toggle="modal" data-target="#editVlan" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                      <button class="btn btn-danger btn-sm" type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#DeleteNetDevice" ><i class="fa fa-trash" aria-hidden="true"></i></button>
+                      <!-- <button class="btn btn-danger btn-sm" type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#DeleteNetDevice" ><i class="fa fa-trash" aria-hidden="true"></i></button> -->
                   </td>
                 {{/if}}
               </tr>
@@ -123,7 +123,7 @@
                 {{#if isAuthenticated}}
                 <td>
                     <button class="btn btn-default btn-sm"  type="button" ng-click="selectCate(cate)" data-toggle="modal" data-target="#editCate" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                    <button class="btn btn-danger btn-sm" type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#DeleteNetDevice" ><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    <!-- <button class="btn btn-danger btn-sm" type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#DeleteNetDevice" ><i class="fa fa-trash" aria-hidden="true"></i></button> -->
                 </td>
                 {{/if}}
               </tr>
@@ -166,17 +166,17 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-                <div class="container col-sm-12">
-                        <label for="vlan_number"><strong>Category ID</strong></label>
-                        <input type="text" class="form-control" id="vlan_number" placeholder="Vlan Number" ng-model="selectedItem.id" disabled>
-                      <label for="inputEmail3" ><strong>Description</strong></label>
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="Description" ng-model="selectedItem.Category">
-                  </div>
-                </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="editCate()">Save</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
+            <div class="container col-sm-12">
+                <label for="vlan_number"><strong>Category ID</strong></label>
+                <input type="text" class="form-control" id="vlan_number" placeholder="Vlan Number" ng-model="selectedItem.id" disabled>
+              <label for="inputEmail3" ><strong>Description</strong></label>
+              <input type="text" class="form-control" id="inputEmail3" placeholder="Description" ng-model="selectedItem.Category">
+          </div>
+      </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="editCate()">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
           </div>
         </div>
     </div>

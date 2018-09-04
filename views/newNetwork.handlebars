@@ -38,7 +38,7 @@
            </div>
            <div class="col-md-4">
              <label for="NetworkNumber">Network Number</label>
-             <input class="form-control" id="NetworkNumber" type="number" aria-describedby="nameHelp" placeholder="Enter Network Number" ng-model="network_info.N_number">
+             <input class="form-control" id="NetworkNumber" type="text" aria-describedby="nameHelp" placeholder="Enter Network Number" ng-model="network_info.N_number">
            </div>
            <div class="col-md-4">
              <label for="Category">Category</label>
@@ -60,7 +60,7 @@
            </div>
            <div class="col-md-4">
              <label for="FaxNumber">Fax Number</label>
-             <input class="form-control" id="FaxNumber" type="numbers" placeholder="Fax number" ng-model="network_info.Fax">
+             <input class="form-control" id="FaxNumber" type="number" placeholder="Fax number" ng-model="network_info.Fax">
            </div>
          </div>
        </div>
@@ -115,7 +115,7 @@
               <td><input type="text" class="form-control" placeholder="Model" ng-model="EndDevice.Model"></td>
               <td><input type="text" class="form-control" placeholder="Connected Device" ng-model="EndDevice.NetDevice"></td>
               <td>
-                <button class="btn btn-default btn-sm"  type="button" ng-click="CloneEndDevice(EndDevice)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                <button class="btn btn-default btn-sm"  type="button" ng-click="CloneEndDevice(EndDevice)"><i class="fa fa-clone" aria-hidden="true"></i></button>
                 <button class="btn btn-danger btn-sm" type="button" ng-click="RemoveEndDevice(EndDevice)"><i class="fa fa-trash" aria-hidden="true"></i></button>
               </td>
             </tr>
@@ -150,19 +150,19 @@
           </thead>
           <tbody>
             <tr ng-repeat="NewWAN in NewWANs">
-              <td><input type="text" class="form-control" placeholder="IP" ng-model="NewWAN.Provider"></td>
-              <td><input type="text" class="form-control" placeholder="Device" ng-model="NewWAN.WAN_Type"></td>
-              <td><input type="text" class="form-control" placeholder="VLAN" ng-model="NewWAN.Upload"></td>
-              <td><input type="text" class="form-control" placeholder="Port" ng-model="NewWAN.Download"></td>
-              <td><input type="text" class="form-control" placeholder="Active" ng-model="NewWAN.UploadShaping"></td>
-              <td><input type="text" class="form-control" placeholder="Description" ng-model="NewWAN.WAN_Network"></td>
-              <td><input type="text" class="form-control" placeholder="Type" ng-model="NewWAN.WAN_IP"></td>
-              <td><input type="text" class="form-control" placeholder="Make" ng-model="NewWAN.ADSL_OOB"></td>
-              <td><input type="text" class="form-control" placeholder="Model" ng-model="NewWAN.LOC_ID"></td>
-              <td><input type="text" class="form-control" placeholder="Connected Device" ng-model="NewWAN.ASSET_TAG"></td>
-              <td><input type="text" class="form-control" placeholder="Connected Device" ng-model="NewWAN.CSID"></td>
+              <td><input type="text" class="form-control" placeholder="Provider" ng-model="NewWAN.Provider"></td>
+              <td><input type="text" class="form-control" placeholder="WAN_Type" ng-model="NewWAN.WAN_Type"></td>
+              <td><input type="text" class="form-control" placeholder="Upload" ng-model="NewWAN.Upload"></td>
+              <td><input type="text" class="form-control" placeholder="Download" ng-model="NewWAN.Download"></td>
+              <td><input type="text" class="form-control" placeholder="UploadShaping" ng-model="NewWAN.UploadShaping"></td>
+              <td><input type="text" class="form-control" placeholder="WAN Network" ng-model="NewWAN.WAN_Network"></td>
+              <td><input type="text" class="form-control" placeholder="WAN IP" ng-model="NewWAN.WAN_IP"></td>
+              <td><input type="text" class="form-control" placeholder="ADSL_OOB" ng-model="NewWAN.ADSL_OOB"></td>
+              <td><input type="text" class="form-control" placeholder="LOC_ID" ng-model="NewWAN.LOC_ID"></td>
+              <td><input type="text" class="form-control" placeholder="ASSET_TAG" ng-model="NewWAN.ASSET_TAG"></td>
+              <td><input type="text" class="form-control" placeholder="CSID" ng-model="NewWAN.CSID"></td>
               <td>
-                <button class="btn btn-default btn-sm"  type="button" ng-click="CloneWAN(NewWAN)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                <button class="btn btn-default btn-sm"  type="button" ng-click="CloneWAN(NewWAN)"><i class="fa fa-clone" aria-hidden="true"></i></button>
                 <button class="btn btn-danger btn-sm" type="button" ng-click="RemoveWAN(NewWAN)"><i class="fa fa-trash" aria-hidden="true"></i></button>
               </td>
               <tr>
@@ -194,14 +194,14 @@
               </thead>
               <tbody>
                 <tr ng-repeat = "NewNetDevice in NewNetDevices">
-                  <td><input type="text" class="form-control" placeholder="Device" ng-model="NewNetDevice.type"></td>
-                  <td><input type="text" class="form-control" placeholder="Device" ng-model="NewNetDevice.name"></td>
-                  <td><input type="text" class="form-control" placeholder="VLAN" ng-model="NewNetDevice.Loopback"></td>
-                  <td><input type="text" class="form-control" placeholder="Port" ng-model="NewNetDevice.Make"></td>
-                  <td><input type="text" class="form-control" placeholder="Active" ng-model="NewNetDevice.Model"></td>
-                  <td><input type="text" class="form-control" placeholder="Description" ng-model="NewNetDevice.Serial_Number"></td>
+                  <td><input type="text" class="form-control" placeholder="type" ng-model="NewNetDevice.type"></td>
+                  <td><input type="text" class="form-control" placeholder="name" ng-model="NewNetDevice.name"></td>
+                  <td><input type="text" class="form-control" placeholder="Loopback" ng-model="NewNetDevice.Loopback"></td>
+                  <td><input type="text" class="form-control" placeholder="Make" ng-model="NewNetDevice.Make"></td>
+                  <td><input type="text" class="form-control" placeholder="Model" ng-model="NewNetDevice.Model"></td>
+                  <td><input type="text" class="form-control" placeholder="Serial_Number" ng-model="NewNetDevice.Serial_Number"></td>
                   <td>
-                    <button class="btn btn-default btn-sm"  type="button" ng-click="CloneNetDevice(NewNetDevice)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button class="btn btn-default btn-sm"  type="button" ng-click="CloneNetDevice(NewNetDevice)"><i class="fa fa-clone" aria-hidden="true"></i></button>
                     <button class="btn btn-danger btn-sm" type="button" ng-click="RemoveNetDevice(NewNetDevice)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                   </td>
                 <tr>
@@ -234,11 +234,11 @@
                   <td>
                     <select class="form-control" ng-options="vlan.vlan_number for vlan in vlans" ng-change="VlanChange(NewVLAN,selectedVLAN)" ng-model ="selectedVLAN"></select>
                   </td>
-                  <td><input type="text" class="form-control" placeholder="Device" ng-model="NewVLAN.Description" disabled></td>
-                  <td><input type="text" class="form-control" placeholder="VLAN" ng-model="NewVLAN.Gateway"></td>
-                  <td><input type="text" class="form-control" placeholder="Port" ng-model="NewVLAN.Submusk"></td>
+                  <td><input type="text" class="form-control" placeholder="Description" ng-model="NewVLAN.Description" disabled></td>
+                  <td><input type="text" class="form-control" placeholder="Gateway" ng-model="NewVLAN.Gateway"></td>
+                  <td><input type="text" class="form-control" placeholder="Submusk" ng-model="NewVLAN.Submusk"></td>
                   <td>
-                    <button class="btn btn-default btn-sm"  type="button" ng-click="CloneVLAN(NewVLAN)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button class="btn btn-default btn-sm"  type="button" ng-click="CloneVLAN(NewVLAN)"><i class="fa fa-clone" aria-hidden="true"></i></button>
                     <button class="btn btn-danger btn-sm" type="button" ng-click="RemoveVLAN(NewVLAN)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                   </td>
                 <tr>

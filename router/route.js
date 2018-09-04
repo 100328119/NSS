@@ -16,6 +16,10 @@ router.get('/login', function (req, res, nex) {
   res.render('login', { layout: false });
 });
 
+router.get('/resetpass', function(req, res, nex){
+  res.render('resetpass',{ layout: false });
+})
+
 router.get('/register', function (req, res, nex) {
   res.render('register', { layout: false });
 });
@@ -66,5 +70,6 @@ router.get('/support', function (req, res, nex) {
   // render support page
   res.render('support');
 });
+
 
 module.exports = router;

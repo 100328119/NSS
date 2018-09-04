@@ -14,6 +14,7 @@ create table users
   email varchar(50) not null,
   admin_id int not null,
   password text not null,
+  status boolean not null default 1,
   FOREIGN KEY (admin_id)
      REFERENCES admin(id)
 ) ENGINE=INNODB;
@@ -134,7 +135,7 @@ create table Report
     ReportName varchar(250),
     ReportDate date,
     ReportPath varchar(300)
-)
+) ENGINE=INNODB;
 //admin table
 INSERT INTO `admin`(`type`) VALUES ('admin');
 INSERT INTO `admin`(`type`) VALUES ('super_admin');

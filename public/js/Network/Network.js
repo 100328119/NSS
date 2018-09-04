@@ -21,7 +21,11 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 				.then(function(response){
 					$scope.Network = angular.copy(response.data);
 					angular.element(document).ready(function () {
-						angular.element('#EndDtable').DataTable();
+						angular.element('#EndDtable').DataTable({
+						     columnDefs: [
+						       { type: 'ip-address', targets: 0 }
+						     ]
+						  });
 						angular.element('#WANTable').DataTable();
 						angular.element('#NDeviceTable').DataTable();
 						angular.element('#VLANTable').DataTable();
@@ -66,6 +70,15 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 		          console.log(response);
 		      });
 				};
+
+				$scope.deleteNet = function(){
+					$http.delete('/api/Netdata/delete/'+$scope.id)
+					.then(function successCallback(res){
+						 $window.location.href = '/dashboard';
+					}, function errorCallback(res){
+						console.log(res.data);
+					});
+				}
   //End Device function add, update, Delete
   // status of object add = 1 ;update = 0; Delete = -1;
   $scope.selectItem = function(SelectedItem){
@@ -84,7 +97,10 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
   $scope.editEndDevice = function(){
       //$scope.Network.End_Device[$scope.CurrentIndex] = $scope.selectedItem;
       $scope.selectedItem.Status = 0;
-      $scope.Network.End_Devices[$scope.CurrentIndex]=$scope.selectedItem;
+			$scope.tempEndDevice = angular.copy($scope.Network.End_Devices);
+      $scope.tempEndDevice[$scope.CurrentIndex]=$scope.selectedItem;
+			$scope.Network.End_Devices = angular.copy($scope.tempEndDevice);
+			// angular.element('#EndDtable').DataTable().draw();
   };
 
   $scope.deleteEndDevice = function(){

@@ -1,4 +1,4 @@
-<div >
+<div ng-controller="UserManagment">
   <ol class="breadcrumb">
   	<li class="breadcrumb-item">
   		<a href="#">User</a>
@@ -7,4 +7,175 @@
   </ol>
 <h1>User Managment</h1>
 <hr>
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fa fa-table"></i> User Table
+    	<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewUser"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
+    </div>
+  <div class="card-body">
+    <div class="alert alert-success alert-dismissible fade collapse" role="alert" id="PassSuccess">
+          <strong>{[{updatedUser}]}</strong> Password Update Successed.
+          <button type="button" class="close" onclick="$('#PassSuccess').collapse('hide')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+     </div>
+     <div class="alert alert-danger alert-dismissible fade collapse" role="alert" id="DuplicateUser">
+           <strong>{[{NewUser.email}]}</strong> Already Exist.
+           <button type="button" class="close" onclick="$('#DuplicateUser').collapse('hide')" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+      </div>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover table-sm"  width="100%" cellspacing="0" id="userTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Change Password</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="user in users">
+              <td>{[{$index+1}]}</td>
+              <td>{[{user.email}]}</td>
+              <td><button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#admin" ng-click="selectUser(user)"><i class="fa fa-pencil" aria-hidden="true"></i> {[{user.type}]}</button></td>
+              <td><button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#Password" ng-click="selectUser(user)"><i class="fa fa-pencil" aria-hidden="true"></i> Change</button></td>
+              <td ng-if="user.status == 1"><button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#active" ng-click="selectUser(user)"><i class="fa fa-pencil" aria-hidden="true"></i> Active</button></td>
+              <td ng-if="user.status == 0"><button class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#active" ng-click="selectUser(user)"><i class="fa fa-pencil" aria-hidden="true"></i> Unactive</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
+<!-- Modal -->
+<div id="admin" class="modal fade" role="dialog" >
+  <div class="modal-dialog modal-dialog-center">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Admin Level</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-6">
+            <label for="inputEmail3"><strong>{[{selectedItem.email}]}</strong></label>
+            <select class="form-control"  ng-model="selectadmin_id" ng-options="admin.id as admin.type for admin in admins"></select>
+        </div>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn  btn-primary mr-auto" data-dismiss="modal" ng-click="saveUser()">Save</button>
+        <button type="button" class="btn  btn-danger pull-right" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div id="Password" class="modal fade" role="dialog" >
+  <div class="modal-dialog modal-dialog-center">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{[{selectedItem.email}]}</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger alert-dismissible fade collapse" role="alert" id="PassError">
+              <strong>Password Not Match!</strong> Please re-enter password.
+              <button type="button" class="close" onclick="$('#PassError').collapse('hide')" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+         </div>
+        <div class="row">
+          <div class="col-md-6">
+              <label for="inputEmail3"><strong>New Password</strong></label>
+              <input type="password" class="form-control"  ng-model="Newpass" placeholder="New Password" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+              <label><strong>Confirm Password</strong></label>
+              <input type="password" class="form-control" ng-model="ConfirmPass"  placeholder="Confirm Password" required>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary mr-auto"  ng-click="updatePass()">Save</button>
+        <button type="button" class="btn btn-danger pull-right">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="active" class="modal fade" role="dialog" >
+  <div class="modal-dialog modal-dialog-center">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">User Activation</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-6" ng-if="selectedItem.status == 1">
+            <label for="inputEmail3"><strong>Deactivate {[{selectedItem.email}]}</strong></label>
+        </div>
+        <div class="col-md-5" ng-if="selectedItem.status == 0">
+            <label for="inputEmail3"><strong>Activate {[{selectedItem.email}]}</strong></label>
+        </div>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn  btn-primary mr-auto" data-dismiss="modal" ng-click="ActivateUser()">Save</button>
+        <button type="button" class="btn  btn-danger pull-right" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="NewUser" class="modal fade" role="dialog" >
+  <div class="modal-dialog modal-dialog-center">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Create User</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger alert-dismissible fade collapse" role="alert" id="NewUserError">
+              <strong>Information invaild</strong> Please re-enter user Info.
+              <button type="button" class="close" onclick="$('#NewUserError').collapse('hide')" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+         </div>
+         <div class="row">
+           <div class="col-md-6">
+               <label for="inputEmail3"><strong>Email</strong></label>
+               <input type="email" class="form-control"  ng-model="NewUserEmail" placeholder="New Email" required>
+           </div>
+           <div class="col-md-6">
+               <label for="inputEmail3"><strong>Admin Level</strong></label>
+               <select class="form-control"  ng-model="NewUseradmin_id" ng-options="admin.id as admin.type for admin in admins"></select>
+           </div>
+         </div>
+         <div class="row">
+            <div class="col-md-6">
+                <label for="inputEmail3"><strong>New Password</strong></label>
+                <input type="password" class="form-control"  ng-model="NewPassword" placeholder="New Password" required>
+            </div>
+            <div class="col-md-6">
+                <label><strong>Confirm Password</strong></label>
+                <input type="password" class="form-control" ng-model="ConfirmPassord"  placeholder="Confirm Password" required>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary mr-auto"  ng-click="newUser()">Save</button>
+        <button type="button" class="btn btn-danger pull-right">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script type="text/JavaScript" src="/js/user/management.js"></script>

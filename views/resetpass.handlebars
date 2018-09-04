@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Network Support Site</title>
+  <!-- Bootstrap core CSS-->
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <!-- Custom styles for this template-->
+  <link href="/css/sb-admin.css" rel="stylesheet">
+
+<body class="bg-dark" ng-app="nss" ng-controller="resetpass">
+  <div class="container">
+    <div class="card card-login mx-auto mt-5">
+      <div class="card-header">Change Password</div>
+      <div class="card-body">
+        <div class="alert alert-danger alert-dismissible fade collapse" role="alert" id="PassError">
+              <strong>Password Not Match!</strong> Please re-enter password.
+              <button type="button" class="close" onclick="$('#PassError').collapse('hide')" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+         </div>
+         <div class="alert alert-danger alert-dismissible fade collapse" role="alert" id="resetError">
+               <strong>Password Reset Failed!</strong> Please try again.
+               <button type="button" class="close" onclick="$('#resetError').collapse('hide')" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Original Password</label>
+            <input class="form-control" ng-model="oldpass"  type="password" placeholder="Original Password" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">New Password</label>
+            <input class="form-control" ng-model="Newpass"  type="password" placeholder="Password" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Confirm Password</label>
+            <input class="form-control"  ng-model="ConfirmPass" type="password" placeholder="Password" required>
+          </div>
+          <button class="btn btn-primary btn-block" ng-click="Submit()" type="button">Submit</button>
+          <button class="btn btn-danger btn-block" ng-click="Cancel()" type="button">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="/js/sb-admin.min.js"></script>
+  <script type="text/javascript" src="/vendor/angular-1.7.2/angular.min.js"></script>
+  <script type="text/javascript" src="/js/user/resetpass.js"></script>
+</body>
+
+</html>

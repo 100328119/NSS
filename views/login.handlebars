@@ -15,7 +15,7 @@
   <!-- Custom styles for this template-->
   <link href="/css/sb-admin.css" rel="stylesheet">
 
-<body class="bg-dark">
+<body class="bg-dark" ng-app="nss" ng-controller="login">
   <div class="container">
     <div class="card card-login mx-auto mt-5">
       <div class="card-header">Login</div>
@@ -36,6 +36,7 @@
             </div>
           </div>
           <button class="btn btn-primary btn-block" type="submit">Login</button>
+            <button class="btn btn-danger btn-block" ng-click="Cancel()" type="button">Cancel</button>
         </form>
       </div>
     </div>
@@ -45,6 +46,8 @@
   <!-- Core plugin JavaScript-->
   <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
   <script src="/js/sb-admin.min.js"></script>
+  <script type="text/javascript" src="/vendor/angular-1.7.2/angular.min.js"></script>
+  <script type="text/javascript" src="/js/user/login.js"></script>
 </body>
 
 </html>

@@ -11,7 +11,7 @@ nss.controller("dashController", function($scope,$http,$window){
       angular.element(document).ready(function () {
           angular.element('#NetTable').DataTable();
         });
-    });;
+    });
 
     $http.get('/api/Netdata/vlan')
       .then(function successCallback(res){
@@ -19,7 +19,6 @@ nss.controller("dashController", function($scope,$http,$window){
         $scope.vlans = angular.copy(res.data);
         angular.element(document).ready(function () {
           angular.element('#VlanTable').DataTable();
-
         });
       }, function errorCallback(res){
         console.log(res.data);

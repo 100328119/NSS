@@ -12,7 +12,7 @@
 			<div class="btn-toolbar mb-2 mb-md-0">
 				<div class="btn-group mr-2">
 					<button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#SaveNetwork" >Save</button>
-					<button class="btn btn-sm btn-outline-secondary" ng-click="showtest()">Export</button>
+					<button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#DeleteNetwork">Delete</button>
 				</div>
 			</div>
 			{{/if}}
@@ -416,16 +416,17 @@
 	    <!-- Modal content-->
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h4 class="modal-title">Are You Sure?</h4>
+	        <h4 class="modal-title">Delete EndDevice?</h4>
 	        <button type="button" class="close" data-dismiss="modal">&times;</button>
 	      </div>
 	      <div class="modal-body">
-	        <h3 style='color: red'>{[{selectedItem.ip}]}</h3>
+					<h3 style='color: red'>Confirm to Delete End Device</h3>
+	        <h3 style='color: red'>{[{selectedItem.name}]}</h3>
 	        <br/>
 	      </div>
 	      <div class="modal-footer">
-	      <button type="button" class="btn btn-default mr-auto" data-dismiss="modal" ng-click="deleteEndDevice()">Yes</button>
-	        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">No</button>
+	      <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="deleteEndDevice()">Confirm</button>
+	        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
 	      </div>
 	    </div>
 	  </div>
@@ -446,15 +447,15 @@
 							<div class="row" >
 								<div class="col-md-4">
 						    	<label for="inputEmail3"><strong>Provider</strong></label>
-						      <input type="text" class="form-control" id="inputEmail3" placeholder="IP Address" ng-model="NewWAN.Provider">
+						      <input type="text" class="form-control" id="inputEmail3" placeholder="Provider" ng-model="NewWAN.Provider">
 								</div>
 								<div class="col-md-4">
 						    	<label for="DeviceName"><strong>WAN Type</strong></label>
-						      <input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="NewWAN.WAN_Type">
+						      <input type="text" class="form-control" id="DeviceName" placeholder="WAN_Type" ng-model="NewWAN.WAN_Type">
 								</div>
 								<div class="col-md-4">
 								<label for="inputEmail3" ><strong>Upload</strong></label>
-								<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="NewWAN.Upload">
+								<input type="text" class="form-control" id="inputEmail3" placeholder="Upload" ng-model="NewWAN.Upload">
 							</div>
 							</div>
 						</div>
@@ -462,15 +463,15 @@
 							<div class="row">
 								<div class="col-md-2">
 										<label for="inputEmail3" class="control-label"><strong>Download</strong></label>
-										<input type="text" class="form-control" id="inputEmail3" placeholder="Port" ng-model="NewWAN.DownLoad">
+										<input type="text" class="form-control" id="inputEmail3" placeholder="Download" ng-model="NewWAN.DownLoad">
 									</div>
 									<div class="col-md-2">
 										<label for="inputEmail3" class="control-label"><strong>UploadShaping</strong></label>
-										<input type="text" class="form-control" id="inputEmail3" placeholder="Active" ng-model="NewWAN.UploadShaping">
+										<input type="text" class="form-control" id="inputEmail3" placeholder="UploadShaping" ng-model="NewWAN.UploadShaping">
 									</div>
 									<div class="col-md-8">
 										<label for="inputEmail3" class="control-label"><strong>WAN Network</strong></label>
-										<input type="text" class="form-control" id="inputEmail3" placeholder="Description" ng-model="NewWAN.WAN_Network">
+										<input type="text" class="form-control" id="inputEmail3" placeholder="WAN Networ" ng-model="NewWAN.WAN_Network">
 									</div>
 								</div>
 							</div>
@@ -478,23 +479,23 @@
 								<div class="row">
 									<div class="col-md-3">
 										<label for="inputEmail3" class="control-label"><strong>WAN IP</strong></label>
-										<input type="text" class="form-control" id="inputEmail3" placeholder="Type" ng-model="NewWAN.WAN_IP">
+										<input type="text" class="form-control" id="inputEmail3" placeholder="WAN IP" ng-model="NewWAN.WAN_IP">
 									</div>
 										<div class="col-md-2">
 											<label for="inputEmail3" class="ccontrol-label"><strong>ADSL OOB</strong></label>
-											<input type="text" class="form-control" id="inputEmail3" placeholder="Make" ng-model="NewWAN.ADSL_OOB">
+											<input type="text" class="form-control" id="inputEmail3" placeholder="ADSL OOB" ng-model="NewWAN.ADSL_OOB">
 										</div>
 										<div class="col-md-2">
 											<label for="inputEmail3" class="control-label"><strong>LOC ID</strong></label>
-											<input type="text" class="form-control" id="inputEmail3" placeholder="Model" ng-model="NewWAN.LOC_ID">
+											<input type="text" class="form-control" id="inputEmail3" placeholder="LOC ID" ng-model="NewWAN.LOC_ID">
 										</div>
 											<div class="col-md-2">
 												<label for="inputEmail3" class=" control-label"> <strong>ASSET TAG</strong></label>
-												<input type="text" class="form-control" id="inputEmail3" placeholder="Connected Device" ng-model="NewWAN.ASSET_TAG">
+												<input type="text" class="form-control" id="inputEmail3" placeholder="ASSET TAG" ng-model="NewWAN.ASSET_TAG">
 											</div>
 											<div class="col-md-3">
 												<label for="inputEmail3" class=" control-label"> <strong>CSID</strong></label>
-												<input type="text" class="form-control" id="inputEmail3" placeholder="Connected Device" ng-model="NewWAN.CSID">
+												<input type="text" class="form-control" id="inputEmail3" placeholder="CSID" ng-model="NewWAN.CSID">
 											</div>
 								</div>
 							</div>
@@ -589,16 +590,17 @@
 		    <!-- Modal content-->
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h4 class="modal-title">Are You WAN?</h4>
+		        <h4 class="modal-title">Delete WAN</h4>
 		        <button type="button" class="close" data-dismiss="modal">&times;</button>
 		      </div>
 		      <div class="modal-body">
+						<h3 style='color: red'>Delete WAN</h3>
 		        <h3 style='color: red'>{[{selectedItem.WAN_IP}]}</h3>
 		        <br/>
 		      </div>
 		      <div class="modal-footer">
-		      <button type="button" class="btn btn-default mr-auto" data-dismiss="modal" ng-click="deleteWAN()">Yes</button>
-		        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">No</button>
+		      <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="deleteWAN()">Confirm</button>
+		        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
 		      </div>
 		    </div>
 		  </div>
@@ -619,15 +621,15 @@
 								<div class="row" >
 									<div class="col-md-4">
 										<label for="inputEmail3"><strong>Type</strong></label>
-										<input type="text" class="form-control" id="inputEmail3" placeholder="IP Address" ng-model="NewNetDevice.type">
+										<input type="text" class="form-control" id="inputEmail3" placeholder="Type" ng-model="NewNetDevice.type">
 									</div>
 									<div class="col-md-4">
 										<label for="DeviceName"><strong>Name</strong></label>
-										<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="NewNetDevice.name">
+										<input type="text" class="form-control" id="DeviceName" placeholder="Name" ng-model="NewNetDevice.name">
 									</div>
 									<div class="col-md-4">
 									<label for="inputEmail3" ><strong>Loopback</strong></label>
-									<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="NewNetDevice.Loopback">
+									<input type="text" class="form-control" id="inputEmail3" placeholder="Loopback" ng-model="NewNetDevice.Loopback">
 								</div>
 								</div>
 							</div>
@@ -635,15 +637,15 @@
 								<div class="row">
 									<div class="col-md-4">
 											<label for="inputEmail3" class="control-label"><strong>Make</strong></label>
-											<input type="text" class="form-control" id="inputEmail3" placeholder="Port" ng-model="NewNetDevice.Make">
+											<input type="text" class="form-control" id="inputEmail3" placeholder="Make" ng-model="NewNetDevice.Make">
 										</div>
 										<div class="col-md-4">
 											<label for="inputEmail3" class="control-label"><strong>Model</strong></label>
-											<input type="text" class="form-control" id="inputEmail3" placeholder="Active" ng-model="NewNetDevice.Model">
+											<input type="text" class="form-control" id="inputEmail3" placeholder="Model" ng-model="NewNetDevice.Model">
 										</div>
 										<div class="col-md-4">
 											<label for="inputEmail3" class="control-label"><strong>Serial</strong></label>
-											<input type="text" class="form-control" id="inputEmail3" placeholder="Description" ng-model="NewNetDevice.Serial_Number">
+											<input type="text" class="form-control" id="inputEmail3" placeholder="Serial" ng-model="NewNetDevice.Serial_Number">
 										</div>
 									</div>
 								</div>
@@ -652,7 +654,6 @@
 								<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="addNetDevice();">Save</button>
 								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 							</div>
-
 						</div>
 						</div>
 					</div>
@@ -671,7 +672,7 @@
 									<div class="row" >
 										<div class="col-md-4">
 											<label for="inputEmail3"><strong>type</strong></label>
-											<input type="text" class="form-control" id="inputEmail3" placeholder="IP Address" ng-model="selectedItem.type">
+											<input type="text" class="form-control" id="inputEmail3" placeholder="type" ng-model="selectedItem.type">
 										</div>
 										<div class="col-md-4">
 											<label for="DeviceName"><strong>Name</strong></label>
@@ -679,7 +680,7 @@
 										</div>
 										<div class="col-md-4">
 										<label for="inputEmail3" ><strong>Loopback</strong></label>
-										<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="selectedItem.Loopback">
+										<input type="text" class="form-control" id="inputEmail3" placeholder="Loopback" ng-model="selectedItem.Loopback">
 									</div>
 									</div>
 								</div>
@@ -687,15 +688,15 @@
 									<div class="row">
 										<div class="col-md-4">
 												<label for="inputEmail3" class="control-label"><strong>Make</strong></label>
-												<input type="text" class="form-control" id="inputEmail3" placeholder="Port" ng-model="selectedItem.Make">
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Make" ng-model="selectedItem.Make">
 											</div>
 											<div class="col-md-4">
 												<label for="inputEmail3" class="control-label"><strong>Model</strong></label>
-												<input type="text" class="form-control" id="inputEmail3" placeholder="Active" ng-model="selectedItem.Model">
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Model" ng-model="selectedItem.Model">
 											</div>
 											<div class="col-md-4">
 												<label for="inputEmail3" class="control-label"><strong>Serial</strong></label>
-												<input type="text" class="form-control" id="inputEmail3" placeholder="Description" ng-model="selectedItem.Serial_Number">
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Serial" ng-model="selectedItem.Serial_Number">
 											</div>
 										</div>
 									</div>
@@ -714,15 +715,16 @@
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title">Are You WAN?</h4>
+						<h4 class="modal-title">Delete Network Device</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 					<div class="modal-body">
-						<h3 style='color: red'>{[{selectedItem.Serial}]}</h3>
+						<h3 style='color: red'>Confirm to Delete</h3>
+						<h3 style='color: red'>{[{selectedItem.name}]}</h3>
 						<br/>
 					</div>
 					<div class="modal-footer">
-					<button type="button" class="btn btn-default mr-auto" data-dismiss="modal" ng-click="deleteNewNetDevice()">Yes</button>
+					<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="deleteNewNetDevice()">Confirm</button>
 						<button type="button" class="btn btn-default pull-right" data-dismiss="modal">No</button>
 					</div>
 				</div>
@@ -749,15 +751,15 @@
 									</div>
 									<div class="col-md-3">
 										<label for="DeviceName"><strong>Description</strong></label>
-										<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="vlan_description">
+										<input type="text" class="form-control" id="DeviceName" placeholder="Description" ng-model="vlan_description">
 									</div>
 									<div class="col-md-3">
 									<label for="inputEmail3" ><strong>Gateway</strong></label>
-									<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="NewVLAN.Gateway">
+									<input type="text" class="form-control" id="inputEmail3" placeholder="Gateway" ng-model="NewVLAN.Gateway">
 								</div>
 								<div class="col-md-3">
 										<label for="inputEmail3" class="control-label"><strong>Subnet</strong></label>
-										<input type="text" class="form-control" id="inputEmail3" placeholder="Port" ng-model="NewVLAN.Submusk">
+										<input type="text" class="form-control" id="inputEmail3" placeholder="Subnet" ng-model="NewVLAN.Submusk">
 									</div>
 								</div>
 							</div>
@@ -789,15 +791,15 @@
 											</div>
 											<div class="col-md-3">
 												<label for="DeviceName"><strong>Description</strong></label>
-												<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="vlan_description">
+												<input type="text" class="form-control" id="DeviceName" placeholder="Description" ng-model="vlan_description">
 											</div>
 											<div class="col-md-3">
 											<label for="inputEmail3" ><strong>Gateway</strong></label>
-											<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="selectedItem.Gateway">
+											<input type="text" class="form-control" id="inputEmail3" placeholder="Gateway" ng-model="selectedItem.Gateway">
 										</div>
 										<div class="col-md-3">
 												<label for="inputEmail3" class="control-label"><strong>Subnet</strong></label>
-												<input type="text" class="form-control" id="inputEmail3" placeholder="Port" ng-model="selectedItem.Submusk">
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Subnet" ng-model="selectedItem.Submusk">
 											</div>
 										</div>
 									</div>
@@ -816,15 +818,16 @@
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title">Are You VLAN?</h4>
+						<h4 class="modal-title">Delete VLAN</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 					<div class="modal-body">
-						<h3 style='color: red'>{[{selectedItem.Gateway}]}</h3>
+						<h3 style='color: red'>Confirm to Delete VLAN</h3>
+						<h3 style='color: red'>{[{selectedVlan_number}]} {[{vlan_description}]}  {[{selectedItem.Gateway}]}</h3>
 					</div>
 					<div class="modal-footer">
-					<button type="button" class="btn btn-danger mr-auto" data-dismiss="modal" ng-click="deleteVlan()">Yes</button>
-						<button type="button" class="btn btn-primary pull-right" data-dismiss="modal">No</button>
+					<button type="button" class="btn btn-danger mr-auto" data-dismiss="modal" ng-click="deleteVlan()">Confirm</button>
+						<button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Cancel</button>
 					</div>
 				</div>
 			</div>
@@ -843,11 +846,11 @@
 											<div class="row" >
 												<div class="col-md-4">
 													<label for="DeviceName"><strong>Network</strong></label>
-													<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="selectedItem.N_Name">
+													<input type="text" class="form-control" id="DeviceName" placeholder="Network" ng-model="selectedItem.N_Name">
 												</div>
 												<div class="col-md-4">
 													<label for="DeviceName"><strong>Network Number</strong></label>
-													<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="selectedItem.N_Number">
+													<input type="text" class="form-control" id="DeviceName" placeholder="Network Number" ng-model="selectedItem.N_Number">
 												</div>
 												<div class="col-md-4">
 													<label for="inputEmail3"><strong>Category</strong></label>
@@ -858,25 +861,25 @@
 											<div class="row">
 												<div class="col-md-4">
 													<label for="DeviceName"><strong>Post Code</strong></label>
-													<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="selectedItem.Postal_Code">
+													<input type="text" class="form-control" id="DeviceName" placeholder="Post Code" ng-model="selectedItem.Postal_Code">
 												</div>
 												<div class="col-md-4">
 												<label for="inputEmail3" ><strong>Phone</strong></label>
-												<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="selectedItem.Phone">
+												<input class="form-control" id="inputEmail3" typ="number" placeholder="Phone" ng-model="selectedItem.Phone">
 											</div>
 											<div class="col-md-4">
 													<label for="inputEmail3" class="control-label"><strong>Fax</strong></label>
-													<input type="text" class="form-control" id="inputEmail3" placeholder="Port" ng-model="selectedItem.Fax">
+													<input class="form-control" id="inputEmail3" typ="number" placeholder="Fax" ng-model="selectedItem.Fax">
 												</div>
 											</div>
 										<div class="row">
 											<div class="col-md-9">
 												<label for="DeviceName"><strong>Address</strong></label>
-												<input type="text" class="form-control" id="DeviceName" placeholder="Device Name" ng-model="selectedItem.address">
+												<input type="text" class="form-control" id="DeviceName" placeholder="Address" ng-model="selectedItem.address">
 											</div>
 											<div class="col-md-3">
 												<label for="inputEmail3" ><strong>Circuit ID</strong></label>
-												<input type="text" class="form-control" id="inputEmail3" placeholder="VLAN" ng-model="selectedItem.Circuit_ID">
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Circuit ID" ng-model="selectedItem.Circuit_ID">
 											</div>
 										</div>
 										</div>
@@ -916,8 +919,28 @@
 				    </div>
 				  </div>
 				</div>
-		<div id="loading" class="modal fade" >
+
+		<!-- <div id="loading" class="modal fade" >
 				<span class="fa fa-spinner fa-spin fa-3x" style=" line-height: 50px; vertical-align: middle;"></span>
+	 </div> -->
+	 <!-- Modal -->
+	 <div id="DeleteNetwork" class="modal fade" role="dialog" >
+		 <div class="modal-dialog modal-dialog-center">
+			 <!-- Modal content-->
+			 <div class="modal-content">
+				 <div class="modal-header">
+					 <h4 class="modal-title">Delete {[{Network.network_info.N_Name}]}</h4>
+					 <button type="button" class="close" data-dismiss="modal">&times;</button>
+				 </div>
+				 <div class="modal-body">
+					 <h3 style='color: red'>Confirm to Delete {[{Network.network_info.N_Name}]}</h3>
+				 </div>
+				 <div class="modal-footer">
+				 <button type="button" class="btn btn-danger mr-auto" data-dismiss="modal" ng-click="deleteNet()">Yes</button>
+					 <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">No</button>
+				 </div>
+			 </div>
+		 </div>
 	 </div>
 	<!-- End Vlan-->
 </div>

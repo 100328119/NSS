@@ -1,7 +1,7 @@
  <!-- ng-app="navbar" -->
 <div ng-controller="NavController">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav" >
-  <a class="navbar-brand" href="index.html">LDB Network Support Site V2.0</a>
+  <a class="navbar-brand" href="/">LDB Network Support Site V2.0</a>
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -40,11 +40,11 @@
       </li>
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#reports" data-parent="#exampleAccordion">
-          <i class="fa fa-fw fa-wrench"></i>
+          <i class="fa fa-fw fa-file"></i>
           <span class="nav-link-text">Report</span>
         </a>
         <ul class="sidenav-second-level collapse" id="reports">
-          <input class="form-control" type="text" ng-model="search_report" placeholder="Search for..." id="SearchInput">
+          <input class="form-control" type="text" ng-model="search_report" placeholder="Search for...">
           {{#if isAuthenticated}}
           <li>
             <a href="/newreport">Create Report</a>
@@ -60,7 +60,7 @@
       </li>
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
         <a class="nav-link" href="">    <!-- /tool -->
-          <i class="fa fa-fw fa-link"></i>
+          <i class="fa fa-fw fa-wrench"></i>
           <span class="nav-link-text">Online Tool</span>
         </a>
       </li>
@@ -85,7 +85,10 @@
         <div class="btn-group">
           <button type="button" class="btn btn-secondary bg-dark dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{useremail}}</button>
           <div class="dropdown-menu  bg-secondary  dropdown-menu-right">
-            <a class="dropdown-item bg-secondary  text-white fa fa-user-o"  href="">User Managemnet</a>            <!-- /management -->
+            {{#if super_admin}}
+            <a class="dropdown-item bg-secondary  text-white fa fa-user-o"  href="/management"> User Managemnet</a>
+            {{/if}}
+            <a class="dropdown-item bg-secondary  text-white fa fa-user-o"  href="/resetpass"> Change Password</a>
             <a class="dropdown-item bg-secondary  text-white fa fa-sign-out"  href="/secure/logout"> Logout</a>
           </div>
         </div>
