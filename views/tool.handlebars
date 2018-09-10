@@ -7,5 +7,136 @@
   </ol>
 <h1>Online Tool</h1>
 <hr>
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fa fa-table"></i> Tool Table
+    	<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewTool"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
+    </div>
+  <div class="card-body">
+    <div class="alert alert-success alert-dismissible fade collapse" role="alert" id="PassSuccess">
+          <strong>{[{updatedUser}]}</strong> Password Update Successed.
+          <button type="button" class="close" onclick="$('#PassSuccess').collapse('hide')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+     </div>
+     <div class="alert alert-danger alert-dismissible fade collapse" role="alert" id="DuplicateUser">
+           <strong>{[{NewUser.email}]}</strong> Already Exist.
+           <button type="button" class="close" onclick="$('#DuplicateUser').collapse('hide')" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+      </div>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover table-sm"  width="100%" cellspacing="0" id="toolTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Tool</th>
+            <th>Description</th>
+            <th>VDC</th>
+            <th>KDC</th>
+            <th>Q9</th>
+            {{#if isAuthenticated}}
+            <th>Action</th>
+            {{/if}}
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="tool in Tools">
+            <td>{[{$index+1}]}</td>
+            <td>{[{tool.name}]}</td>
+            <td>{[{tool.description}]}</td>
+            <td><a ng-href="{[{tool.VDC}]}" target="_blank">VDC Link</a></td>
+            <td><a ng-href="{[{tool.KDC}]}" target="_blank">KDC Link</a></td>
+            <td><a ng-href="{[{tool.Q9}]}" target="_blank">Q9 Link</a></td>
+            {{#if isAuthenticated}}
+            <td>
+              <button class="btn btn-default btn-sm"  type="button" ng-click="selectItem(tool)" data-toggle="modal" data-target="#EditTool" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+              <button class="btn btn-danger btn-sm" type="button" ng-click="selectItem(tool)" data-toggle="modal" data-target="#DeleteTool" ><i class="fa fa-trash" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+          {{/if}}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
+<!-- Start tool Modal -->
+<div id="NewTool" class="modal fade" role="dialog" >
+  <div class="modal-dialog  modal-lg"  >
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">New Tool</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+            <div class="container col-md-12">
+                <label for="inputEmail3"><strong>Tool Name</strong></label>
+                <input type="text" class="form-control" id="DeviceName" placeholder="Name" ng-model="newTool.name">
+                <label for="DeviceName"><strong>Description</strong></label>
+                <input type="text" class="form-control" id="DeviceName" placeholder="Description" ng-model="newTool.description">
+                <label for="inputEmail3" ><strong>VDC Link</strong></label>
+                <input type="text" class="form-control" id="inputEmail3" placeholder="VDC Link" ng-model="newTool.VDC">
+                <label for="inputEmail3" class="control-label"><strong>KDC Link</strong></label>
+                <input type="text" class="form-control" id="inputEmail3" placeholder="KDC Link" ng-model="newTool.KDC">
+                <label for="inputEmail3" class="control-label"><strong>Q9 Link</strong></label>
+                <input type="text" class="form-control" id="inputEmail3" placeholder="Q9 Link" ng-model="newTool.Q9">
+            </div>
+        </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="addTool();">Save</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="newTool={}">Close</button>
+            </div>
+      </div>
+      </div>
+    </div>
+    <div id="EditTool" class="modal fade" role="dialog" >
+      <div class="modal-dialog  modal-lg"  >
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Edit Tool</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+                <div class="container col-md-12">
+                    <label for="inputEmail3"><strong>Tool Name</strong></label>
+                    <input type="text" class="form-control" id="DeviceName" placeholder="Name" ng-model="selectedItem.name">
+                    <label for="DeviceName"><strong>Description</strong></label>
+                    <input type="text" class="form-control" id="DeviceName" placeholder="Description" ng-model="selectedItem.description">
+                    <label for="inputEmail3" ><strong>VDC Link</strong></label>
+                    <input type="text" class="form-control" id="inputEmail3" placeholder="VDC Link" ng-model="selectedItem.VDC">
+                    <label for="inputEmail3" class="control-label"><strong>KDC Link</strong></label>
+                    <input type="text" class="form-control" id="inputEmail3" placeholder="KDC Link" ng-model="selectedItem.KDC">
+                    <label for="inputEmail3" class="control-label"><strong>Q9 Link</strong></label>
+                    <input type="text" class="form-control" id="inputEmail3" placeholder="Q9 Link" ng-model="selectedItem.Q9">
+                </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="editTool();">Save</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="selectedItem={}">Close</button>
+                </div>
+          </div>
+          </div>
+        </div>
+        <div id="DeleteTool" class="modal fade" role="dialog" >
+          <div class="modal-dialog modal-dialog-center">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Delete {[{selectedItem.name}]}</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <h3 style='color: red'>Confirm to Delete {[{selectedItem.name}]}</h3>
+              </div>
+              <div class="modal-footer">
+              <button type="button" class="btn btn-danger mr-auto" data-dismiss="modal" ng-click="deleteNet()">Yes</button>
+                <button type="button" class="btn btn-primary pull-right" data-dismiss="modal"ng-click="selectedItem={}">No</button>
+              </div>
+            </div>
+          </div>
+        </div>
+</div>
+
 <script type="text/JavaScript" src="/js/tool/tool.js"></script>

@@ -136,6 +136,17 @@ create table Report
     ReportDate date,
     ReportPath varchar(300)
 ) ENGINE=INNODB;
+
+create table tool
+(
+    id int not null auto_increment primary key,
+    name int not null,
+    description varchar(250),
+    VDC varchar(300),
+    KDC varchar(300),
+    Q9 varchar(300)
+) ENGINE=INNODB;
+
 //admin table
 INSERT INTO `admin`(`type`) VALUES ('admin');
 INSERT INTO `admin`(`type`) VALUES ('super_admin');

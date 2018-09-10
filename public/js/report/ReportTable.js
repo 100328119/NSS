@@ -18,6 +18,10 @@ nss.controller("ReportTableContoller", function($scope,$http,$location,$window){
     $scope.selectedReport = angular.copy(repo);
   };
 
+  $scope.newRepo = function(){
+    $window.location.href = '/newreport';
+  }
+
   $scope.deleteRepo = function(){
     console.log($scope.selectedReport);
     $http.put('/api/reportdata/delete/'+$scope.selectedReport.id,$scope.selectedReport)

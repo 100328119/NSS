@@ -18,7 +18,11 @@ nss.controller("dashController", function($scope,$http,$window){
         console.log(res.data);
         $scope.vlans = angular.copy(res.data);
         angular.element(document).ready(function () {
-          angular.element('#VlanTable').DataTable();
+          angular.element('#VlanTable').DataTable({
+             columnDefs: [
+              { type: 'numeric-comma', targets: 1 }
+             ]
+           });
         });
       }, function errorCallback(res){
         console.log(res.data);
