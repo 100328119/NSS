@@ -20,12 +20,17 @@ router.get('/resetpass', function(req, res, nex){
   res.render('resetpass',{ layout: false });
 })
 
-router.get('/register', function (req, res, nex) {
-  res.render('register', { layout: false });
-});
+// router.get('/register', function (req, res, nex) {
+//   res.render('register', { layout: false });
+// });
 
 router.get('/management', function(req, res, nex){
-  res.render('management');
+  if(req.isAuthenticated()){
+    res.render('management');
+    }else{
+      res.redirect('/dashboard');
+    }
+
 })
 
 router.get('/network/:id', function (req, res, nex) {
@@ -35,7 +40,11 @@ router.get('/network/:id', function (req, res, nex) {
 
 router.get('/network/Create/New', function (req, res, nex) {
   //render create new newtork page
-  res.render('newNetwork');
+  if(req.isAuthenticated()){
+    res.render('newNetwork');
+  }else{
+    res.redirect('/dashboard');
+  }
 });
 
 router.get('/report/:id', function (req, response, next) {
@@ -54,7 +63,11 @@ router.get('/ReportTable', function(req, response, nex){
 
 router.get('/newreport', function (req, res, nex) {
   //render create new report page
-  res.render('newreport');
+  if(req.isAuthenticated()){
+    res.render('newreport');
+  }else{
+    res.redirect('/dashboard');
+  }
 });
 
 router.get('/ReportView', function(req, response, nex){
