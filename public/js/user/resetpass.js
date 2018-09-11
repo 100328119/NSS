@@ -1,4 +1,4 @@
-const nss = angular.module('nss', []).config(($interpolateProvider)=>{
+const nss = angular.module('nss', []).config(function($interpolateProvider){
   $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 });
 nss.controller("resetpass", function($scope,$http,$location,$window){

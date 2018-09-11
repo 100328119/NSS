@@ -192,7 +192,7 @@ window.addEventListener('dragenter', preventDrop, false);
 window.addEventListener('dragover', preventDrop, false);
 window.addEventListener('drop', preventDrop, false);
 
-submit.addEventListener('click', (ev) => {
+submit.addEventListener('click', function(ev){
   ev.preventDefault();
   sendFiles('/api/reportdata/new', allFilesList);
 }, false);
@@ -211,7 +211,7 @@ function sendFiles(url, data) {
         credentials: "same-origin",
         body: formData
       })
-      .then(response => {
+      .then(function(response){
         console.log(response);
         window.location.href = "/ReportTable"
       })
