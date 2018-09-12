@@ -140,7 +140,7 @@ create table Report
 create table tool
 (
     id int not null auto_increment primary key,
-    name int not null,
+    name varchar(250),
     description varchar(250),
     VDC varchar(300),
     KDC varchar(300),
