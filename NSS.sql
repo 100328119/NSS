@@ -21,7 +21,7 @@ create table users
 
 create table Category
 (
-  id int  not null auto_increment primary key,
+  id int not null auto_increment primary key,
   Category varchar(50) not null
 ) ENGINE=INNODB;
 
@@ -43,7 +43,7 @@ create table network
      REFERENCES Category(id)
 ) ENGINE=INNODB;
 
-create table Net_device
+create table net_device
 (
    id int  not null auto_increment primary key,
    net_id int not null,
@@ -57,7 +57,7 @@ create table Net_device
       REFERENCES network(id)
 ) ENGINE=INNODB;
 
-create table Vlan
+create table vlan
 (
   id int  not null auto_increment primary key,
   vlan_number varchar(50) not null,
@@ -120,7 +120,7 @@ create table Update_history
   id int  not null auto_increment primary key,
   net_id int not null,
   user_id int not null,
-  Update_date datetime not null,
+  Update_date varchar(50) not null,
   Description varchar(250),
   FOREIGN KEY (net_id)
      REFERENCES network(id),
@@ -133,7 +133,7 @@ create table Report
     id int not null auto_increment primary key,
     user_id int not null,
     ReportName varchar(250),
-    ReportDate date,
+    ReportDate varchar(50),
     ReportPath varchar(300)
 ) ENGINE=INNODB;
 
