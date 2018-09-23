@@ -2,7 +2,7 @@
 //   $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 // });
 // "use strict";
-nss.controller("NewSiteController",($scope,$http,$window)=>{
+nss.controller("NewSiteController",function($scope,$http,$window){
   $scope.NewSite = {};
   $scope.network_info = {};
   $scope.End_Device = [];
@@ -49,7 +49,7 @@ nss.controller("NewSiteController",($scope,$http,$window)=>{
   //   });
   // };
 
-  $scope.SaveNewSite = ()=>{
+  $scope.SaveNewSite = function(){
     $scope.NewSite.network_info = angular.copy($scope.network_info);
     $scope.NewSite.End_Devices = angular.copy($scope.End_Device);
     $scope.NewSite.WANs = angular.copy($scope.NewWANs);
@@ -66,82 +66,82 @@ nss.controller("NewSiteController",($scope,$http,$window)=>{
   };
 
   //END device minipuplate
-  $scope.NewEndDevice = ()=>{
+  $scope.NewEndDevice = function(){
     $scope.NewEnd =  {};
     $scope.End_Device.splice(0,0,$scope.NewEnd);
     $scope.change = 1;
   };
 
-  $scope.CloneEndDevice = (Clone)=>{
+  $scope.CloneEndDevice = function(Clone){
     $scope.index = $scope.End_Device.indexOf(Clone);
     $scope.End_Device.splice($scope.index, 0, angular.copy(Clone));
     $scope.change = 1;
   };
 
-  $scope.RemoveEndDevice = (Clone)=>{
+  $scope.RemoveEndDevice = function(Clone){
     $scope.index = $scope.End_Device.indexOf(Clone);
     $scope.End_Device.splice($scope.index, 1);
     $scope.change = 1;
   };
 
   //New WAN setup
-  $scope.NewWAN = ()=>{
+  $scope.NewWAN = function(){
     $scope.New_WAN = {};
     $scope.NewWANs.splice(0,0,$scope.New_WAN);
     $scope.change = 1;
   };
 
-  $scope.CloneWAN = (Clone)=>{
+  $scope.CloneWAN = function(Clone){
     $scope.index = $scope.NewWANs.indexOf(Clone);
     $scope.NewWANs.splice($scope.index, 0 , angular.copy(Clone));
     $scope.change = 1;
   };
 
-  $scope.RemoveWAN = (Clone)=>{
+  $scope.RemoveWAN = function(Clone){
     $scope.index = $scope.NewWANs.indexOf(Clone);
     $scope.NewWANs.splice($scope.index, 1);
     $scope.change = 1;
   };
 
   //Net_Device minipuplate
-  $scope.NewNetDevice = ()=>{
+  $scope.NewNetDevice = function(){
     $scope.New_NetDevice = {};
     $scope.NewNetDevices.splice(0,0,angular.copy($scope.New_NetDevice));
     $scope.change = 1;
   };
 
-  $scope.CloneNetDevice = (Clone)=>{
+  $scope.CloneNetDevice = function(Clone){
     $scope.index = $scope.NewNetDevices.indexOf(Clone);
     $scope.NewNetDevices.splice($scope.idnex,0,angular.copy(Clone));
     $scope.change = 1;
   };
 
-  $scope.RemoveNetDevice = (Clone)=>{
+  $scope.RemoveNetDevice = function(Clone){
     $scope.index = $scope.NewNetDevices.indexOf(Clone);
     $scope.NewNetDevices.splice($scope.idnex,1);
     $scope.change = 1;
   };
 
   //VKAN minipuplate
-  $scope.NewVLAN = ()=>{
+  $scope.NewVLAN = function(){
     $scope.New_VLAN = {};
     $scope.NewVLANs.splice(0,0,$scope.New_VLAN);
     $scope.change = 1;
   };
 
-  $scope.CloneVLAN = (Clone)=>{
+  $scope.CloneVLAN = function(Clone){
     $scope.index = $scope.NewVLANs.indexOf(Clone);
     $scope.NewVLANs.splice($scope.index,0,angular.copy(Clone));
     $scope.change = 1;
   };
 
-  $scope.RemoveVLAN = (Clone) => {
+  $scope.RemoveVLAN = function(Clone) {
     $scope.index = $scope.NewVLANs.indexOf(Clone);
     $scope.NewVLANs.splice($scope.index,1);
     $scope.change = 1;
   };
 
-  $scope.VlanChange = (NewVLAN, vlan)=>{
+  $scope.VlanChange = function(NewVLAN, vlan){
     // console.log(NewVLAN);
     // console.log(vlan)
     NewVLAN.Description = vlan.Description;

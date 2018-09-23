@@ -18,6 +18,7 @@ nss.controller("ToolController", function($scope,$http,$window){
     $http.post('/api/tooldata/new', $scope.newTool)
     .then(function successCallback(res){
       $scope.Tools = angular.copy(res.data);
+      angular.element('#toolTable').DataTable().draw();
     }, function errorCallback(res){
       console.log(res.data);
     });
@@ -28,6 +29,7 @@ nss.controller("ToolController", function($scope,$http,$window){
     $http.put('/api/tooldata/update/'+$scope.selectedItem.id, $scope.selectedItem)
     .then(function successCallback(res){
       $scope.Tools = angular.copy(res.data);
+      angular.element('#toolTable').DataTable().draw();
     }, function errorCallback(res){
       console.log(res.data);
     });
@@ -38,6 +40,7 @@ nss.controller("ToolController", function($scope,$http,$window){
     $http.delete('/api/tooldata/delete/'+$scope.selectedItem.id)
     .then(function successCallback(res){
       $scope.Tools = angular.copy(res.data);
+      angular.element('#toolTable').DataTable().draw();
     }, function errorCallback(res){
       console.log(res.data);
     });
