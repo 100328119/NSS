@@ -53,6 +53,7 @@ create table net_device
    Make varchar(50),
    Model varchar(50),
    Serial_Number varchar(50),
+   Connect_Device varchar(250),
    FOREIGN KEY (Net_id)
       REFERENCES network(id)
 ) ENGINE=INNODB;

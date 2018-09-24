@@ -125,7 +125,9 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
   $scope.editWAN = function(){
       //$scope.Network.End_Device[$scope.CurrentIndex] = $scope.selectedItem;
       $scope.selectedItem.Status = 0;
-      $scope.Network.WANs[$scope.CurrentIndex]=$scope.selectedItem;
+			$scope.tempWAN = angular.copy($scope.Network.WANs);
+      $scope.tempWAN[$scope.CurrentIndex]=$scope.selectedItem;
+			$scope.Network.WANs = angular.copy($scope.tempWAN);
   };
 
   $scope.deleteWAN = function(){
@@ -147,7 +149,9 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 
   $scope.editNewNetDevice = function(){
       $scope.selectedItem.Status = 0;
-      $scope.Network.Net_devices[$scope.CurrentIndex]=$scope.selectedItem;
+			$scope.tempNet_devices = angular.copy($scope.Network.Net_devices);
+      $scope.tempNet_devices[$scope.CurrentIndex]=$scope.selectedItem;
+			$scope.Network.Net_devices = angular.copy($scope.tempNet_devices);
 			console.log($scope.Network.Net_devices);
   };
 
@@ -184,7 +188,9 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
       $scope.selectedItem.Status = 0;
 			$scope.selectedItem.vlan_id = $scope.selectedVlan_number;
 			console.log($scope.selectedItem.vlan_id);
-      $scope.Network.VlanNetwork[$scope.CurrentIndex]=$scope.selectedItem;
+			$scope.TempVlanNetwork = angular.copy($scope.Network.VlanNetwork);
+      $scope.TempVlanNetwork[$scope.CurrentIndex]=$scope.selectedItem;
+			$scope.Network.VlanNetwork = angular.copy($scope.TempVlanNetwork);
   };
 
   $scope.deleteVlan = function(){

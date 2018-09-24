@@ -84,7 +84,7 @@ router.get('/support', function (req, res, nex) {
   res.render('support');
 });
 
-router.get('/diagram', function(req, res, nex) {
+router.get('/diagram/:id', function(req, res, nex) {
   res.render('Diagram');
 })
 

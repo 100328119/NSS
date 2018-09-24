@@ -17,6 +17,7 @@
 			</div>
 			{{/if}}
 		</div>
+		<a href="/diagram/{[{Network.network_info.id}]}">Network Diagarm</a>
 		<hr>
 	<div class = "row">
 		<div class = "col-lg-8">
@@ -185,6 +186,7 @@
 									<th>Make</th>
 									<th>Model</th>
 									<th>Serial Number</th>
+									<th>Connect Device</th>
 									{{#if isAuthenticated}}
 									<th>Action</th>
 									{{/if}}
@@ -198,6 +200,7 @@
 									<td>{[{Net_Device.Make}]}</td>
 									<td>{[{Net_Device.Model}]}</td>
 									<td>{[{Net_Device.Serial_Number}]}</td>
+									<td>{[{Net_Device.Connect_Device}]}</td>
 									{{#if isAuthenticated}}
 									<td>
 										  <button class="btn btn-default btn-sm"  type="button" ng-click="selectNetDevice(Net_Device)" data-toggle="modal" data-target="#EditNetDevice" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
@@ -621,7 +624,11 @@
 								<div class="row" >
 									<div class="col-md-4">
 										<label for="inputEmail3"><strong>Type</strong></label>
-										<input type="text" class="form-control" id="inputEmail3" placeholder="Type" ng-model="NewNetDevice.type">
+										<!-- <input type="text" class="form-control" id="inputEmail3" placeholder="Type" ng-model="NewNetDevice.type"> -->
+										<select class="form-control" ng-model="NewNetDevice.type">
+											    <option value="Router">Router</option>
+											    <option value="Switch">Switch</option>
+											</select>
 									</div>
 									<div class="col-md-4">
 										<label for="DeviceName"><strong>Name</strong></label>
@@ -635,17 +642,21 @@
 							</div>
 							<div class="container col-md-12">
 								<div class="row">
-									<div class="col-md-4">
+									<div class="col-md-3">
 											<label for="inputEmail3" class="control-label"><strong>Make</strong></label>
 											<input type="text" class="form-control" id="inputEmail3" placeholder="Make" ng-model="NewNetDevice.Make">
 										</div>
-										<div class="col-md-4">
+										<div class="col-md-3">
 											<label for="inputEmail3" class="control-label"><strong>Model</strong></label>
 											<input type="text" class="form-control" id="inputEmail3" placeholder="Model" ng-model="NewNetDevice.Model">
 										</div>
-										<div class="col-md-4">
+										<div class="col-md-3">
 											<label for="inputEmail3" class="control-label"><strong>Serial</strong></label>
 											<input type="text" class="form-control" id="inputEmail3" placeholder="Serial" ng-model="NewNetDevice.Serial_Number">
+										</div>
+										<div class="col-md-3">
+											<label for="inputEmail3" class="control-label"><strong>Connect Device</strong></label>
+											<input type="text" class="form-control" id="inputEmail3" placeholder="Connect Device" ng-model="NewNetDevice.Connect_Device">
 										</div>
 									</div>
 								</div>
@@ -672,7 +683,11 @@
 									<div class="row" >
 										<div class="col-md-4">
 											<label for="inputEmail3"><strong>type</strong></label>
-											<input type="text" class="form-control" id="inputEmail3" placeholder="type" ng-model="selectedItem.type">
+											<!-- <input type="text" class="form-control" id="inputEmail3" placeholder="type" ng-model="selectedItem.type"> -->
+											<select class="form-control" ng-model="selectedItem.type">
+														<option value="Router">Router</option>
+														<option value="Switch">Switch</option>
+												</select>
 										</div>
 										<div class="col-md-4">
 											<label for="DeviceName"><strong>Name</strong></label>
@@ -686,17 +701,21 @@
 								</div>
 								<div class=" col-md-12">
 									<div class="row">
-										<div class="col-md-4">
+										<div class="col-md-3">
 												<label for="inputEmail3" class="control-label"><strong>Make</strong></label>
 												<input type="text" class="form-control" id="inputEmail3" placeholder="Make" ng-model="selectedItem.Make">
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-3">
 												<label for="inputEmail3" class="control-label"><strong>Model</strong></label>
 												<input type="text" class="form-control" id="inputEmail3" placeholder="Model" ng-model="selectedItem.Model">
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-3">
 												<label for="inputEmail3" class="control-label"><strong>Serial</strong></label>
 												<input type="text" class="form-control" id="inputEmail3" placeholder="Serial" ng-model="selectedItem.Serial_Number">
+											</div>
+											<div class="col-md-3">
+												<label for="inputEmail3" class="control-label"><strong>Connect Device</strong></label>
+												<input type="text" class="form-control" id="inputEmail3" placeholder="Connect Device" ng-model="selectedItem.Connect_Device">
 											</div>
 										</div>
 									</div>

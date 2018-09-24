@@ -121,13 +121,12 @@ Netdata.post('/new', function(req,response,nex){
        })};
        if(!(req.body.Update_history === undefined)){
          qb.insert('update_history',req.body.update_info,(err, res)=>{
-           db.release();
+           qb.release();
            if(err) return console.error(err);
            console.log("update_history ok");
          })
        }else{
-         console.log(res);
-         db.release();
+         qb.release();
          return response.send(res);
        };
     })
@@ -248,7 +247,7 @@ Netdata.put('/update/:id',function(req,response,nex){
         console.log("VlanNetwork ok");
       });
     };
-    if(!(req.body.Update_history === undefined)){
+    if(!(req.body.Update_history.Description === undefined)){
       req.body.Update_history.user_id = req.user.user_id;
       qb.insert('update_history',req.body.Update_history,(err, res)=>{
           qb.release();
@@ -257,6 +256,7 @@ Netdata.put('/update/:id',function(req,response,nex){
           return response.sendStatus(200);
       });
     }else{
+      qb.release();
       return response.sendStatus(200);
     }
   });

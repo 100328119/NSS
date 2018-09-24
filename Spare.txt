@@ -561,3 +561,17 @@ let network_example = {
     }
    ]
  };
+
+ if($scope.Network.Net_devices[i].type == 'Router'){
+   $scope.nodes.push({id:$scope.Network.Net_devices[i].name+' '+$scope.Network.Net_devices[i].type, label:$scope.Network.Net_devices[i].name+' '+$scope.Network.Net_devices[i].Loopback, image: DIR + 'router.png', shape: 'image'});
+   for(var j = 0; j < $scope.Network.WANs.length;  j++ ){
+      $scope.edges.push({from: $scope.Network.Net_devices[i].name+' '+$scope.Network.Net_devices[i].type, to: $scope.Network.WANs[j].Provider, length: EDGE_LENGTH_MAIN});
+   }
+ }else{
+   $scope.nodes.push({id:$scope.Network.Net_devices[i].name+' '+$scope.Network.Net_devices[i].type, label:$scope.Network.Net_devices[i].name+' '+$scope.Network.Net_devices[i].Loopback, image: DIR + 'switch.png', shape: 'image'});
+   for(var k = 0; k < $scope.Network.Net_devices.length;  k++ ){
+     if($scope.Network.Net_devices[k].type == 'Router'){
+         $scope.edges.push({from: $scope.Network.Net_devices[i].name+' '+$scope.Network.Net_devices[i].type, to:$scope.Network.Net_devices[k].name+' '+$scope.Network.Net_devices[k].type, length: EDGE_LENGTH_MAIN});
+     }
+   }
+ }

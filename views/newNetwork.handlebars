@@ -171,8 +171,8 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class = "col-lg-6" >
+  <!-- <div class="row">
+    <div class = "col-lg-6" > -->
       <div class="card mb-3">
         <div class="card-header">
           <i class="fa fa-table"></i> Router/Switch
@@ -189,17 +189,25 @@
                   <th>Make</th>
                   <th>Model</th>
                   <th>Serial Number</th>
+                  <th>Connected Device</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat = "NewNetDevice in NewNetDevices">
-                  <td><input type="text" class="form-control" placeholder="type" ng-model="NewNetDevice.type"></td>
+                  <!-- <td><input type="text" class="form-control" placeholder="type" ng-model="NewNetDevice.type"></td> -->
+                  <td>
+                    <select class="form-control" ng-model="NewNetDevice.type">
+                          <option value="Router">Router</option>
+                          <option value="Switch">Switch</option>
+                      </select>
+                    </td>
                   <td><input type="text" class="form-control" placeholder="name" ng-model="NewNetDevice.name"></td>
                   <td><input type="text" class="form-control" placeholder="Loopback" ng-model="NewNetDevice.Loopback"></td>
                   <td><input type="text" class="form-control" placeholder="Make" ng-model="NewNetDevice.Make"></td>
                   <td><input type="text" class="form-control" placeholder="Model" ng-model="NewNetDevice.Model"></td>
                   <td><input type="text" class="form-control" placeholder="Serial_Number" ng-model="NewNetDevice.Serial_Number"></td>
+                  <td><input type="text" class="form-control" placeholder="Connected Device" ng-model="NewNetDevice.Connect_Device"></td>
                   <td>
                     <button class="btn btn-default btn-sm"  type="button" ng-click="CloneNetDevice(NewNetDevice)"><i class="fa fa-clone" aria-hidden="true"></i></button>
                     <button class="btn btn-danger btn-sm" type="button" ng-click="RemoveNetDevice(NewNetDevice)"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -210,8 +218,8 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class = "col-lg-6" >
+    <!-- </div> -->
+    <!-- <div class = "col-lg-6" > -->
       <div class="card mb-3">
         <div class="card-header">
           <i class="fa fa-table"></i> VLANS
@@ -247,8 +255,8 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    <!-- </div>
+  </div> -->
   </div>
 
   <script type="text/JavaScript" src="/js/Network/NewSite.js"></script>
