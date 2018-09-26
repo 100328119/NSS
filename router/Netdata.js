@@ -224,6 +224,12 @@ Netdata.put('/update/:id',function(req,response,nex){
 
      //add data
     if (!(Net_Device_sorted.Net_Add === undefined || Net_Device_sorted.Net_Add == 0)) {
+      // for(let i=0; i<Net_Device_sorted.Net_Add.length; i++){
+      //   console.log(Net_Device_sorted.Net_Add[i]);
+      //   qb.insert("Net_device",Net_Device_sorted.Net_Add[i],(err, res)=>{
+      //     if(err) return console.error(err);
+      //   });
+      // }
       qb.insert_batch("Net_device",Net_Device_sorted.Net_Add, (err, res)=>{
          if(err) return console.error(err);
          console.log("Netword Device ok");
