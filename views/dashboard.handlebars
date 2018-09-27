@@ -70,7 +70,6 @@
           <table class="table table-striped table-hover table-sm" id="VlanTable" ng-table="VlanTable" width="100%" cellspacing="0" ui-jq="dataTable" ui-options="dataTableOpt">
             <thead>
               <tr>
-                <th>#</th>
                 <th>Number</th>
                 <th>Description</th>
               {{#if isAuthenticated}}
@@ -80,7 +79,6 @@
             </thead>
             <tbody>
               <tr ng-repeat=" vlan in vlans track by $index">
-                <td>{[{vlan.id}]}</td>
                 <td>{[{vlan.vlan_number}]}</td>
                 <td>{[{vlan.Description}]}</td>
                 {{#if isAuthenticated}}
@@ -151,7 +149,7 @@
                 </div>
               </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="editVlan()">Save</button>
+                <button type="button" class="btn btn-primary " data-dismiss="modal"ng-click="editVlan()">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -174,7 +172,7 @@
           </div>
       </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="editCate()">Save</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal"ng-click="editCate()">Save</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
           </div>
@@ -198,7 +196,7 @@
                 </div>
               </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="addVlan()">Save</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"ng-click="addVlan()">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -219,7 +217,7 @@
                   </div>
                 </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="addCate()">Save</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addCate()">Save</button>
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               </div>
           </div>

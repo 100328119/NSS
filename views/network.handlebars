@@ -1,24 +1,43 @@
 <!-- ng-app="myApp" -->
 <style>
-.chat {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.chat
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
-.chat li {
-  margin-bottom: 10px;
-  padding-bottom: 5px;
-  border-bottom: 1px dotted #999999;
+
+.chat li
+{
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
 }
-.chat li.left .chat-body {
-  margin-left: 60px;
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
 }
-.chat li.right .chat-body {
-  margin-right: 60px;
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
 }
-.chat li .chat-body p {
-  margin: 0;
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+    color: #777777;
 }
+
+
+.chatcard-body
+{
+    overflow-y: scroll;
+    height: 250px;
+}
+
 </style>
 <div ng-controller="myController" ng-init="NetworkInit()">
 <ol class="breadcrumb">
@@ -29,11 +48,13 @@
 </ol>
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 			<h2 class="h2">#{[{Network.network_info.N_Number}]} - {[{Network.network_info.N_Name}]}   {[{Network.network_info.Category}]}</h2>
+      <h2 style="background-color:red;color:white; width: 237px; height: 40px; text-align: center;">CONFIDENTIAL</h2>
+      <img src="/img/LDBLogo.png" width="200px">
 			{{#if isAuthenticated}}
 			<div class="btn-toolbar mb-2 mb-md-0">
 				<div class="btn-group mr-2">
-					<button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#SaveNetwork" >Save</button>
-					<button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#DeleteNetwork">Delete</button>
+					<!-- <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#SaveNetwork" >Save</button> -->
+					<button class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#DeleteNetwork">Delete</button>
 				</div>
 			</div>
 			{{/if}}
@@ -70,7 +91,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="End_Device in Network.End_Devices | filter:{Status:'!-1'}">
+						<tr ng-repeat="End_Device in Network.End_Devices">
 								<td>{[{End_Device.ip}]}</td>
 								<td>{[{End_Device.name}]}</td>
 								<td>{[{End_Device.VLAN_ID}]}</td>
@@ -83,8 +104,8 @@
 								<td>{[{End_Device.NetDevice}]}</td>
 								{{#if isAuthenticated}}
 								<td>
-									<button class="btn btn-default btn-sm"  type="button" ng-click="selectItem(End_Device)" data-toggle="modal" data-target="#EditEndDevice" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
-									<button class="btn btn-danger btn-sm" type="button" ng-click="selectItem(End_Device)" data-toggle="modal" data-target="#myModalDelete" ><i class="fa fa-trash" aria-hidden="true"></i></button>
+									<button class="btn btn-default btn-sm"  type="button" ng-click="selectEndDevice(End_Device)" data-toggle="modal" data-target="#EditEndDevice" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+									<button class="btn btn-danger btn-sm" type="button" ng-click="selectEndDevice(End_Device)" data-toggle="modal" data-target="#myModalDelete" ><i class="fa fa-trash" aria-hidden="true"></i></button>
 							</td>
 							{{/if}}
 						</tr>
@@ -131,90 +152,87 @@
 	</div>
 	<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
 	</div>
-	<div class="chat-panel card mb-3">
-                        <div class="card-header">
-                            <i class="fa fa-comments fa-fw"></i> Notes
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="card-body">
-                            <ul class="chat">
-                                <li class="left clearfix">
-                                    <span class="chat-img pull-left">
-                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <strong class="primary-font">Jack Sparrow</strong>
-                                            <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 12 mins ago
-                                            </small>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="right clearfix">
-                                    <span class="chat-img pull-right">
-                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <small class=" text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
-                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="left clearfix">
-                                    <span class="chat-img pull-left">
-                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <strong class="primary-font">Jack Sparrow</strong>
-                                            <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 14 mins ago</small>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="right clearfix">
-                                    <span class="chat-img pull-right">
-                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <small class=" text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 15 mins ago</small>
-                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.panel-body -->
-                        <div class="card-footer">
-                            <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn-chat">
-                                        Send
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- /.panel-footer -->
-                    </div>
-                    <!-- /.panel .chat-panel -->
+              <div class="card mb-3">
+                  <div class="card-header" id="accordion">
+                      <i class="fa fa-history"></i> Notes
+                      <div class="btn-group pull-right">
+                          <a type="button" class="btn btn-primary btn-sm pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                              <i class="fa fa-caret-down"></i>
+                          </a>
+                      </div>
+                  </div>
+              <div class="card-collapse collapse" id="collapseOne">
+                  <div class="card-body chatcard-body">
+                      <ul class="chat">
+                          <li class="left clearfix"><span class="chat-img pull-left">
+                              <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                          </span>
+                              <div class="chat-body clearfix">
+                                  <div class="header">
+                                      <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
+                                          <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                  </div>
+                                  <p>
+                                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                      dolor, quis ullamcorper ligula sodales.
+                                  </p>
+                              </div>
+                          </li>
+                          <li class="right clearfix"><span class="chat-img pull-right">
+                              <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
+                          </span>
+                              <div class="chat-body clearfix">
+                                  <div class="header">
+                                      <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
+                                      <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                                  </div>
+                                  <p>
+                                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                      dolor, quis ullamcorper ligula sodales.
+                                  </p>
+                              </div>
+                          </li>
+                          <li class="left clearfix"><span class="chat-img pull-left">
+                              <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                          </span>
+                              <div class="chat-body clearfix">
+                                  <div class="header">
+                                      <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
+                                          <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
+                                  </div>
+                                  <p>
+                                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                      dolor, quis ullamcorper ligula sodales.
+                                  </p>
+                              </div>
+                          </li>
+                          <li class="right clearfix"><span class="chat-img pull-right">
+                              <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
+                          </span>
+                              <div class="chat-body clearfix">
+                                  <div class="header">
+                                      <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>15 mins ago</small>
+                                      <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                                  </div>
+                                  <p>
+                                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                      dolor, quis ullamcorper ligula sodales.
+                                  </p>
+                              </div>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="card-footer">
+                      <div class="input-group">
+                          <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                          <span class="input-group-btn">
+                              <button class="btn btn-warning btn-sm" id="btn-chat">
+                                  Send</button>
+                          </span>
+                      </div>
+                  </div>
+              </div>
+              </div>
 </div>
 </div>
 	<div class="card mb-3">
@@ -430,7 +448,7 @@
 						</div>
 			      </div>
 			      <div class="modal-footer">
-							<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="addEndDevice();">Save</button>
+							<button type="button" class="btn btn-primary " data-dismiss="modal" ng-click="addEndDevice();">Save</button>
 			        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="NewEndevice={}">Close</button>
 			      </div>
 						</form>
@@ -511,7 +529,7 @@
 					</form>
 			      </div>
 			      <div class="modal-footer">
-							<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="editEndDevice()">Save</button>
+							<button type="button" class="btn btn-primary " data-dismiss="modal"ng-click="editEndDevice()">Save</button>
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			      </div>
 			    </div>
@@ -533,7 +551,7 @@
 	        <br/>
 	      </div>
 	      <div class="modal-footer">
-	      <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="deleteEndDevice()">Confirm</button>
+	      <button type="button" class="btn btn-primary " data-dismiss="modal" ng-click="deleteEndDevice()">Confirm</button>
 	        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
 	      </div>
 	    </div>
@@ -609,7 +627,7 @@
 							</div>
 				      </div>
 				      <div class="modal-footer">
-								<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="addWAN();">Save</button>
+								<button type="button" class="btn btn-primary " data-dismiss="modal" ng-click="addWAN();">Save</button>
 				        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="NewWAN={}">Close</button>
 				      </div>
 
@@ -685,7 +703,7 @@
 									</div>
 					      </div>
 					      <div class="modal-footer">
-									<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="editWAN()">Save</button>
+									<button type="button" class="btn btn-primary " data-dismiss="modal"ng-click="editWAN()">Save</button>
 					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					      </div>
 				    </div>
@@ -707,7 +725,7 @@
 		        <br/>
 		      </div>
 		      <div class="modal-footer">
-		      <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="deleteWAN()">Confirm</button>
+		      <button type="button" class="btn btn-primary " data-dismiss="modal" ng-click="deleteWAN()">Confirm</button>
 		        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
 		      </div>
 		    </div>
@@ -767,7 +785,7 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="addNetDevice();">Save</button>
+								<button type="button" class="btn btn-primary " data-dismiss="modal" ng-click="addNetDevice();">Save</button>
 								<button type="button" class="btn btn-default" data-dismiss="modal"ng-click="NewNetDevice={}">Close</button>
 							</div>
 						</div>
@@ -826,7 +844,7 @@
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="editNewNetDevice()">Save</button>
+									<button type="button" class="btn btn-primary " data-dismiss="modal"ng-click="editNewNetDevice()">Save</button>
 									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 								</div>
 						</div>
@@ -848,7 +866,7 @@
 						<br/>
 					</div>
 					<div class="modal-footer">
-					<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="deleteNewNetDevice()">Confirm</button>
+					<button type="button" class="btn btn-primary " data-dismiss="modal" ng-click="deleteNewNetDevice()">Confirm</button>
 						<button type="button" class="btn btn-default pull-right" data-dismiss="modal">No</button>
 					</div>
 				</div>
@@ -889,7 +907,7 @@
 							</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="addVLAN();">Save</button>
+								<button type="button" class="btn btn-primary " data-dismiss="modal" ng-click="addVLAN();">Save</button>
 								<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="NewVLAN = {}">Close</button>
 							</div>
 				</div>
@@ -929,7 +947,7 @@
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="editVlan()">Save</button>
+									<button type="button" class="btn btn-primary " data-dismiss="modal"ng-click="editVlan()">Save</button>
 									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 								</div>
 						</div>
@@ -950,7 +968,7 @@
 						<h3 style='color: red'>{[{selectedVlan_number}]} {[{vlan_description}]}  {[{selectedItem.Gateway}]}</h3>
 					</div>
 					<div class="modal-footer">
-					<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="deleteVlan()">Confirm</button>
+					<button type="button" class="btn btn-primary " data-dismiss="modal" ng-click="deleteVlan()">Confirm</button>
 						<button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
 					</div>
 				</div>
@@ -1009,7 +1027,7 @@
 										</div>
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-primary mr-auto" data-dismiss="modal"ng-click="editNetwork()">Save</button>
+										<button type="button" class="btn btn-primary " data-dismiss="modal"ng-click="editNetwork()">Save</button>
 										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 									</div>
 							</div>
@@ -1060,7 +1078,7 @@
 					 <h3 style='color: red'>Confirm to Delete {[{Network.network_info.N_Name}]}</h3>
 				 </div>
 				 <div class="modal-footer">
-				 <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="deleteNet()">Confirm</button>
+				 <button type="button" class="btn btn-primary " data-dismiss="modal" ng-click="deleteNet()">Confirm</button>
 					 <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
 				 </div>
 			 </div>

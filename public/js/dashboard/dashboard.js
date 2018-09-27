@@ -19,9 +19,10 @@ nss.controller("dashController", function($scope,$http,$window){
         $scope.vlans = angular.copy(res.data);
         angular.element(document).ready(function () {
           angular.element('#VlanTable').DataTable({
-             columnDefs: [
-              { type: 'numeric-comma', targets: 1 }
-             ]
+          "order": [[ 0, "asc" ]],
+          "columnDefs": [
+                { "type": "numeric-comma", targets: 0 }
+            ]
            });
         });
       }, function errorCallback(res){
@@ -31,7 +32,6 @@ nss.controller("dashController", function($scope,$http,$window){
     $http.get('/api/Netdata/category')
       .then(function(response){
         $scope.Cates = angular.copy(response.data);
-        console.log($scope.Cates);
         angular.element(document).ready(function () {
           angular.element('#CateTable').DataTable();
           });
@@ -59,14 +59,22 @@ nss.controller("dashController", function($scope,$http,$window){
       // vlan function
       $scope.selectVlan = function(vlan){
         $scope.selectedItem = angular.copy(vlan);
-        $scope.currentIndex = $scope.vlans.indexOf(vlan);
-        console.log($scope.selectedItem);
       };
 
       $scope.addVlan = function(){
          $http.post('/api/Netdata/NewVlan',$scope.newVlan)
           .then(function successCallback(res){
-             $scope.newVlan = res.data;
+            angular.element('#VlanTable').DataTable().destroy();
+            $scope.vlans = angular.copy(res.data);
+            angular.element(document).ready(function () {
+              angular.element('#VlanTable').DataTable({
+                "order": [[ 0, "asc" ]],
+                "columnDefs": [
+                      { "type": "numeric-comma", targets: 0 }
+                  ]
+                });
+            });
+            $scope.newVlan = {};
           }, function errorCallback(res){
             console.log(res);
           });
@@ -75,7 +83,17 @@ nss.controller("dashController", function($scope,$http,$window){
       $scope.editVlan = function(){
           $http.put('/api/Netdata/UpdataVlan', $scope.selectedItem)
             .then(function successCallback(res){
+                angular.element('#VlanTable').DataTable().destroy();
                 $scope.vlans = angular.copy(res.data);
+                angular.element(document).ready(function () {
+                  angular.element('#VlanTable').DataTable({
+                    "order": [[ 0, "asc" ]],
+                    "columnDefs": [
+                          { "type": "numeric-comma", targets: 0 }
+                      ]
+                    });
+                });
+                $scope.selectedItem = {};
             }, function errorCallback(res){
                 console.log(res);
             });
@@ -90,7 +108,12 @@ nss.controller("dashController", function($scope,$http,$window){
       console.log("add new cate");
        $http.post('/api/Netdata/NewCategory',$scope.newCate)
         .then(function successCallback(res){
-           $scope.Cates = res.data;
+           angular.element('#CateTable').DataTable().destroy();
+           $scope.Cates = angular.copy(res.data);
+           angular.element(document).ready(function () {
+             angular.element('#CateTable').DataTable();
+           });
+           $scope.newCate = {};
         }, function errorCallback(res){
           console.log(res);
         });
@@ -100,6 +123,11 @@ nss.controller("dashController", function($scope,$http,$window){
           $http.put('/api/Netdata/UpdateCate', $scope.selectedItem)
             .then(function successCallback(res){
                 $scope.Cates = angular.copy(res.data);
+                angular.element('#CateTable').DataTable().destroy();
+                $scope.Cates = angular.copy(res.data);
+                angular.element(document).ready(function () {
+                  angular.element('#CateTable').DataTable();
+                });
             }, function errorCallback(res){
                 console.log(res);
             });

@@ -21,7 +21,7 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 				.then(function(response){
 					$scope.Network = angular.copy(response.data);
 					angular.element(document).ready(function () {
-						angular.element('#EndDtable').DataTable({
+					 angular.element('#EndDtable').DataTable({
 						     columnDefs: [
 						       { type: 'ip-address', targets: 0 }
 						     ]
@@ -48,8 +48,6 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 				}, function errorCallback(res){
 					console.log(res.data);
 				});
-
-				$scope.newUpdate.Update_date = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
 			};
 
 		  $scope.SaveNetwork = function(){
@@ -79,33 +77,68 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 						console.log(res.data);
 					});
 				}
+
   //End Device function add, update, Delete
   // status of object add = 1 ;update = 0; Delete = -1;
-  $scope.selectItem = function(SelectedItem){
-    $scope.CurrentIndex = $scope.Network.End_Devices.indexOf(SelectedItem);
+  $scope.selectEndDevice = function(SelectedItem){
     $scope.selectedItem = angular.copy(SelectedItem);
 		console.log($scope.selectedItem);
   };
 
   $scope.addEndDevice = function(){
-    $scope.NewEndevice.Status = 1;
 		$scope.NewEndevice.net_id = $scope.id;
-    $scope.Network.End_Devices.push($scope.NewEndevice);
-    $scope.NewEndevice = {};
+		$http.post('/api/Netdata/end_device/'+$scope.id,$scope.NewEndevice)
+			.then(function successCallback(res){
+				angular.element('#EndDtable').DataTable().destroy();
+				$scope.Network.End_Devices = angular.copy(res.data);
+				angular.element(document).ready(function () {
+					 angular.element('#EndDtable').DataTable({
+								columnDefs: [
+									{ type: 'ip-address', targets: 0 }
+								]
+						 });
+				 });
+			}, function errorCallback(res){
+				console.log(res);
+			});
   };
 
   $scope.editEndDevice = function(){
-      //$scope.Network.End_Device[$scope.CurrentIndex] = $scope.selectedItem;
-      $scope.selectedItem.Status = 0;
-			$scope.tempEndDevice = angular.copy($scope.Network.End_Devices);
-      $scope.tempEndDevice[$scope.CurrentIndex]=$scope.selectedItem;
-			$scope.Network.End_Devices = angular.copy($scope.tempEndDevice);
-			// angular.element('#EndDtable').DataTable().draw();
+		$http.put('/api/Netdata/end_device/'+$scope.id,$scope.selectedItem)
+			.then(function successCallback(res){
+				angular.element('#EndDtable').DataTable().destroy();
+				$scope.Network.End_Devices = angular.copy(res.data);
+				angular.element(document).ready(function () {
+					 angular.element('#EndDtable').DataTable({
+								columnDefs: [
+									{ type: 'ip-address', targets: 0 }
+								]
+						 });
+				 });
+				 $scope.selectedItem={};
+			}, function errorCallback(res){
+				$scope.selectedItem={};
+				console.log(res);
+			});
   };
 
   $scope.deleteEndDevice = function(){
-    $scope.Network.End_Devices[$scope.CurrentIndex].Status = -1;
-    console.log($scope.Network.End_Device);
+		$http.delete('/api/Netdata/end_device/'+$scope.id+'/'+$scope.selectedItem.id)
+			.then(function successCallback(res){
+				angular.element('#EndDtable').DataTable().destroy();
+				$scope.Network.End_Devices = angular.copy(res.data);
+				angular.element(document).ready(function () {
+					 angular.element('#EndDtable').DataTable({
+								columnDefs: [
+									{ type: 'ip-address', targets: 0 }
+								]
+						 });
+				 });
+				 $scope.selectedItem={};
+			}, function errorCallback(res){
+				$scope.selectedItem={};
+				console.log(res);
+			});
   };
   //end of EnddEVICE Section
 

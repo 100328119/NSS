@@ -224,12 +224,6 @@ Netdata.put('/update/:id',function(req,response,nex){
 
      //add data
     if (!(Net_Device_sorted.Net_Add === undefined || Net_Device_sorted.Net_Add == 0)) {
-      // for(let i=0; i<Net_Device_sorted.Net_Add.length; i++){
-      //   console.log(Net_Device_sorted.Net_Add[i]);
-      //   qb.insert("Net_device",Net_Device_sorted.Net_Add[i],(err, res)=>{
-      //     if(err) return console.error(err);
-      //   });
-      // }
       qb.insert_batch("Net_device",Net_Device_sorted.Net_Add, (err, res)=>{
          if(err) return console.error(err);
          console.log("Netword Device ok");
@@ -287,7 +281,80 @@ Netdata.delete('/delete/:id', function(req,response,nex){
   })
 });
 
-//category relate feature.
+
+//end device CRUD
+Netdata.get('/end_device/:net_id', function(req, response, nex){
+  db.get_connection(qb=>{
+    qb.select('*').where({'net_id':req.params.net_id}).get('End_Device',(err,res)=>{
+      qb.release();
+      if(err){
+        console.error(err)
+        return response.sendStatus(400);
+      };
+      return response.send(res);
+    });
+  })
+})
+
+Netdata.post('/end_device/:net_id', function(req, response, nex){
+  db.get_connection(qb=>{
+    qb.insert('End_Device',req.body,(err, res)=>{
+      if(err) {
+        console.error(err);
+        return response.sendStatus(400);
+      };
+        qb.select('*').where({'net_id':req.params.net_id}).get('End_Device',(err,res)=>{
+          qb.release();
+          if(err){
+            console.error(err)
+            return response.sendStatus(400);
+          };
+          console.log(res);
+          return response.send(res);
+        });
+    })
+  })
+})
+
+Netdata.put('/end_device/:net_id', function(req, response, nex){
+   db.get_connection(qb=>{
+     qb.update('End_Device',req.body,{id:req.body.id}, (err, res)=>{
+       if(err){
+         console.error(err);
+         return response.sendStatus(400);
+       }
+       qb.select('*').where({'net_id':req.params.net_id}).get('End_Device',(err,res)=>{
+         qb.release();
+         if(err){
+           console.error(err)
+           return response.sendStatus(400);
+         };
+         return response.send(res);
+       });
+     })
+   })
+})
+
+Netdata.delete('/end_device/:net_id/:end_device_id', function(req, response, nex){
+  db.get_connection(qb=>{
+    qb.delete('End_Device',{id:req.params.end_device_id}, (err, res)=>{
+      if(err){
+        console.log(err);
+        return response.sendStatus(400);
+      };
+      qb.select('*').where({'net_id':req.params.net_id}).get('End_Device',(err,res)=>{
+        qb.release();
+        if(err){
+          console.error(err)
+          return response.sendStatus(400);
+        };
+        return response.send(res);
+      });
+    })
+  })
+})
+
+//category CRUD.
 Netdata.get('/category',(req,response,nex)=>{
    db.get_connection(qb=>{
      qb.select('*').get('Category',(err,res)=>{
@@ -344,7 +411,7 @@ Netdata.post('/NewCategory', (req,response, nex)=>{
   })
 })
 
-// vlan relate Netdata
+// vlan CRUD
 Netdata.get('/Vlan', (res, response, nex)=>{
    db.get_connection(qb=>{
      qb.select('*').get('vlan',(err,res)=>{
@@ -354,7 +421,6 @@ Netdata.get('/Vlan', (res, response, nex)=>{
      })
    })
 });
-
 Netdata.post('/NewVlan', (req,response, nex)=>{
   console.log(req.body);
   db.get_connection(qb=>{
@@ -374,7 +440,6 @@ Netdata.post('/NewVlan', (req,response, nex)=>{
     })
   })
 })
-
 Netdata.put('/UpdataVlan', (req, response, nex)=>{
   db.get_connection(qb=>{
     qb.update('vlan',req.body,{id:req.body.id},(err, res)=>{
