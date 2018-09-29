@@ -50,42 +50,12 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 				});
 			};
 
-		  $scope.SaveNetwork = function(){
-		    console.log("save fired");
-		    console.log($scope.Network);
-				$scope.newUpdate.Update_date = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-				$scope.newUpdate.net_id = $scope.id;
-				$scope.Network.Update_history = $scope.newUpdate;
-				delete $scope.Network.network_info.Category;
-				console.log($scope.Network);
-		     $http.put('/api/Netdata/update/'+$scope.id,$scope.Network)
-		      .then(function successCallback(response){
-		         console.log(response);
-						 if(response.status === 200){
-							  $window.location.reload();
-						 }
-		      },function errorCallback(response){
-		          console.log(response);
-		      });
-				};
-
-				$scope.deleteNet = function(){
-					$http.delete('/api/Netdata/delete/'+$scope.id)
-					.then(function successCallback(res){
-						 $window.location.href = '/dashboard';
-					}, function errorCallback(res){
-						console.log(res.data);
-					});
-				}
-
-  //End Device function add, update, Delete
-  // status of object add = 1 ;update = 0; Delete = -1;
-  $scope.selectEndDevice = function(SelectedItem){
+//--------------------end device CRUD------------------------------//
+	$scope.selectEndDevice = function(SelectedItem){
     $scope.selectedItem = angular.copy(SelectedItem);
-		console.log($scope.selectedItem);
   };
 
-  $scope.addEndDevice = function(){
+	$scope.addEndDevice = function(){
 		$scope.NewEndevice.net_id = $scope.id;
 		$http.post('/api/Netdata/end_device/'+$scope.id,$scope.NewEndevice)
 			.then(function successCallback(res){
@@ -98,7 +68,9 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 								]
 						 });
 				 });
+				 $scope.NewEndevice={};
 			}, function errorCallback(res){
+				$scope.NewEndevice={};
 				console.log(res);
 			});
   };
@@ -120,9 +92,10 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 				$scope.selectedItem={};
 				console.log(res);
 			});
-  };
+  }
 
   $scope.deleteEndDevice = function(){
+		console.log('/api/Netdata/end_device/'+$scope.id+'/'+$scope.selectedItem.id);
 		$http.delete('/api/Netdata/end_device/'+$scope.id+'/'+$scope.selectedItem.id)
 			.then(function successCallback(res){
 				angular.element('#EndDtable').DataTable().destroy();
@@ -140,94 +113,164 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 				console.log(res);
 			});
   };
-  //end of EnddEVICE Section
 
-  //start WAN function
+  //------------------ WAN function ----------------------------//
   $scope.selectWAN = function(wan){
-    $scope.CurrentIndex = $scope.Network.WANs.indexOf(wan);
     $scope.selectedItem = angular.copy(wan);
   };
 
   $scope.addWAN = function(){
-    $scope.NewWAN.Status = 1;
 		$scope.NewWAN.net_id = $scope.id;
-    $scope.Network.WANs.push($scope.NewWAN);
-    $scope.NewWAN = {};
+		$http.post('/api/Netdata/WAN/'+$scope.id, $scope.NewWAN)
+			.then(function successCallback(res){
+				angular.element('#WANTable').DataTable().destroy();
+				$scope.Network.WANs = angular.copy(res.data);
+				angular.element(document).ready(function () {
+					 angular.element('#WANTable').DataTable();
+				 })
+				 $scope.NewWAN = {};
+			}, function errorCallback(res){
+				$scope.NewWAN = {};
+				console.log(res);
+			});
   };
 
   $scope.editWAN = function(){
-      //$scope.Network.End_Device[$scope.CurrentIndex] = $scope.selectedItem;
-      $scope.selectedItem.Status = 0;
-			$scope.tempWAN = angular.copy($scope.Network.WANs);
-      $scope.tempWAN[$scope.CurrentIndex]=$scope.selectedItem;
-			$scope.Network.WANs = angular.copy($scope.tempWAN);
+			$http.put('/api/Netdata/WAN/'+$scope.id,$scope.selectedItem)
+				.then(function successCallback(res){
+					angular.element('#WANTable').DataTable().destroy();
+					$scope.Network.WANs = angular.copy(res.data);
+					angular.element(document).ready(function () {
+						 angular.element('#WANTable').DataTable();
+					 });
+					 $scope.selectedItem={};
+				}, function errorCallback(res){
+					$scope.selectedItem={};
+					console.log(res);
+				});
   };
 
   $scope.deleteWAN = function(){
-    $scope.Network.WANs[$scope.CurrentIndex].Status = -1;
+		console.log($scope.selectedItem.id);
+		$http.delete('/api/Netdata/WAN/'+$scope.id+'/'+$scope.selectedItem.id)
+			.then(function successCallback(res){
+				angular.element('#WANTable').DataTable().destroy();
+				$scope.Network.WANs = angular.copy(res.data);
+				angular.element(document).ready(function () {
+					 angular.element('#WANTable').DataTable();
+				 });
+				 $scope.selectedItem={};
+			}, function errorCallback(res){
+				$scope.selectedItem={};
+				console.log(res);
+			});
   };
 
-  //start Router/switch
+  //------------------------------ Router/switch-----------------------------------//
   $scope.selectNetDevice = function(netdevice){
-    $scope.CurrentIndex = $scope.Network.Net_devices.indexOf(netdevice);
     $scope.selectedItem = angular.copy(netdevice);
   };
 
   $scope.addNetDevice = function(){
-    $scope.NewNetDevice.Status = 1;
-		$scope.NewNetDevice.net_id = $scope.id;
-    $scope.Network.Net_devices.push($scope.NewNetDevice);
-    $scope.NewNetDevice = {};
+    $scope.NewNetDevice.net_id = $scope.id;
+		$http.post('/api/Netdata/net_device/'+$scope.id,$scope.NewNetDevice)
+			.then(function successCallback(res){
+				angular.element('#NDeviceTable').DataTable().destroy();
+				$scope.Network.Net_devices = angular.copy(res.data);
+				angular.element(document).ready(function () {
+					 angular.element('#NDeviceTable').DataTable();
+				 });
+				 $scope.NewNetDevice={};
+			}, function errorCallback(res){
+				$scope.NewNetDevice={};
+				console.log(res);
+			});
   };
 
   $scope.editNewNetDevice = function(){
-      $scope.selectedItem.Status = 0;
-			$scope.tempNet_devices = angular.copy($scope.Network.Net_devices);
-      $scope.tempNet_devices[$scope.CurrentIndex]=$scope.selectedItem;
-			$scope.Network.Net_devices = angular.copy($scope.tempNet_devices);
-			console.log($scope.Network.Net_devices);
+			$http.put('/api/Netdata/net_device/'+$scope.id,$scope.selectedItem)
+				.then(function successCallback(res){
+					angular.element('#NDeviceTable').DataTable().destroy();
+					$scope.Network.Net_devices = angular.copy(res.data);
+					angular.element(document).ready(function () {
+						 angular.element('#NDeviceTable').DataTable();
+					 });
+					 $scope.selectedItem={};
+				}, function errorCallback(res){
+					$scope.selectedItem={};
+					console.log(res);
+				});
   };
 
   $scope.deleteNewNetDevice = function(){
-    $scope.Network.Net_devices[$scope.CurrentIndex].Status = -1;
+		$http.delete('/api/Netdata/net_device/'+$scope.id+'/'+$scope.selectedItem.id)
+			.then(function successCallback(res){
+				angular.element('#NDeviceTable').DataTable().destroy();
+				$scope.Network.Net_devices = angular.copy(res.data);
+				console.log($scope.Network.Net_devices);
+				angular.element(document).ready(function () {
+					 angular.element('#NDeviceTable').DataTable();
+				 });
+				 $scope.selectedItem={};
+			}, function errorCallback(res){
+				$scope.selectedItem={};
+				console.log(res);
+			});
   };
 
   //start VLAN
   $scope.selectedVLAN = function(vlan){
 		$scope.selectedVlan_number = vlan.vlan_id;
 		$scope.vlan_description = $scope.vlans[$scope.selectedVlan_number-1].Description;
-		console.log($scope.selectedVlan_number);
-    $scope.CurrentIndex = $scope.Network.VlanNetwork.indexOf(vlan);
     $scope.selectedItem = angular.copy(vlan);
   };
 
 	$scope.VlanChange = function(selectedVlan_number){
-		console.log(selectedVlan_number);
 		$scope.vlan_description = $scope.vlans[selectedVlan_number-1].Description;
-		// $scope.selectedItem.net_id = selectedVLANitem.id;
 	};
 
   $scope.addVLAN = function(){
-    $scope.NewVLAN.Status = 1;
 		$scope.NewVLAN.vlan_id = $scope.selectedVlan_number;
 		$scope.NewVLAN.net_id = $scope.id;
-		console.log($scope.NewVLAN);
-    $scope.Network.VlanNetwork.push($scope.NewVLAN);
-    $scope.NewVLAN = {};
+		$http.post('/api/Netdata/VlanNetwork/'+$scope.id,$scope.NewVLAN)
+			.then(function successCallback(res){
+				angular.element('#VLANTable').DataTable().destroy();
+				$scope.Network.VlanNetwork = angular.copy(res.data);
+				angular.element(document).ready(function () {
+					 angular.element('#VLANTable').DataTable();
+				 })
+				 $scope.NewVLAN={};
+			}, function errorCallback(res){
+				console.log(res);
+				$scope.NewVLAN={};
+			});
   };
 
   $scope.editVlan = function(){
-      //$scope.Network.End_Device[$scope.CurrentIndex] = $scope.selectedItem;
-      $scope.selectedItem.Status = 0;
 			$scope.selectedItem.vlan_id = $scope.selectedVlan_number;
-			console.log($scope.selectedItem.vlan_id);
-			$scope.TempVlanNetwork = angular.copy($scope.Network.VlanNetwork);
-      $scope.TempVlanNetwork[$scope.CurrentIndex]=$scope.selectedItem;
-			$scope.Network.VlanNetwork = angular.copy($scope.TempVlanNetwork);
+			$http.put('/api/Netdata/VlanNetwork/'+$scope.id,$scope.selectedItem)
+				.then(function successCallback(res){
+					angular.element('#VLANTable').DataTable().destroy();
+					$scope.Network.VlanNetwork = angular.copy(res.data);
+					angular.element(document).ready(function () {
+						 angular.element('#VLANTable').DataTable();
+					 })
+				}, function errorCallback(res){
+					console.log(res);
+				});
   };
 
   $scope.deleteVlan = function(){
-    $scope.Network.VlanNetwork[$scope.CurrentIndex].Status = -1;
+		$http.delete('/api/Netdata/VlanNetwork/'+$scope.id+'/'+$scope.selectedItem.id)
+			.then(function successCallback(res){
+				angular.element('#VLANTable').DataTable().destroy();
+				$scope.Network.VlanNetwork = angular.copy(res.data);
+				angular.element(document).ready(function () {
+					 angular.element('#VLANTable').DataTable();
+				 })
+			}, function errorCallback(res){
+				console.log(res);
+			});
   };
 
 	$scope.selectNetwork = function(){
@@ -241,7 +284,20 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 	};
 
 	$scope.editNetwork = function(){
-		$scope.Network.network_info = angular.copy($scope.selectedItem);
-		console.log($scope.Network.network_info)
+		// $scope.Network.network_info = angular.copy($scope.selectedItem);
+		delete $scope.selectedItem.Category;
+		$http.put('/api/Netdata/networkinfo/'+$scope.id,$scope.selectedItem)
+		.then(function successCallback(res){
+			console.log(res.data);
+			$scope.Network.network_info = angular.copy(res.data);
+			$scope.selectedItem={};
+		}, function errorCallback(res){
+			$scope.selectedItem={};
+			console.log(res);
+		});
 	};
+
+	$scope.deleteNet = function(){
+		
+	}
 });

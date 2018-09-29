@@ -575,3 +575,130 @@ let network_example = {
      }
    }
  }
+ Netdata.put('/update/:id',function(req,response,nex){
+   //update
+   let net = new network();
+   //sort out data
+   let Net_Device_sorted = net.clearNetDevice(req.body.Net_devices);
+   let End_Device_sorted = net.clearEndDevice(req.body.End_Devices);
+   let WAN_sorted = net.clearWAN(req.body.WANs);
+   let VlanNetwork_sorted = net.clearVlanWork(req.body.VlanNetwork);
+
+   db.get_connection(qb=>{
+     // update data
+     qb.update('network',req.body.network_info,{id:req.params.id},(err,res)=>{
+       if(err) return console.error(err);
+       console.log(res);
+     });
+     if (!(End_Device_sorted.End_update === undefined || End_Device_sorted.End_update.length == 0)) {
+       for(let i=0; i<End_Device_sorted.End_update.length; i++){
+         qb.update('end_device',End_Device_sorted.End_update[i],{id:End_Device_sorted.End_update[i].id}, (err, res)=>{
+           if(err) return console.error(err);
+           console.log(res);
+         })
+       };
+     };
+     if (!(Net_Device_sorted.Net_update === undefined || Net_Device_sorted.Net_update.length == 0)) {
+       //update net device
+       for(let i=0; i<Net_Device_sorted.Net_update.length; i++){
+         qb.update('net_device',Net_Device_sorted.Net_update[i],{id:Net_Device_sorted.Net_update[i].id}, (err, res)=>{
+           if(err) return console.error(err);
+           console.log(res);
+         })
+       };
+     };
+     if (!(WAN_sorted.WANs_update === undefined || WAN_sorted.WANs_update.length == 0)) {
+       //update wan device
+       for(let i=0; i<WAN_sorted.WANs_update.length; i++){
+         qb.update('wan',WAN_sorted.WANs_update[i],{id:WAN_sorted.WANs_update[i].id}, (err, res)=>{
+           if(err) return console.error(err);
+           console.log(res);
+         })
+       };
+     }
+     if (!(VlanNetwork_sorted.VlanNetwork_update === undefined || VlanNetwork_sorted.VlanNetwork_update.length == 0)) {
+       //update wan device
+       for(let i=0; i<VlanNetwork_sorted.VlanNetwork_update.length; i++){
+         qb.update('VlanNetwork',VlanNetwork_sorted.VlanNetwork_update[i],{id:VlanNetwork_sorted.VlanNetwork_update[i].id}, (err, res)=>{
+           if(err) return console.error(err);
+           console.log(res);
+         })
+       };
+     }
+     if (!(End_Device_sorted.End_delete === undefined || End_Device_sorted.End_delete.length == 0)) {
+       //delete user
+       for(let i=0; i<End_Device_sorted.End_delete.length; i++){
+         console.log(End_Device_sorted.End_delete[i]);
+         qb.delete('end_device',{id:End_Device_sorted.End_delete[i].id}, (err, res)=>{
+           if(err) return console.error(err);
+           console.log(res);
+         });
+       };
+     };
+     if (!(Net_Device_sorted.Net_delete === undefined || Net_Device_sorted.Net_delete.length == 0)) {
+       for(let i=0; i<Net_Device_sorted.Net_delete.length; i++){
+         console.log(Net_Device_sorted.Net_delete[i]);
+         qb.delete('net_device',{id:Net_Device_sorted.Net_delete[i].id}, (err, res)=>{
+           if(err) return console.error(err);
+           console.log(res);
+         });
+       };
+     };
+     if (!(WAN_sorted.WANs_delete === undefined || WAN_sorted.WANs_delete.length == 0)) {
+       for(let i=0; i<WAN_sorted.WANs_delete.length; i++){
+         console.log(WAN_sorted.WANs_delete[i]);
+         qb.delete('wan',{id:WAN_sorted.WANs_delete[i].id}, (err, res)=>{
+           if(err) return console.error(err);
+           console.log(res);
+         });
+       };
+     };
+     if (!(VlanNetwork_sorted.VlanNetwork_delete === undefined || VlanNetwork_sorted.VlanNetwork_delete.length == 0)) {
+       for(let i=0; i<VlanNetwork_sorted.VlanNetwork_delete.length; i++){
+         console.log(VlanNetwork_sorted.VlanNetwork_delete[i]);
+         qb.delete('VlanNetwork',{id:VlanNetwork_sorted.VlanNetwork_delete[i].id}, (err, res)=>{
+           if(err) return console.error(err);
+           console.log(res);
+         })
+       };
+     };
+
+      //add data
+     if (!(Net_Device_sorted.Net_Add === undefined || Net_Device_sorted.Net_Add == 0)) {
+       qb.insert_batch("Net_device",Net_Device_sorted.Net_Add, (err, res)=>{
+          if(err) return console.error(err);
+          console.log("Netword Device ok");
+       });
+     };
+     if (!(End_Device_sorted.End_Add === undefined || End_Device_sorted.End_Add == 0)) {
+       qb.insert_batch("End_Device",End_Device_sorted.End_Add, (err, res)=>{
+          if(err) return console.error(err);
+          console.log("End_Device ok ");
+       });
+     };
+     if (!(WAN_sorted.WANs_Add === undefined || WAN_sorted.WANs_Add == 0)) {
+       qb.insert_batch("WAN",WAN_sorted.WANs_Add,(err, res)=>{
+         if(err) return console.error(err);
+         console.log("WAN ok");
+       });
+     };
+     if (!(VlanNetwork_sorted.VlanNetwork_Add === undefined || VlanNetwork_sorted.VlanNetwork_Add == 0)) {
+       qb.insert_batch("VlanNetwork",VlanNetwork_sorted.VlanNetwork_Add,(err, res)=>{
+         if(err) return console.error(err);
+         console.log("VlanNetwork ok");
+       });
+     };
+     if(!(req.body.Update_history.Description === undefined)){
+       req.body.Update_history.user_id = req.user.user_id;
+       qb.insert('update_history',req.body.Update_history,(err, res)=>{
+           qb.release();
+           if(err) return console.error(err);
+           console.log("update_history ok");
+           return response.sendStatus(200);
+       });
+     }else{
+       qb.release();
+       return response.sendStatus(200);
+     }
+   });
+ });

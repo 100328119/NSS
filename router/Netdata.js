@@ -5,7 +5,7 @@ const db = require('../model/db');
 
 
 //Restful Netdata
-// newtork data minipuplate
+//-----------------------newtork data minipuplate-------------------------//
 Netdata.get('/all',function(req,response,nex){
   //get all newtork information
    db.get_connection(qb=>{
@@ -134,133 +134,24 @@ Netdata.post('/new', function(req,response,nex){
   }
 });
 
-Netdata.put('/update/:id',function(req,response,nex){
-  //update
-  let net = new network();
-  //sort out data
-  let Net_Device_sorted = net.clearNetDevice(req.body.Net_devices);
-  let End_Device_sorted = net.clearEndDevice(req.body.End_Devices);
-  let WAN_sorted = net.clearWAN(req.body.WANs);
-  let VlanNetwork_sorted = net.clearVlanWork(req.body.VlanNetwork);
-
+Netdata.put('/networkinfo/:net_id', function(req, response, nex){
   db.get_connection(qb=>{
-    // update data
-    qb.update('network',req.body.network_info,{id:req.params.id},(err,res)=>{
-      if(err) return console.error(err);
-      console.log(res);
-    });
-    if (!(End_Device_sorted.End_update === undefined || End_Device_sorted.End_update.length == 0)) {
-      for(let i=0; i<End_Device_sorted.End_update.length; i++){
-        qb.update('end_device',End_Device_sorted.End_update[i],{id:End_Device_sorted.End_update[i].id}, (err, res)=>{
-          if(err) return console.error(err);
-          console.log(res);
-        })
-      };
-    };
-    if (!(Net_Device_sorted.Net_update === undefined || Net_Device_sorted.Net_update.length == 0)) {
-      //update net device
-      for(let i=0; i<Net_Device_sorted.Net_update.length; i++){
-        qb.update('net_device',Net_Device_sorted.Net_update[i],{id:Net_Device_sorted.Net_update[i].id}, (err, res)=>{
-          if(err) return console.error(err);
-          console.log(res);
-        })
-      };
-    };
-    if (!(WAN_sorted.WANs_update === undefined || WAN_sorted.WANs_update.length == 0)) {
-      //update wan device
-      for(let i=0; i<WAN_sorted.WANs_update.length; i++){
-        qb.update('wan',WAN_sorted.WANs_update[i],{id:WAN_sorted.WANs_update[i].id}, (err, res)=>{
-          if(err) return console.error(err);
-          console.log(res);
-        })
-      };
-    }
-    if (!(VlanNetwork_sorted.VlanNetwork_update === undefined || VlanNetwork_sorted.VlanNetwork_update.length == 0)) {
-      //update wan device
-      for(let i=0; i<VlanNetwork_sorted.VlanNetwork_update.length; i++){
-        qb.update('VlanNetwork',VlanNetwork_sorted.VlanNetwork_update[i],{id:VlanNetwork_sorted.VlanNetwork_update[i].id}, (err, res)=>{
-          if(err) return console.error(err);
-          console.log(res);
-        })
-      };
-    }
-    if (!(End_Device_sorted.End_delete === undefined || End_Device_sorted.End_delete.length == 0)) {
-      //delete user
-      for(let i=0; i<End_Device_sorted.End_delete.length; i++){
-        console.log(End_Device_sorted.End_delete[i]);
-        qb.delete('end_device',{id:End_Device_sorted.End_delete[i].id}, (err, res)=>{
-          if(err) return console.error(err);
-          console.log(res);
-        });
-      };
-    };
-    if (!(Net_Device_sorted.Net_delete === undefined || Net_Device_sorted.Net_delete.length == 0)) {
-      for(let i=0; i<Net_Device_sorted.Net_delete.length; i++){
-        console.log(Net_Device_sorted.Net_delete[i]);
-        qb.delete('net_device',{id:Net_Device_sorted.Net_delete[i].id}, (err, res)=>{
-          if(err) return console.error(err);
-          console.log(res);
-        });
-      };
-    };
-    if (!(WAN_sorted.WANs_delete === undefined || WAN_sorted.WANs_delete.length == 0)) {
-      for(let i=0; i<WAN_sorted.WANs_delete.length; i++){
-        console.log(WAN_sorted.WANs_delete[i]);
-        qb.delete('wan',{id:WAN_sorted.WANs_delete[i].id}, (err, res)=>{
-          if(err) return console.error(err);
-          console.log(res);
-        });
-      };
-    };
-    if (!(VlanNetwork_sorted.VlanNetwork_delete === undefined || VlanNetwork_sorted.VlanNetwork_delete.length == 0)) {
-      for(let i=0; i<VlanNetwork_sorted.VlanNetwork_delete.length; i++){
-        console.log(VlanNetwork_sorted.VlanNetwork_delete[i]);
-        qb.delete('VlanNetwork',{id:VlanNetwork_sorted.VlanNetwork_delete[i].id}, (err, res)=>{
-          if(err) return console.error(err);
-          console.log(res);
-        })
-      };
-    };
-
-     //add data
-    if (!(Net_Device_sorted.Net_Add === undefined || Net_Device_sorted.Net_Add == 0)) {
-      qb.insert_batch("Net_device",Net_Device_sorted.Net_Add, (err, res)=>{
-         if(err) return console.error(err);
-         console.log("Netword Device ok");
+    qb.update('network',req.body,{id:req.body.id}, (err, res)=>{
+      if(err){
+        console.error(err);
+        return response.sendStatus(400);
+      }
+      qb.select('*').where({'id':req.params.net_id}).get('network',(err,res)=>{
+        qb.release();
+        if(err){
+          console.error(err)
+          return response.sendStatus(400);
+        };
+        return response.send(res[0]);
       });
-    };
-    if (!(End_Device_sorted.End_Add === undefined || End_Device_sorted.End_Add == 0)) {
-      qb.insert_batch("End_Device",End_Device_sorted.End_Add, (err, res)=>{
-         if(err) return console.error(err);
-         console.log("End_Device ok ");
-      });
-    };
-    if (!(WAN_sorted.WANs_Add === undefined || WAN_sorted.WANs_Add == 0)) {
-      qb.insert_batch("WAN",WAN_sorted.WANs_Add,(err, res)=>{
-        if(err) return console.error(err);
-        console.log("WAN ok");
-      });
-    };
-    if (!(VlanNetwork_sorted.VlanNetwork_Add === undefined || VlanNetwork_sorted.VlanNetwork_Add == 0)) {
-      qb.insert_batch("VlanNetwork",VlanNetwork_sorted.VlanNetwork_Add,(err, res)=>{
-        if(err) return console.error(err);
-        console.log("VlanNetwork ok");
-      });
-    };
-    if(!(req.body.Update_history.Description === undefined)){
-      req.body.Update_history.user_id = req.user.user_id;
-      qb.insert('update_history',req.body.Update_history,(err, res)=>{
-          qb.release();
-          if(err) return console.error(err);
-          console.log("update_history ok");
-          return response.sendStatus(200);
-      });
-    }else{
-      qb.release();
-      return response.sendStatus(200);
-    }
-  });
-});
+    })
+  })
+})
 
 Netdata.delete('/delete/:id', function(req,response,nex){
   //remove
@@ -273,7 +164,10 @@ Netdata.delete('/delete/:id', function(req,response,nex){
        qb.delete('end_device', {Net_id: req.params.id}, (err, res) => {
           if (err) return console.error(err);
           qb.delete('network', {id: req.params.id}, (err, res) => {
-            if (err) return console.error(err);
+            if (err){
+              console.error(err);
+              return response.sendStatus(400);
+            }
             return response.sendStatus(200);
           });
         });
@@ -281,8 +175,85 @@ Netdata.delete('/delete/:id', function(req,response,nex){
   })
 });
 
+//---------------------Update history CURD------------------------------//
+Netdata.get('/update_history/:net_id', function(req, response, nex){
+  db.get_connection(qb=>{
+    qb.select(["h.*","u.email"]).from('update_history h').where({'h.net_id':req.params.net_id}).join('users u', 'u.id=h.user_id', 'left').get((err, res)=>{
+      qb.release();
+      if(err){
+        console.log(err);
+        return response.sendStatus(400);
+      }
+      return response.send(res);
+    })
+  })
+})
 
-//end device CRUD
+Netdata.post('/update_history/:net_id', function(req, response, nex){
+  if(req.isAuthenticated()){
+    req.body.user_id = req.user.user_id;
+    db.get_connection(qb=>{
+      qb.insert('update_history', req.body, (err, res)=>{
+        if(err){
+          console.log(err);
+          return response.sendStatus(400);
+        }
+        qb.select(["h.*","u.email"]).from('update_history h').join('users u', 'u.id=h.user_id', 'left').get((err, res)=>{
+          qb.release();
+          if(err){
+            console.log(err);
+            return response.sendStatus(400);
+          }
+          return response.send(res);
+        })
+      })
+    })
+  }
+ })
+
+Netdata.put('/update_history/:net_id', function(req, response, nex){
+  if(req.isAuthenticated()){
+    req.body.user_id = req.user.user_id;
+    db.get_connection(qb=>{
+      qb.update('update_history', req.body, {id:req.body.id}, (err, res)=>{
+        if(err){
+          console.log(err);
+          return response.sendStatus(400);
+        }
+        qb.select(["h.*","u.email"]).from('update_history h').join('users u', 'u.id=h.user_id', 'left').get((err, res)=>{
+          qb.release();
+          if(err){
+            console.log(err);
+            return response.sendStatus(400);
+          }
+          return response.send(res);
+        })
+      })
+    })
+  }
+})
+
+Netdata.delete('/update_history/:net_id/:update_id', function(req, response, nex){
+    if(req.isAuthenticated()){
+      db.get_connection(qb=>{
+        qb.delete('update_history',{id:req.params.update_id}, (err, res)=>{
+          if(err){
+            console.log(err);
+            return response.sendStatus(400);
+          }
+          qb.select(["h.*","u.email"]).from('update_history h').join('users u', 'u.id=h.user_id', 'left').get((err, res)=>{
+            qb.release();
+            if(err){
+              console.log(err);
+              return response.sendStatus(400);
+            }
+            return response.send(res);
+          })
+        })
+      })
+    }
+  })
+//--------------------end device CRUD------------------------------//
 Netdata.get('/end_device/:net_id', function(req, response, nex){
   db.get_connection(qb=>{
     qb.select('*').where({'net_id':req.params.net_id}).get('End_Device',(err,res)=>{
@@ -354,7 +325,220 @@ Netdata.delete('/end_device/:net_id/:end_device_id', function(req, response, nex
   })
 })
 
-//category CRUD.
+//------------------------ network device CRUD------------------------//
+Netdata.get('/net_device/:net_id', function(req, response, nex){
+  db.get_connection(qb=>{
+    qb.select('*').where({'net_id':req.params.net_id}).get('net_device',(err, res)=>{
+      qb.release();
+      if(err){
+        console.log(err);
+        return response.sendStatus(400);
+      }
+      return response.send(res);
+    })
+  })
+})
+
+Netdata.post('/net_device/:net_id', function(req, response, nex){
+  db.get_connection(qb=>{
+    qb.insert('net_device',req.body, (err, res)=>{
+      if(err){
+        console.log(err);
+        return response.sendStatus(400);
+      }
+    })
+    qb.select('*').where({'net_id':req.params.net_id}).get('net_device',(err, res)=>{
+      qb.release();
+      if(err){
+        console.log(err);
+        return response.sendStatus(400);
+      }
+      return response.send(res);
+    })
+  })
+})
+
+Netdata.put('/net_device/:net_id', function(req, response, nex){
+  db.get_connection(qb=>{
+    qb.update('net_device',req.body,{id:req.body.id}, (err, res)=>{
+      if(err){
+        console.error(err);
+        return response.sendStatus(400);
+      }
+      qb.select('*').where({'net_id':req.params.net_id}).get('net_device',(err,res)=>{
+        qb.release();
+        if(err){
+          console.error(err)
+          return response.sendStatus(400);
+        };
+        return response.send(res);
+      });
+    })
+  })
+})
+
+Netdata.delete('/net_device/:net_id/:net_device_id', function(req, response, nex){
+  db.get_connection(qb=>{
+    qb.delete('net_device',{id:req.params.net_device_id}, (err, res)=>{
+      if(err){
+        console.log(err);
+        return response.sendStatus(400);
+      };
+      qb.select('*').where({'net_id':req.params.net_id}).get('net_device',(err,res)=>{
+        qb.release();
+        if(err){
+          console.error(err)
+          return response.sendStatus(400);
+        };
+        return response.send(res);
+      });
+    })
+  })
+})
+
+//--------------------WAN CRUD-----------------------------------//
+Netdata.get('/WAN/:net_id', function(req, response, nex){
+  db.get_connection(qb=>{
+      qb.select('*').where({'net_id':req.params.net_id}).get('WAN',(err, res)=>{
+          qb.release();
+          if(err){
+            console.log(err);
+            return response.sendStatus(400);
+        }
+       return response.send(res);
+    })
+  })
+})
+
+Netdata.post('/WAN/:net_id', function(req, response, nex){
+  db.get_connection(qb=>{
+    qb.insert('WAN',req.body,(err, res)=>{
+      if(err) {
+        console.error(err);
+        return response.sendStatus(400);
+      };
+      qb.select('*').where({'net_id':req.params.net_id}).get('WAN',(err, res)=>{
+        qb.release();
+        if(err){
+          console.log(err);
+          return response.sendStatus(400);
+        }
+        return response.send(res);
+      })
+    })
+  })
+})
+
+Netdata.put('/WAN/:net_id', function(req, response, nex){
+  db.get_connection(qb=>{
+    qb.update('WAN',req.body,{id:req.body.id}, (err, res)=>{
+      if(err){
+        console.error(err);
+        return response.sendStatus(400);
+      }
+      qb.select('*').where({'net_id':req.params.net_id}).get('WAN',(err,res)=>{
+        qb.release();
+        if(err){
+          console.error(err)
+          return response.sendStatus(400);
+        };
+        return response.send(res);
+      });
+    })
+  })
+})
+
+Netdata.delete('/WAN/:net_id/:wan_id', function(req, response, nex){
+  db.get_connection(qb=>{
+    qb.delete('WAN',{id:req.params.wan_id}, (err, res)=>{
+      if(err){
+        console.log(err);
+        return response.sendStatus(400);
+      };
+      qb.select('*').where({'net_id':req.params.net_id}).get('WAN',(err,res)=>{
+        qb.release();
+        if(err){
+          console.error(err)
+          return response.sendStatus(400);
+        };
+        return response.send(res);
+      });
+    })
+  })
+})
+
+//--------------------VlanNetwork CRUD-----------------------------------//
+Netdata.get('/VlanNetwork/:net_id', function(req, response, nex){
+  db.get_connection(qb=>{
+      qb.select('*').where({'net_id':req.params.net_id}).get('VlanNetwork',(err, res)=>{
+          qb.release();
+          if(err){
+            console.log(err);
+            return response.sendStatus(400);
+        }
+       return response.send(res);
+    })
+  })
+})
+
+Netdata.post('/VlanNetwork/:net_id', function(req, response, nex){
+  db.get_connection(qb=>{
+    qb.insert('VlanNetwork',req.body,(err, res)=>{
+      if(err) {
+        console.error(err);
+        return response.sendStatus(400);
+      };
+      qb.select('*').where({'net_id':req.params.net_id}).get('VlanNetwork',(err, res)=>{
+        qb.release();
+        if(err){
+          console.log(err);
+          return response.sendStatus(400);
+        }
+        return response.send(res);
+      })
+    })
+  })
+})
+
+Netdata.put('/VlanNetwork/:net_id', function(req, response, nex){
+  db.get_connection(qb=>{
+    qb.update('VlanNetwork',req.body,{id:req.body.id}, (err, res)=>{
+      if(err){
+        console.error(err);
+        return response.sendStatus(400);
+      }
+      qb.select('*').where({'net_id':req.params.net_id}).get('VlanNetwork',(err,res)=>{
+        qb.release();
+        if(err){
+          console.error(err)
+          return response.sendStatus(400);
+        };
+        return response.send(res);
+      });
+    })
+  })
+})
+
+Netdata.delete('/VlanNetwork/:net_id/:NetDevice_id', function(req, response, nex){
+  db.get_connection(qb=>{
+    qb.delete('VlanNetwork',{id:req.params.NetDevice_id}, (err, res)=>{
+      if(err){
+        console.log(err);
+        return response.sendStatus(400);
+      };
+      qb.select('*').where({'net_id':req.params.net_id}).get('VlanNetwork',(err,res)=>{
+        qb.release();
+        if(err){
+          console.error(err)
+          return response.sendStatus(400);
+        };
+        return response.send(res);
+      });
+    })
+  })
+})
+
+//-------------------category CRUD------------------------------//
 Netdata.get('/category',(req,response,nex)=>{
    db.get_connection(qb=>{
      qb.select('*').get('Category',(err,res)=>{
@@ -365,7 +549,8 @@ Netdata.get('/category',(req,response,nex)=>{
      })
    })
 });
-Netdata.get('/NetCategoryGroup', (res, response, nex)=>{
+
+Netdata.get('/NetCategoryGroup', (req, response, nex)=>{
   db.get_connection(qb=>{
     qb.select(["c.Category as label",'count(n.id) as value']).from('network n').join('Category c','c.id=n.Category_id ','left').group_by('Category_id').get((err,res)=>{
       qb.release();
@@ -374,6 +559,7 @@ Netdata.get('/NetCategoryGroup', (res, response, nex)=>{
     });
   })
 });
+
 Netdata.put('/UpdateCate',(req,response,nex)=>{
   db.get_connection(qb=>{
     qb.update('category',req.body,{id:req.body.id},(err, res)=>{
@@ -392,6 +578,7 @@ Netdata.put('/UpdateCate',(req,response,nex)=>{
     });
   });
 })
+
 Netdata.post('/NewCategory', (req,response, nex)=>{
   db.get_connection(qb=>{
     qb.insert('Category',req.body,(err,res)=>{
@@ -411,8 +598,8 @@ Netdata.post('/NewCategory', (req,response, nex)=>{
   })
 })
 
-// vlan CRUD
-Netdata.get('/Vlan', (res, response, nex)=>{
+//---------------------- vlan CRUD--------------------------//
+Netdata.get('/Vlan', (req, response, nex)=>{
    db.get_connection(qb=>{
      qb.select('*').get('vlan',(err,res)=>{
        qb.release();
@@ -421,6 +608,7 @@ Netdata.get('/Vlan', (res, response, nex)=>{
      })
    })
 });
+
 Netdata.post('/NewVlan', (req,response, nex)=>{
   console.log(req.body);
   db.get_connection(qb=>{
@@ -440,6 +628,7 @@ Netdata.post('/NewVlan', (req,response, nex)=>{
     })
   })
 })
+
 Netdata.put('/UpdataVlan', (req, response, nex)=>{
   db.get_connection(qb=>{
     qb.update('vlan',req.body,{id:req.body.id},(err, res)=>{
@@ -451,11 +640,5 @@ Netdata.put('/UpdataVlan', (req, response, nex)=>{
     });
   });
 });
-
-//
-Netdata.get('/template/:Temp',(req,res,nex)=>{
- // res.send(Template);
-});
-
 
 module.exports = Netdata;

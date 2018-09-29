@@ -26,8 +26,11 @@ nss.controller("ReportTableContoller", function($scope,$http,$location,$window){
     console.log($scope.selectedReport);
     $http.put('/api/reportdata/delete/'+$scope.selectedReport.id,$scope.selectedReport)
     .then(function successCallback(res){
+      angular.element('#repoTable').DataTable().destroy();
       $scope.Reports = angular.copy(res.data);
-      // angular.element('#repoTable').DataTable().clear().draw();
+        angular.element(document).ready(function () {
+          angular.element('#repoTable').DataTable();
+        });
     }, function errorCallback(res){
       console.log(res.data);
     });

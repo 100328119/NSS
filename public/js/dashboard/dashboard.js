@@ -9,7 +9,12 @@ nss.controller("dashController", function($scope,$http,$window){
       console.log($scope.Networks);
     }).finally(function(){
       angular.element(document).ready(function () {
-          angular.element('#NetTable').DataTable();
+          angular.element('#NetTable').DataTable({
+          "order": [[ 0, "asc" ]],
+          "columnDefs": [
+                { "type": "numeric-comma", targets: 0 }
+            ]
+           });
         });
     });
 

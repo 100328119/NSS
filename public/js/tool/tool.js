@@ -17,8 +17,11 @@ nss.controller("ToolController", function($scope,$http,$window){
   $scope.addTool = function(){
     $http.post('/api/tooldata/new', $scope.newTool)
     .then(function successCallback(res){
+      angular.element('#toolTable').DataTable().destroy();
       $scope.Tools = angular.copy(res.data);
-      angular.element('#toolTable').DataTable().draw();
+      angular.element(document).ready(function () {
+        angular.element('#toolTable').DataTable();
+      });
     }, function errorCallback(res){
       console.log(res.data);
     });
@@ -29,7 +32,10 @@ nss.controller("ToolController", function($scope,$http,$window){
     $http.put('/api/tooldata/update/'+$scope.selectedItem.id, $scope.selectedItem)
     .then(function successCallback(res){
       $scope.Tools = angular.copy(res.data);
-      angular.element('#toolTable').DataTable().draw();
+      angular.element('#toolTable').DataTable().destroy();
+      angular.element(document).ready(function () {
+        angular.element('#toolTable').DataTable();
+      });
     }, function errorCallback(res){
       console.log(res.data);
     });
@@ -39,8 +45,11 @@ nss.controller("ToolController", function($scope,$http,$window){
   $scope.deleteNet =function(){
     $http.delete('/api/tooldata/delete/'+$scope.selectedItem.id)
     .then(function successCallback(res){
+      angular.element('#toolTable').DataTable().destroy();
       $scope.Tools = angular.copy(res.data);
-      angular.element('#toolTable').DataTable().draw();
+      angular.element(document).ready(function () {
+        angular.element('#toolTable').DataTable();
+      });
     }, function errorCallback(res){
       console.log(res.data);
     });
