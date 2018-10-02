@@ -12,7 +12,6 @@ Netdata.get('/all',function(req,response,nex){
      qb.select("*").get("network",(err,res)=>{
        qb.release();
       if(err) return console.error(err);
-      console.log(res);
       return response.send(res);
     });
   });
@@ -23,7 +22,6 @@ Netdata.get('/networkinfor', function(req, response, nex){
       qb.select(['n.id','n.N_Name','n.N_Number','n.address','n.Postal_Code','n.Phone','n.Fax','n.Circuit_ID','c.Category']).from('network n').join('Category c','c.id=n.Category_id ','left').get((err,res)=>{
           qb.release();
           if(err) return console.error(err);
-          console.log(res);
           return response.send(res);
       });
    })
@@ -33,7 +31,6 @@ Netdata.get('/Site/:id', function(req,response,nex){
   //get specific newtork data
   let Net_id = req.params.id;
   let Network = {};
-  console.log(Net_id);
   db.get_connection(qb=>{
     qb.select(['n.*',"c.Category"]).from('network n').where({'n.id':Net_id}).join('Category c','c.id=n.Category_id ','left').get((err,res)=>{
       if(err) return console.error(err);
@@ -55,11 +52,10 @@ Netdata.get('/Site/:id', function(req,response,nex){
       if(err) return console.error(err);
       Network.WANs =  res;
     });
-    qb.select('*').where({'net_id':Net_id}).order_by('Update_date', 'desc').get('Update_history',(err,res)=>{
+    qb.select(['h.*',"u.email"]).from('Update_history h').where({'h.net_id':Net_id}).join('users u','u.id=h.user_id','left').order_by('h.Update_date', 'desc').get((err,res)=>{
       qb.release();
       if(err) return console.error(err);
       Network.Update_history = res;
-      console.log(Network.Update_history);
       return response.send(Network);
     });
   });
@@ -209,7 +205,7 @@ Netdata.post('/update_history/:net_id', function(req, response, nex){
       })
     })
   }
- })
+})
 
 Netdata.put('/update_history/:net_id', function(req, response, nex){
   if(req.isAuthenticated()){
@@ -544,7 +540,6 @@ Netdata.get('/category',(req,response,nex)=>{
      qb.select('*').get('Category',(err,res)=>{
        qb.release();
         if(err) return console.error(err);
-        console.log(res);
         return response.send(res);
      })
    })

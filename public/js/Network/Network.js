@@ -11,7 +11,6 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
   $scope.CurrentIndex="";
   $scope.selectedItem = {};
 	$scope.newUpdate = {};
-	var loading = angular.element('#loading');
 	//page initial
 	$scope.NetworkInit = function(){
 		  // loading.modal('show');
@@ -298,6 +297,11 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 	};
 
 	$scope.deleteNet = function(){
-		
+		$http.delete('/api/Netdata/delete/'+$scope.id,)
+		 .then(function successCallback(res){
+			 $window.location.href = '/dashboard';
+		 }, function errorCallback(res){
+			 console.log(res);
+		 });
 	}
 });

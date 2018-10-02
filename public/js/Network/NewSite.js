@@ -11,13 +11,6 @@ nss.controller("NewSiteController",function($scope,$http,$window){
   $scope.NewVLANs =[];
   $scope.change = 0;
 
-  // $scope.$on("$locationChangeStart", function(event,nex,current){
-  //     if(!$window.confirm("dsadsa"+nex)){
-  //       // event.preventDefault();
-  //     }
-  // })
-
-
   //get category
   $http.get('/api/Netdata/category')
     .then(function successCallback(res){
@@ -35,19 +28,6 @@ nss.controller("NewSiteController",function($scope,$http,$window){
     }, function errorCallback(res){
       console.log(res.data);
     });
-
-  //New End Device Setup
-  // $scope.getTemplate = ()=>{
-  //   console.log("get Template")
-  //   $http.get('/api/Netdata/template/BCCS')
-  //     .then((response)=>{
-  //       $scope.End_Device = angular.copy(response.data.End_Device);
-  //       $scope.NewWANs = angular.copy(response.data.WAN);
-  //       $scope.NewNetDevices = angular.copy(response.data.Net_Device);
-  //       $scope.NewVLANs = angular.copy(response.data.VLANs);
-  //
-  //   });
-  // };
 
   $scope.SaveNewSite = function(){
     $scope.NewSite.network_info = angular.copy($scope.network_info);
