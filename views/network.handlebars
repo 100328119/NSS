@@ -124,16 +124,16 @@
         </div>
     <div class="card-collapse collapse" id="collapseOne">
                   <div class="card-body chatcard-body">
-                      <ul class="chat">
-                          <li class="left clearfix"><span class="chat-img pull-left" ng-repeat="note in Network.Update_history">
+                      <ul class="chat" ng-repeat="note in Network.Update_history ">
+                          <li class="left clearfix"><span class="chat-img pull-left" >
                               <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
                           </span>
                               <div class="chat-body clearfix">
                                   <div class="header">
-                                      <strong class="primary-font">note.email</strong> <small class="pull-right text-muted">
-                                          <span class="glyphicon glyphicon-time"></span>{[{note.email}]}</small>
+                                      <strong class="primary-font">{[{note.email}]}</strong> <small class="pull-right text-muted">
+                                          <span class="glyphicon glyphicon-time"></span>{[{note.Update_date}]}</small>
                                   </div>
-                                  <p>{[{note.description}]}</p>
+                                  <p>{[{note.Description}]}</p>
                               </div>
                           </li>
                       </ul>
