@@ -52,7 +52,7 @@ Netdata.get('/Site/:id', function(req,response,nex){
       if(err) return console.error(err);
       Network.WANs =  res;
     });
-    qb.select(['h.*',"u.email"]).from('Update_history h').where({'h.net_id':Net_id}).join('users u','u.id=h.user_id','left').order_by('h.Update_date', 'desc').get((err,res)=>{
+    qb.select(['h.*',"u.email","u.admin_id"]).from('Update_history h').where({'h.net_id':Net_id}).join('users u','u.id=h.user_id','left').order_by('h.Update_date', 'desc').get((err,res)=>{
       qb.release();
       if(err) return console.error(err);
       Network.Update_history = res;
@@ -76,7 +76,6 @@ Netdata.post('/new', function(req,response,nex){
   db.get_connection(qb => {
     qb.insert("network", network_info, (err, res)=>{
        if(err) return console.error(err);
-       console.log('network insert ok');
        let newId = res.insertId;
        for(let i = 0, len = Net_Devices.length; i<len; i++){
           Net_Devices[i].net_id = newId;
@@ -92,34 +91,28 @@ Netdata.post('/new', function(req,response,nex){
          WANs[i].net_id = newId;
        };
        // req.body.update_info.net_id = newId;
-       console.log(Net_Devices);
        if (!(Net_Devices === undefined || Net_Devices == 0)) {
        qb.insert_batch("Net_device",Net_Devices, (err, res)=>{
           if(err) return console.error(err);
-          console.log("Netword Device ok");
+
        })};
-       console.log(End_Devices);
        if (!(End_Devices === undefined || End_Devices == 0)) {
        qb.insert_batch("End_Device",End_Devices, (err, res)=>{
           if(err) return console.error(err);
-          console.log("End_Device ok ");
        })};
        if (!(WANs === undefined || WANs == 0)) {
        qb.insert_batch("WAN",WANs,(err, res)=>{
          if(err) return console.error(err);
-         console.log("WAN ok");
        })};
        if (!(VLANs === undefined || VLANs == 0)) {
          qb.insert_batch("VlanNetwork",VLANs,(err, res)=>{
-           // qb.release();
            if(err) return console.error(err);
-           console.log("VlanNetwork ok");
        })};
        if(!(req.body.Update_history === undefined)){
          qb.insert('update_history',req.body.update_info,(err, res)=>{
            qb.release();
            if(err) return console.error(err);
-           console.log("update_history ok");
+
          })
        }else{
          qb.release();
@@ -160,6 +153,7 @@ Netdata.delete('/delete/:id', function(req,response,nex){
        qb.delete('end_device', {Net_id: req.params.id}, (err, res) => {
           if (err) return console.error(err);
           qb.delete('network', {id: req.params.id}, (err, res) => {
+            qb.release();
             if (err){
               console.error(err);
               return response.sendStatus(400);
@@ -174,7 +168,7 @@ Netdata.delete('/delete/:id', function(req,response,nex){
 //---------------------Update history CURD------------------------------//
 Netdata.get('/update_history/:net_id', function(req, response, nex){
   db.get_connection(qb=>{
-    qb.select(["h.*","u.email"]).from('update_history h').where({'h.net_id':req.params.net_id}).join('users u', 'u.id=h.user_id', 'left').get((err, res)=>{
+    qb.select(["h.*","u.email","u.admin_id"]).from('update_history h').where({'h.net_id':req.params.net_id}).join('users u', 'u.id=h.user_id', 'left').order_by('h.Update_date', 'desc').get((err, res)=>{
       qb.release();
       if(err){
         console.log(err);
@@ -194,7 +188,7 @@ Netdata.post('/update_history/:net_id', function(req, response, nex){
           console.log(err);
           return response.sendStatus(400);
         }
-        qb.select(["h.*","u.email"]).from('update_history h').join('users u', 'u.id=h.user_id', 'left').get((err, res)=>{
+        qb.select(["h.*","u.email","u.admin_id"]).from('update_history h').where({'h.net_id':req.params.net_id}).join('users u', 'u.id=h.user_id', 'left').order_by('h.Update_date', 'desc').get((err, res)=>{
           qb.release();
           if(err){
             console.log(err);
@@ -216,7 +210,7 @@ Netdata.put('/update_history/:net_id', function(req, response, nex){
           console.log(err);
           return response.sendStatus(400);
         }
-        qb.select(["h.*","u.email"]).from('update_history h').join('users u', 'u.id=h.user_id', 'left').get((err, res)=>{
+        qb.select(["h.*","u.email","u.admin_id"]).from('update_history h').where({'h.net_id':req.params.net_id}).join('users u', 'u.id=h.user_id', 'left').order_by('h.Update_date', 'desc').get((err, res)=>{
           qb.release();
           if(err){
             console.log(err);
@@ -230,14 +224,16 @@ Netdata.put('/update_history/:net_id', function(req, response, nex){
 })
 
 Netdata.delete('/update_history/:net_id/:update_id', function(req, response, nex){
-    if(req.isAuthenticated()){
+  console.log(req.params.update_id);
+  console.log(req.params.net_id);
+    // if(req.isAuthenticated()){
       db.get_connection(qb=>{
         qb.delete('update_history',{id:req.params.update_id}, (err, res)=>{
           if(err){
             console.log(err);
             return response.sendStatus(400);
           }
-          qb.select(["h.*","u.email"]).from('update_history h').join('users u', 'u.id=h.user_id', 'left').get((err, res)=>{
+          qb.select(["h.*","u.email","u.admin_id"]).where({'h.net_id':req.params.net_id}).join('users u', 'u.id=h.user_id', 'left').order_by('h.Update_date', 'desc').get('update_history h',(err, res)=>{
             qb.release();
             if(err){
               console.log(err);
@@ -247,7 +243,7 @@ Netdata.delete('/update_history/:net_id/:update_id', function(req, response, nex
           })
         })
       })
-    }
+    // }
   })
 //--------------------end device CRUD------------------------------//
 Netdata.get('/end_device/:net_id', function(req, response, nex){

@@ -35,7 +35,6 @@ app.use(bodyParser.json());
 app.use(function(req,response,nex){
    if(req.isAuthenticated()){
      response.locals.isAuthenticated = req.isAuthenticated();
-     console.log(req.user.user_id);
      db.get_connection(qb=>{
        qb.select(["email","admin_id"]).where({id:req.user.user_id}).get('`users',(err,res)=>{
          qb.release();
@@ -46,8 +45,6 @@ app.use(function(req,response,nex){
          }else{
            response.locals.super_admin = false;
          }
-         console.log(res[0].admin_id);
-         console.log(response.locals.super_admin);
           nex();
        })
      })

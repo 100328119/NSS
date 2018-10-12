@@ -121,8 +121,8 @@ create table Update_history
   id int  not null auto_increment primary key,
   net_id int not null,
   user_id int not null,
-  Update_date varchar(50) not null,
-  Description varchar(250),
+  Update_date date not null,
+  Description varchar(500),
   FOREIGN KEY (net_id)
      REFERENCES network(id),
   FOREIGN KEY (user_id)
@@ -147,6 +147,17 @@ create table tool
     KDC varchar(300),
     Q9 varchar(300)
 ) ENGINE=INNODB;
+
+create table operation_hour
+(
+    id int not null auto_increment primary key,
+    net_id int not null,
+    open_date varchar(50),
+    open_time varchar(50),
+    close_time varchar(50),
+    FOREIGN KEY (net_id)
+       REFERENCES network(id)
+)
 
 //admin table
 INSERT INTO `admin`(`type`) VALUES ('admin');

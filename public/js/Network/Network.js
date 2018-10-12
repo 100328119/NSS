@@ -8,9 +8,9 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
   $scope.NewEndevice = {};
   $scope.NewVlAN = {};
   $scope.NewNetDevice ={};
-  $scope.CurrentIndex="";
   $scope.selectedItem = {};
 	$scope.newUpdate = {};
+	$scope.newUpdate.Description ="";
 	//page initial
 	$scope.NetworkInit = function(){
 		  // loading.modal('show');
@@ -303,5 +303,47 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 		 }, function errorCallback(res){
 			 console.log(res);
 		 });
+	}
+
+	//-----------------------------Update history---------------------------//
+	$scope.post_update = function(){
+		$scope.newUpdate.Update_date = $filter('date')(new Date(),'yyyy-MM-dd');
+		$scope.newUpdate.net_id = angular.copy($scope.id);
+		// $scope.newUpdate = {};
+		$http.post('/api/Netdata/update_history/'+$scope.id, $scope.newUpdate)
+			.then(function successCallback(res){
+				$scope.Network.Update_history = angular.copy(res.data);
+				$scope.newUpdate = {};
+			}, function errorCallback(res){
+				console.log(res.data);
+			})
+	}
+
+	$scope.selectNote = function(note){
+		$scope.selectedItem = angular.copy(note);
+		$scope.currentdate = $filter('date')(new Date(),'yyyy-MM-dd');
+	}
+
+	$scope.UpdateNote = function(){
+		$scope.selectedItem.Update_date = $scope.currentdate;
+		delete $scope.selectedItem.email;
+		delete $scope.selectedItem.admin_id;
+		$http.put('/api/Netdata/update_history/'+$scope.id,$scope.selectedItem)
+		 .then(function successCallback(res){
+			 $scope.Network.Update_history = angular.copy(res.data);
+			 $scope.selectedItem = {};
+		 },function errorCallback(res){
+			 console.log(res.data);
+		 })
+	}
+
+	$scope.deleteNote = function(){
+		$http.delete('/api/Netdata/update_history/'+ $scope.id + "/" + $scope.selectedItem.id)
+		 .then(function successCallback(res){
+			 $scope.Network.Update_history = angular.copy(res.data);
+			 $scope.selectedItem = {};
+		 }, function errorCallback(res){
+			 console.log(res.data);
+		 })
 	}
 });
