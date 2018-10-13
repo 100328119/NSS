@@ -138,12 +138,14 @@
 																		<div class="col-lg-10">
 	                                  	<p>{[{note.Description}]}</p>
 																		</div>
+																		{{#if isAuthenticated}}
 																		<div class="col-lg-2">
 																			<div class="row">
 																				<button class="btn btn-default btn-sm"  type="button" ng-click="selectNote(note)" data-toggle="modal" data-target="#UpdateNote" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
 																				 <button class="btn btn-danger btn-sm" type="button" ng-click="selectNote(note)" data-toggle="modal" data-target="#deleteNote" ><i class="fa fa-trash" aria-hidden="true"></i></button>
 																			</div>
 																		</div>
+																		{{/if}}
 																	</div>
                               </div>
                           </li>
