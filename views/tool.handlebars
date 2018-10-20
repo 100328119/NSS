@@ -10,7 +10,9 @@
 <div class="card mb-3">
   <div class="card-header">
     <i class="fa fa-table"></i> Tool Table
+    {{#if isAuthenticated}}
     	<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#NewTool"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
+    {{/if}}  
     </div>
   <div class="card-body">
     <div class="alert alert-success alert-dismissible fade collapse" role="alert" id="PassSuccess">
