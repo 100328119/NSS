@@ -73,6 +73,7 @@ report.put('/delete/:id', function(req,response,nex){
             return response.sendStatus(400);
           }
           qb.select("*").get("report",(err,res)=>{
+            qb.release();
             if (err) return console.error(err);
             return response.send(res);
           })

@@ -148,6 +148,7 @@ create table tool
     Q9 varchar(300)
 ) ENGINE=INNODB;
 
+-- not yet complete
 create table operation_hour
 (
     id int not null auto_increment primary key,
@@ -155,6 +156,17 @@ create table operation_hour
     open_date varchar(50),
     open_time varchar(50),
     close_time varchar(50),
+    FOREIGN KEY (net_id)
+       REFERENCES network(id)
+)
+
+create table store_image
+(
+    id int not null auto_increment primary key,
+    net_id int not null,
+    image_name varchar(250),
+    image_date date,
+    image_path varchar(500)
     FOREIGN KEY (net_id)
        REFERENCES network(id)
 )
