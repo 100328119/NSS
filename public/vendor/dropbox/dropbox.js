@@ -211,7 +211,7 @@ function sendFiles(url, data) {
         credentials: "same-origin",
         body: formData
       })
-      .then(function(response){
+      .then(function successCallback(response){
         console.log(response);
         window.location.href = "/ReportTable"
       })

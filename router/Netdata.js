@@ -1,7 +1,9 @@
 const express = require('express');
 const Netdata = express.Router();
 const network = require('../model/network');
-const db = require('../model/db');const multer = require('multer');
+const db = require('../model/db');
+const dateFormat = require('dateformat');
+const multer = require('multer');
 const upload = multer({ dest: './public/uploads/store_image' });
 const fs = require('fs');
 
@@ -637,7 +639,7 @@ Netdata.put('/UpdataVlan', (req, response, nex)=>{
 //---------Store image CRUD---------------------------------//
 Netdata.get('/store_image/:net_id', (req, response,nex)=>{
   db.get_connection(qb=>{
-    qb.select('*').get('store_image',(err,res)=>{
+    qb.select('*').where({net_id:req.params.net_id}).get('store_image',(err,res)=>{
       qb.release();
       if(err){
         console.log(err);
@@ -648,100 +650,76 @@ Netdata.get('/store_image/:net_id', (req, response,nex)=>{
   })
 })
 
-Netdata.post('/store_image/:net_id',upload.single('new_image'),(req, response, next)=>{
+Netdata.post('/store_image/:net_id',upload.single('file'),(req, response, next)=>{
    if(req.isAuthenticated()){
-     let new_image = req.new_image;
-     db.get_connection(qb=>{
-         let oldpath = new_image.path;
-         let newpath = new_image.destination + new_image.originalname;
-         var image = {};
-         image.image_name =  new_image.originalname;
-         image.net_id = req.params.net_id;
-         var now = new Date();
-         image.image_date = dateFormat(now, "yyyy-mm-dd");
-         image.image_path = "uploads/store_image/"+ new_image.originalname;
-         console.log(image);
-            qb.insert("store_image",image, (err,res)=>{
-             if(err) {
-               console.log(err);
-               return  response.sendStatus(400);
-             }
-             console.log(res);
-             fs.rename(oldpath, newpath, function (err) {
-              if (err){
-                console.log(err);
-                return response.sendStatus(400);
-              }
-              qb.select('*').get('store_image', (err, result)=>{
-                qb.realease();
-                if(err){
+     let new_image = req.file;
+     let oldpath = new_image.path;
+     let newpath = "public/uploads/store_image/" + new_image.originalname;
+     var image = {};
+     image.image_name =  new_image.originalname;
+     image.net_id = req.params.net_id;
+     var now = new Date();
+     image.image_date = dateFormat(now, "yyyy-mm-dd");
+     image.image_path = "/uploads/store_image/"+ new_image.originalname;
+     if(!fs.existsSync(newpath)){
+       db.get_connection(qb=>{
+              qb.insert("store_image",image, (err,res)=>{
+               if(err) {
+                 console.log(err);
+                 return  response.sendStatus(400);
+               }
+               fs.rename(oldpath, newpath, function (err) {
+                if (err){
                   console.log(err);
                   return response.sendStatus(400);
                 }
-                return response.send(result);
-              })
+                qb.select('*').where({net_id:req.params.net_id}).get('store_image', (err, result)=>{
+                  qb.release();
+                  if(err){
+                    console.log(err);
+                    return response.sendStatus(400);
+                  }
+                  return response.send(result);
+                })
+               });
              });
-           });
-         });
-      }
+          });
+     }else{
+       // uplink or remove the existing image
+       fs.unlink(oldpath, function (err) {
+         if (err){
+           console.error(err);
+           return response.sendStatus(400);
+         }
+         return response.sendStatus(400);
+       })
+     }
+    }
 })
 
-Netdata.delete('/store_image/:image_id', (req, response, next)=>{
+Netdata.put('/delete_store_image/:image_id', (req, response, next)=>{
   db.get_connection(qb=>{
-    qb.delete('store_image',{id:req.params.image_id},(err,resp)=>{
+    qb.delete('store_image',{id:req.body.id},(err,resp)=>{
       if(err){
         console.log(err);
         return response.sendStatus(400);
       }
-      qb.select("*").get('store_image', (err, res)=>{
-        qb.release();
-        if(err){
-          console.log(err);
+      fs.unlink('public/'+req.body.image_path, function (err) {
+        if (err){
+          console.error(err);
           return response.sendStatus(400);
         }
-        return response.send(res);
+        qb.select("*").where({net_id:req.params.net_id}).get('store_image', (err, res)=>{
+          qb.release();
+          if(err){
+            console.log(err);
+            return response.sendStatus(400);
+          }
+          return response.send(res);
+        })
       })
     })
   })
 })
 
-Netdata.put('/store_image/:net_id/:image_id/:image_path', upload.single('update_image'),(req, response, next)=>{
-    if(req.isAuthenticated()){
-      let update_img = req.update_image;
-      let oldpath  = update_img.path;
-      let newpath = update_img.destination + update_img.originalname;
-      let u_img = {};
-      u_img.image_name = update_img.originalname;
-      u_img.net_id = req.params.net_id;
-      var now = new Date();
-      u_img.image_date = dateFormat(now, "yyyy-mm-dd");
-      u_img.image_path = "uploads/store_image/"+update_img.originalname;
-      db.get_connection(qb=>{
-        // uplink or remove the existing image
-        fs.unlink('public/'+req.body.ReportPath, function (err) {
-          if (err){
-             console.error(err);
-            return response.sendStatus(400);
-          }
-        })
-        // update record in database
-        qb.update('store_image', u_img , {id: req.params.image_id},(err,res)=>{
-          if(err){
-            console.log(err);
-            return response.sendStatus(400);
-          }
-          fs.rename(oldpath, newpath, function (err) {
-            if (err) return response.sendStatus(400);
-            qb.select('*').get('store_image', (err, result)=>{
-              qb.realease();
-              if(err){
-                console.log(err);
-                return response.send(result);
-              }
-            })
-          });
-        })
-      })
-    }
-})
 module.exports = Netdata;

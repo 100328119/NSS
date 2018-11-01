@@ -20,8 +20,10 @@
 			</div>
 			{{/if}}
 		</div>
-		<a href="/diagram/{[{Network.network_info.id}]}">Network Diagarm</a>
-		<hr>
+		<a href="/diagram/{[{Network.network_info.id}]}" style="margin-right: 50px">Network Diagarm</a>
+		<a href="/network/store_image/{[{Network.network_info.id}]}">Floor Plan & Image</a>
+		<br/>
+		<br/>
 	<div class = "row">
 		<div class = "col-lg-8">
 	<div class="card mb-3">
@@ -153,14 +155,12 @@
                   </div>
 									{{#if isAuthenticated}}
                   <div class="card-footer">
-                      <div class="input-group">
-                        <!-- <input  id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." /> -->
-                        <textarea class="form-control" aria-label="With textarea" ng-model="newUpdate.Description"></textarea>
-                          <span class="input-group-btn">
-                              <button class="btn btn-primary btn-sm" id="btn-chat" ng-click="post_update()">
-                                  Send</button>
-                          </span>
-                      </div>
+											<div class="input-group mb-3">
+											  <textarea type="text" class="form-control" ng-model="newUpdate.Description"></textarea>
+											  <div class="input-group-append">
+											    <button class="btn btn-primary" type="button" id="btn-chat" ng-click="post_update()">Button</button>
+											  </div>
+											</div>
 										</div>
 									{{/if}}
               </div>

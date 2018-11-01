@@ -1,5 +1,4 @@
 "use strict";
-const nss = angular.module('nss', []).config(function($interpolateProvider){
+const nss = angular.module('nss', ['ngFileUpload']).config(function($interpolateProvider){
   $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-
 });

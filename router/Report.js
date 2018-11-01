@@ -24,42 +24,51 @@ report.get( "/all", function(req,response,nex){
 
 report.post('/new',upload.array('pdfs'),function(req, response, nex){
   let files = req.files;
-  console.log(files);
   if(req.isAuthenticated()){
-    db.get_connection(qb=>{
-      for (let i = 0, len = files.length; i < len; i++) {
-        let oldpath = files[i].path;
-        let newpath = files[i].destination + files[i].originalname;
-        var report = {};
-        report.user_id = req.user.user_id;
-        report.ReportName =  files[i].originalname;
-        var now = new Date();
-        report.ReportDate = dateFormat(now, "yyyy-mm-dd");
-        report.ReportPath = "uploads/"+files[i].originalname;
-        console.log(report);
-           qb.insert("Report",report, (err,res)=>{
-            if(err) return  response.sendStatus(400);
-            console.log(res);
-            fs.rename(oldpath, newpath, function (err) {
-              if (err) return response.sendStatus(400);
-            });
-          });
-        }
-        qb.release();
-     });
-   response.sendStatus(200);
- }
-});
-
-report.put('/update/:id',function(req,response,nex){
-  qb.delete('report', {id: req.params.id}, (err, res) => {
-      if (err) return console.error(err);
-      fs.unlink(req.body.ReportPath, function (err) {
-        if (err) throw err;
-        // if no error, file has been deleted successfully
-        return response.sendStatus(200);
-      });
-  })
+    for (let i = 0, len = files.length; i < len; i++) {
+      let checkpath = files[i].destination + files[i].originalname;
+      if(fs.existsSync(checkpath)){
+        fs.unlink(files[i].path, function(err){
+          if(err) console.error(err);
+          delete files[i];
+        })
+      }
+    }
+    console.log(files);
+    // db.get_connection(qb=>{
+    //   for (let i = 0, len = files.length; i < len; i++) {
+    //     let oldpath = files[i].path;
+    //     let newpath = files[i].destination + files[i].originalname;
+    //     var report = {};
+    //     report.user_id = req.user.user_id;
+    //     report.ReportName =  files[i].originalname;
+    //     var now = new Date();
+    //     report.ReportDate = dateFormat(now, "yyyy-mm-dd");
+    //     report.ReportPath = "uploads/"+files[i].originalname;
+    //     if(!fs.existsSync(newpath)){
+    //        qb.insert("Report",report, (err,res)=>{
+    //         if(err) return  response.sendStatus(400);
+    //         console.log(res);
+    //         fs.rename(oldpath, newpath, function (err) {
+    //           if (err) return response.sendStatus(400);
+    //         });
+    //       });
+    //     }else{
+    //       // qb.release();
+    //       // uplink or remove the existing image
+    //       fs.unlink(oldpath, function (err) {
+    //         if (err){
+    //           console.error(err);
+    //           return response.sendStatus(400);
+    //         }
+    //         return response.sendStatus(400);
+    //       })
+    //   }
+    //  }
+    //  // qb.release();
+    //  // response.sendStatus(200);
+    // });
+  }
 });
 
 report.put('/delete/:id', function(req,response,nex){

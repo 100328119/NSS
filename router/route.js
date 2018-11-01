@@ -47,6 +47,10 @@ router.get('/network/Create/New', function (req, res, nex) {
   }
 });
 
+router.get('/network/store_image/:id', function(req, res, nex){
+  res.render('store_image');
+})
+
 router.get('/report/:id', function (req, response, next) {
   //render Operation report page
   db.get_connection(qb=>{
@@ -87,6 +91,5 @@ router.get('/support', function (req, res, nex) {
 router.get('/diagram/:id', function(req, res, nex) {
   res.render('Diagram');
 })
-
 
 module.exports = router;
