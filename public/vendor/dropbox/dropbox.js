@@ -207,14 +207,14 @@ function sendFiles(url, data) {
     }
 
     fetch(url, {
-        method: 'POST',
-        credentials: "same-origin",
-        body: formData
-      })
-      .then(function successCallback(response){
-        console.log(response);
-        window.location.href = "/ReportTable"
-      })
-      .catch(function(error) {console.error('Error:', error)});
+          method: 'POST',
+          credentials: "same-origin",
+          body: formData
+        })
+        .then(function successCallback(response){
+          console.log(response);
+          window.location.href = "/ReportTable"
+        })
+        .catch(function(error) {console.error('Error:', error)});
   }
 }

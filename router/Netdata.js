@@ -709,7 +709,7 @@ Netdata.put('/delete_store_image/:image_id', (req, response, next)=>{
           console.error(err);
           return response.sendStatus(400);
         }
-        qb.select("*").where({net_id:req.params.net_id}).get('store_image', (err, res)=>{
+        qb.select("*").where({net_id:req.body.net_id}).get('store_image', (err, res)=>{
           qb.release();
           if(err){
             console.log(err);

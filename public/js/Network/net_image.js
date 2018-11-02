@@ -1,12 +1,24 @@
-nss.controller('netImage',['$scope',"$http","$location",'Upload',function($scope, $http, $location ,Upload){
+nss.controller('netImage',['$scope',"$http","$location",'Upload','$timeout',function($scope, $http, $location ,Upload, $timeout){
   var url = $location.absUrl().split('/');
   $scope.id = url[5];
   $http.get('/api/Netdata/store_image/'+$scope.id,)
   .then(function successCallback(res){
      $scope.store_images = res.data;
+     $timeout(function () {
+       baguetteBox.run('.cards-gallery', { animation: 'slideIn'});
+     });
   },function errorCallback(res){
     console.log(res.data);
   });
+
+  $http.get('/api/Netdata/Site/'+$scope.id)
+  .then(function successCallback(res){
+     $scope.network = res.data;
+     console.log($scope.network);
+  },function errorCallback(res){
+    console.log(res.data);
+  });
+
 
    $scope.uploadFile = function(){
      if($scope.newImage && $scope.newImage != ''){
@@ -27,6 +39,9 @@ nss.controller('netImage',['$scope',"$http","$location",'Upload',function($scope
             $scope.newImage = '';
             angular.element('#NewImageError').collapse("hide");
             angular.element('#uploadimage').modal('hide');
+            $timeout(function () {
+              baguetteBox.run('.cards-gallery', { animation: 'slideIn'});
+            });
         }, function (resp) {
             angular.element('#NewImageError').collapse("show");
             $scope.newImage = '';
@@ -45,6 +60,9 @@ nss.controller('netImage',['$scope',"$http","$location",'Upload',function($scope
            $scope.selectedItem = "";
            $scope.store_images = res.data;
            angular.element('#deleteImage').collapse("hide");
+           $timeout(function () {
+             baguetteBox.run('.cards-gallery', { animation: 'slideIn'});
+           });
         }, function errorCallback(res){
            console.log(res.data);
         })

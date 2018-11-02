@@ -166,7 +166,7 @@ create table store_image
     net_id int not null,
     image_name varchar(250),
     image_date date,
-    image_path varchar(500)
+    image_path varchar(500),
     FOREIGN KEY (net_id)
        REFERENCES network(id)
 )

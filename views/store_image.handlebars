@@ -6,17 +6,21 @@
 <div ng-controller="netImage" >
 <ol class="breadcrumb">
   <li class="breadcrumb-item">
-    <a href="/Network/{[{Network.network_info.id}]}">Network</a>
+    <a href="/Network/{[{network.network_info.id}]}">{[{network.network_info.N_Name}]}</a>
   </li>
-  <li class="breadcrumb-item active">Floor Plan & Image</li>
+  <li class="breadcrumb-item active"> Floor Plan & Image</li>
 </ol>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1>Floor Plan & Image</h1>
+    <h2>#{[{network.network_info.N_Number}]} - {[{network.network_info.N_Name}]} Floor Plan & Image</h2>
+      <h2 style="background-color:red;color:white; width: 237px; height: 40px; text-align: center;">CONFIDENTIAL</h2>
+      <img src="/img/LDBLogo.png" width="200px">
+      {{#if isAuthenticated}}
       <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group mr-2">
           <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#uploadimage">Upload</button>
         </div>
       </div>
+      {{/if}}
 </div>
 <section class="gallery-block cards-gallery">
    <div class="container-fluid">
@@ -62,9 +66,7 @@
             <label class="custom-file-label" for="inputGroupFile01">{[{newImage.name}]}</label>
           </div>
         </div>
-          <div class="col-md-3">
-               <img height="250" style="align-content:center; justify-content:center;" ngf-src="newImage" id="display_image">
-           </div>
+           <img  style="height:50%; width:100%" ngf-src="newImage" id="display_image">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" ng-click="uploadFile()">Save changes</button>

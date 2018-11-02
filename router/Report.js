@@ -24,50 +24,39 @@ report.get( "/all", function(req,response,nex){
 
 report.post('/new',upload.array('pdfs'),function(req, response, nex){
   let files = req.files;
+  let filter_file = [];
   if(req.isAuthenticated()){
     for (let i = 0, len = files.length; i < len; i++) {
       let checkpath = files[i].destination + files[i].originalname;
-      if(fs.existsSync(checkpath)){
-        fs.unlink(files[i].path, function(err){
-          if(err) console.error(err);
-          delete files[i];
-        })
-      }
-    }
-    console.log(files);
-    // db.get_connection(qb=>{
-    //   for (let i = 0, len = files.length; i < len; i++) {
-    //     let oldpath = files[i].path;
-    //     let newpath = files[i].destination + files[i].originalname;
-    //     var report = {};
-    //     report.user_id = req.user.user_id;
-    //     report.ReportName =  files[i].originalname;
-    //     var now = new Date();
-    //     report.ReportDate = dateFormat(now, "yyyy-mm-dd");
-    //     report.ReportPath = "uploads/"+files[i].originalname;
-    //     if(!fs.existsSync(newpath)){
-    //        qb.insert("Report",report, (err,res)=>{
-    //         if(err) return  response.sendStatus(400);
-    //         console.log(res);
-    //         fs.rename(oldpath, newpath, function (err) {
-    //           if (err) return response.sendStatus(400);
-    //         });
-    //       });
-    //     }else{
-    //       // qb.release();
-    //       // uplink or remove the existing image
-    //       fs.unlink(oldpath, function (err) {
-    //         if (err){
-    //           console.error(err);
-    //           return response.sendStatus(400);
-    //         }
-    //         return response.sendStatus(400);
-    //       })
-    //   }
-    //  }
-    //  // qb.release();
-    //  // response.sendStatus(200);
-    // });
+        if(fs.existsSync(checkpath)){
+          console.log(checkpath+" is already existed");
+          fs.unlinkSync(files[i].path);
+        }else{
+          filter_file.push(files[i]);
+        }
+     }
+
+    db.get_connection(qb=>{
+      for (let i = 0, len = filter_file.length; i < len; i++) {
+        let oldpath = filter_file[i].path;
+        let newpath = filter_file[i].destination + filter_file[i].originalname;
+        var report = {};
+        report.user_id = req.user.user_id;
+        report.ReportName =  filter_file[i].originalname;
+        var now = new Date();
+        report.ReportDate = dateFormat(now, "yyyy-mm-dd");
+        report.ReportPath = "uploads/"+filter_file[i].originalname;
+        qb.insert("Report",report, (err,res)=>{
+            if(err) return  response.sendStatus(400);
+              console.log(res);
+            fs.rename(oldpath, newpath, function (err) {
+              if (err) return response.sendStatus(400);
+            });
+        });
+       }
+       qb.release();
+       return response.sendStatus(200);
+     });
   }
 });
 
