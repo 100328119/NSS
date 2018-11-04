@@ -276,7 +276,6 @@ Netdata.post('/end_device/:net_id', function(req, response, nex){
             console.error(err)
             return response.sendStatus(400);
           };
-          console.log(res);
           return response.send(res);
         });
     })

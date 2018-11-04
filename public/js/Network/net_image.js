@@ -1,7 +1,7 @@
 nss.controller('netImage',['$scope',"$http","$location",'Upload','$timeout',function($scope, $http, $location ,Upload, $timeout){
   var url = $location.absUrl().split('/');
   $scope.id = url[5];
-  $http.get('/api/Netdata/store_image/'+$scope.id,)
+  $http.get('/api/Netdata/store_image/'+$scope.id)
   .then(function successCallback(res){
      $scope.store_images = res.data;
      $timeout(function () {

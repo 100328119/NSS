@@ -23,7 +23,9 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 					 angular.element('#EndDtable').DataTable({
 						     columnDefs: [
 						       { type: 'ip-address', targets: 0 }
-						     ]
+						     ],
+								 aLengthMenu: [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+			 				 	 iDisplayLength: 100
 						  });
 						angular.element('#WANTable').DataTable();
 						angular.element('#NDeviceTable').DataTable();
@@ -64,7 +66,9 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 					 angular.element('#EndDtable').DataTable({
 								columnDefs: [
 									{ type: 'ip-address', targets: 0 }
-								]
+								],
+								aLengthMenu: [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+								iDisplayLength: 100
 						 });
 				 });
 				 $scope.NewEndevice={};
@@ -83,7 +87,9 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 					 angular.element('#EndDtable').DataTable({
 								columnDefs: [
 									{ type: 'ip-address', targets: 0 }
-								]
+								],
+								aLengthMenu: [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+								iDisplayLength: 100
 						 });
 				 });
 				 $scope.selectedItem={};
@@ -103,7 +109,9 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 					 angular.element('#EndDtable').DataTable({
 								columnDefs: [
 									{ type: 'ip-address', targets: 0 }
-								]
+								],
+								aLengthMenu: [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+								iDisplayLength: 100
 						 });
 				 });
 				 $scope.selectedItem={};
