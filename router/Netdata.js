@@ -72,7 +72,6 @@ Netdata.post('/new', function(req,response,nex){
   let End_Devices = req.body.End_Devices;
   let WANs = req.body.WANs;
   let VLANs = req.body.VLANs;
-  console.log(req.body);
   if(req.isAuthenticated()){
     network_info.user_id = req.user.user_id;
     // req.body.update_info.user_id = req.user.user_id;
@@ -98,7 +97,6 @@ Netdata.post('/new', function(req,response,nex){
        if (!(Net_Devices === undefined || Net_Devices == 0)) {
        qb.insert_batch("Net_device",Net_Devices, (err, res)=>{
           if(err) return console.error(err);
-
        })};
        if (!(End_Devices === undefined || End_Devices == 0)) {
        qb.insert_batch("End_Device",End_Devices, (err, res)=>{
@@ -249,6 +247,7 @@ Netdata.delete('/update_history/:net_id/:update_id', function(req, response, nex
       })
     // }
   })
+
 //--------------------end device CRUD------------------------------//
 Netdata.get('/end_device/:net_id', function(req, response, nex){
   db.get_connection(qb=>{
