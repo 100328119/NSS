@@ -68,7 +68,7 @@
             <label class="custom-file-label" for="inputGroupFile01">{[{newImage.name}]}</label>
           </div>
         </div>
-           <img  style="height:50%; width:100%" ngf-src="newImage" id="display_image">
+           <img  ng-if="newImage" style="height:50%; width:100%" ngf-src="newImage" id="display_image">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" ng-click="uploadFile()">Save changes</button>

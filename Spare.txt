@@ -1,3 +1,60 @@
+{
+    "net_id": 1,
+    "open_date": "Sunday",
+    "date_priority": 0,
+    "open_time": "10:00 am",
+    "close_time": "10:00 pm"
+}
+{
+    "net_id": 1,
+    "open_date": "Monday",
+    "date_priority": 1,
+    "open_time": "10:00 am",
+    "close_time": "10:00 pm"
+}
+{
+    "net_id": 1,
+    "open_date": "Tuesday",
+    "date_priority": 2,
+    "open_time": "10:00 am",
+    "close_time": "10:00 pm"
+}
+{
+    "net_id": 1,
+    "open_date": "Wednesday",
+    "date_priority": 3,
+    "open_time": "10:00 am",
+    "close_time": "10:00 pm"
+}
+{
+    "net_id": 1,
+    "open_date": "Thursday",
+    "date_priority": 4,
+    "open_time": "10:00 am",
+    "close_time": "10:00 pm"
+}
+{
+    "net_id": 1,
+    "open_date": "Friday",
+    "date_priority": 5,
+    "open_time": "10:00 am",
+    "close_time": "10:00 pm"
+}
+{
+    "net_id": 1,
+    "open_date": "Saturday",
+    "date_priority": 6,
+    "open_time": "10:00 am",
+    "close_time": "10:00 pm"
+}
+{
+    "net_id": 1,
+    "open_date": "Remember's day",
+    "date_priority": 7,
+    "open_time": "10:00 am",
+    "close_time": "10:00 pm"
+}
+
         <tr key = "1">
             <td>{this.state.EditState ? (
               <input

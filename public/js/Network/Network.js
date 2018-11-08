@@ -1,13 +1,10 @@
-// var myApp = angular.module("myApp", []).config(function($interpolateProvider){
-//  $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-// });
-// "use strict";
 nss.controller("myController", function($scope, $http,$location,$window,$filter){
 	// console.log($routeParams.id);
 	$scope.Network = {};
   $scope.NewEndevice = {};
   $scope.NewVlAN = {};
   $scope.NewNetDevice ={};
+	$scope.Newhour = {};
   $scope.selectedItem = {};
 	$scope.newUpdate = {};
 	$scope.newUpdate.Description ="";
@@ -353,5 +350,76 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 		 }, function errorCallback(res){
 			 console.log(res.data);
 		 })
+	}
+
+	//----------------------------Operation hour------------------------//
+	$scope.selecthoure = function(date){
+		$scope.selectedItem = angular.copy(date);
+		console.log($scope.selectedItem);
+	}
+
+	$scope.addhour = function(){
+			$scope.Newhour.net_id = $scope.id;
+			var op_hour = $scope.Newhour.open_date.toLowerCase();
+			$scope.Newhour.date_priority = classifier(op_hour);
+			console.log($scope.Newhour);
+			$http.post('/api/Netdata/operation_hour/', $scope.newhour)
+				.then(function successCallback(res){
+					$scope.Network.operation_hour = angular.copy(res.data);
+				}, function errorCallback(res){
+					console.log(res);
+				})
+	}
+
+	$scope.edithour = function(){
+		var op_hour = $scope.selectedItem.open_date.toLowerCase();
+		$scope.selectedItem.date_priority = classifier(op_hour);
+		console.log($scope.selectedItem);
+		$http.put('/api/Netdata/operation_hour/'+ $scope.id, $scope.selectedItem)
+			.then(function successCallback(res){
+				 $scope.Network.operation_hour = angular.copy(res.data);
+				 $scope.selectedItem = {};
+			}, function errorCallback(res){
+				console.log(res);
+			})
+	}
+
+	$scope.deletehour = function(){
+		$http.delete('/api/Netdata//operation_hour/'+$scope.selectedItem.id+'/'+$scope.selectedItem.net_id)
+			.then(function successCallback(res){
+				$scope.Network.operation_hour = angular.copy(res.data);
+				$scope.selectedItem = {};
+			}, function errorCallback(res){
+				console.log(res);
+			})
+	}
+
+	function classifier(date){
+		switch (date) {
+			case 'sunday':
+				return 0;
+				break;
+	   	case 'monday':
+		   	return 1;
+		   	break;
+			case 'tuesday':
+				return 2;
+				break;
+			case 'wednesday':
+				return 3;
+				break;
+			case 'thursday':
+			  return 4;
+				break;
+			case 'friday':
+			  return 5;
+				break;
+			case 'saturday':
+				return 6;
+				break;
+			default:
+				return 7;
+				break;
+		}
 	}
 });

@@ -56,6 +56,10 @@ Netdata.get('/Site/:id', function(req,response,nex){
       if(err) return console.error(err);
       Network.WANs =  res;
     });
+    qb.select("*").where({net_id:Net_id}).order_by('date_priority').get('operation_hour',(err,res)=>{
+      if(err) return console.log(err);
+      Network.operation_hour = res;
+    })
     qb.select(['h.*',"u.email","u.admin_id"]).from('Update_history h').where({'h.net_id':Net_id}).join('users u','u.id=h.user_id','left').order_by('h.Update_date', 'desc').get((err,res)=>{
       qb.release();
       if(err) return console.error(err);
@@ -720,4 +724,75 @@ Netdata.put('/delete_store_image/:image_id', (req, response, next)=>{
   })
 })
 
+
+//------------------------------------operation_hour-------------------------------//
+Netdata.get('/operation_hour/:net_id', (req,response, next)=>{
+  db.get_connection(qb=>{
+    qb.select("*").where({net_id:req.params.net_id}).order_by('date_priority').get('operation_hour',(err,res)=>{
+      qb.release();
+      if(err){
+        console.log(err);
+        return response.sendStatus(400);
+      }
+      return response.send(res);
+    })
+  })
+})
+
+Netdata.post('/operation_hour/:net_id', (req, response, next)=>{
+   db.get_connection(qb=>{
+     qb.insert('operation_hour', req.body, (err, res)=>{
+       if(err){
+         console.log(err)
+         return response.sendStatus(400);
+       }
+       qb.select("*").where({net_id:req.params.net_id}).order_by('date_priority').get('operation_hour',(err,res)=>{
+         qb.release();
+         if(err){
+           console.log(err);
+           return response.sendStatus(400);
+         }
+         return response.send(res);
+       })
+     })
+   })
+})
+
+Netdata.put('/operation_hour/:net_id', (req, response, next)=>{
+    db.get_connection(qb=>{
+      qb.update('operation_hour', req.body, {id:req.body.id}, (err, res)=>{
+        if(err){
+          console.log(err);
+          return response.sendStatus(400);
+        }
+        qb.select("*").where({net_id:req.params.net_id}).order_by('date_priority').get('operation_hour',(err,res)=>{
+          qb.release();
+          if(err){
+            console.log(err);
+            return response.sendStatus(400);
+          }
+          return response.send(res);
+        })
+      })
+    })
+})
+
+Netdata.delete('/operation_hour/:id/:net_id', (req, response, next)=>{
+  db.get_connection(qb=>{
+    qb.delete('operation_hour',{id: req.params.id}, (err, res)=>{
+      if(err){
+        console.log(err);
+        return response.sendStatus(400);
+      }
+      qb.select("*").where({net_id:req.params.net_id}).order_by('date_priority').get('operation_hour',(err,res)=>{
+        qb.release();
+        if(err){
+          console.log(err);
+          return response.sendStatus(400);
+        }
+        return response.send(res);
+      })
+    })
+  })
+})
 module.exports = Netdata;

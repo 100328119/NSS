@@ -94,7 +94,7 @@ secure.put('/updatepass/:id', function(req, response,nex){
             console.error(err);
             return response.sendStatus(400);
           };
-          return response.send(200);
+          return response.sendStatus(200);
         })
       })
     });

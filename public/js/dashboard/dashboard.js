@@ -1,12 +1,9 @@
 
 nss.controller("dashController", function($scope,$http,$window){
-  console.log("dashController");
-
   $scope.vlantable = angular.element('#VlanTable');
   $http.get('/api/Netdata/networkinfor')
     .then(function(response){
       $scope.Networks = angular.copy(response.data);
-      console.log($scope.Networks);
     }).finally(function(){
       angular.element(document).ready(function () {
           angular.element('#NetTable').DataTable({

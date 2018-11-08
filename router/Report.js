@@ -35,28 +35,31 @@ report.post('/new',upload.array('pdfs'),function(req, response, nex){
           filter_file.push(files[i]);
         }
      }
-
-    db.get_connection(qb=>{
-      for (let i = 0, len = filter_file.length; i < len; i++) {
-        let oldpath = filter_file[i].path;
-        let newpath = filter_file[i].destination + filter_file[i].originalname;
-        var report = {};
-        report.user_id = req.user.user_id;
-        report.ReportName =  filter_file[i].originalname;
-        var now = new Date();
-        report.ReportDate = dateFormat(now, "yyyy-mm-dd");
-        report.ReportPath = "uploads/"+filter_file[i].originalname;
-        qb.insert("Report",report, (err,res)=>{
-            if(err) return  response.sendStatus(400);
-              console.log(res);
-            fs.rename(oldpath, newpath, function (err) {
-              if (err) return response.sendStatus(400);
-            });
-        });
-       }
-       qb.release();
-       return response.sendStatus(200);
-     });
+    if(!filter_file === undefined || !filter_file.length == 0){
+      db.get_connection(qb=>{
+        for (let i = 0, len = filter_file.length; i < len; i++) {
+          let oldpath = filter_file[i].path;
+          let newpath = filter_file[i].destination + filter_file[i].originalname;
+          var report = {};
+          report.user_id = req.user.user_id;
+          report.ReportName =  filter_file[i].originalname;
+          var now = new Date();
+          report.ReportDate = dateFormat(now, "yyyy-mm-dd");
+          report.ReportPath = "uploads/"+filter_file[i].originalname;
+          qb.insert("Report",report, (err,res)=>{
+              if(err) return  response.sendStatus(400);
+                console.log(res);
+              fs.rename(oldpath, newpath, function (err) {
+                if (err) return response.sendStatus(400);
+              });
+          });
+         }
+         qb.release();
+         return response.sendStatus(200);
+       });
+    }else{
+      return response.sendStatus(200);
+    }
   }
 });
 

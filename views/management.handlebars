@@ -55,7 +55,7 @@
 </div>
 <!-- Modal -->
 <div id="admin" class="modal fade" role="dialog" >
-  <div class="modal-dialog modal-dialog-center">
+  <div class="modal-dialog modal-dialog-center modal-sm">
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -63,13 +63,13 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <label for="inputEmail3"><strong>{[{selectedItem.email}]}</strong></label>
             <select class="form-control"  ng-model="selectadmin_id" ng-options="admin.id as admin.type for admin in admins"></select>
         </div>
       </div>
       <div class="modal-footer">
-      <button type="button" class="btn  btn-primary mr-auto" data-dismiss="modal" ng-click="saveUser()">Save</button>
+        <button type="button" class="btn  btn-primary" data-dismiss="modal" ng-click="saveUser()">Save</button>
         <button type="button" class="btn  btn-danger pull-right" data-dismiss="modal">Cancel</button>
       </div>
     </div>
@@ -92,13 +92,13 @@
               </button>
          </div>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12">
               <label for="inputEmail3"><strong>New Password</strong></label>
               <input type="password" class="form-control"  ng-model="Newpass" placeholder="New Password" required>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12">
               <label><strong>Confirm Password</strong></label>
               <input type="password" class="form-control" ng-model="ConfirmPass"  placeholder="Confirm Password" required>
           </div>
@@ -130,7 +130,7 @@
         </div>
       </div>
       <div class="modal-footer">
-      <button type="button" class="btn  btn-primary mr-auto" data-dismiss="modal" ng-click="ActivateUser()">Save</button>
+      <button type="button" class="btn  btn-primary" data-dismiss="modal" ng-click="ActivateUser()">Save</button>
         <button type="button" class="btn  btn-danger pull-right" data-dismiss="modal">Cancel</button>
       </div>
     </div>
@@ -174,7 +174,7 @@
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary mr-auto"  ng-click="newUser()">Save</button>
+        <button type="button" class="btn btn-primary"  ng-click="newUser()">Save</button>
         <button type="button" class="btn btn-danger pull-right">Cancel</button>
       </div>
     </div>

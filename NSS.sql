@@ -37,6 +37,9 @@ create table network
   Fax varchar(50),
   Circuit_ID varchar(50),
   Category_id int,
+  alt_number varchar(50),
+  store_manager varchar(100),
+  regional_manager varchar(100),
   FOREIGN KEY (user_id)
      REFERENCES users(id),
   FOREIGN KEY (Category_id)
@@ -154,6 +157,7 @@ create table operation_hour
     id int not null auto_increment primary key,
     net_id int not null,
     open_date varchar(50),
+    date_priority int,
     open_time varchar(50),
     close_time varchar(50),
     FOREIGN KEY (net_id)
