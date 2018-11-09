@@ -24,16 +24,18 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 								 aLengthMenu: [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
 			 				 	 iDisplayLength: 100
 						  });
-						angular.element('#WANTable').DataTable();
-						angular.element('#NDeviceTable').DataTable();
-						angular.element('#VLANTable').DataTable();
+							angular.element('#WANTable').DataTable();
+							angular.element('#NDeviceTable').DataTable();
+							angular.element('#VLANTable').DataTable({
+								aLengthMenu: [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+								iDisplayLength: 25
+							});
 						});
 					console.log($scope.Network);
 			});
 			//get vlan Information
 			$http.get('/api/Netdata/vlan')
 				.then(function successCallback(res){
-					console.log(res.data);
 					$scope.vlans = angular.copy(res.data);
 				}, function errorCallback(res){
 					console.log(res.data);
@@ -42,7 +44,6 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 			$http.get('/api/Netdata/category')
 				.then(function successCallback(res){
 					$scope.cates = angular.copy(res.data);
-					console.log($scope.cates);
 				}, function errorCallback(res){
 					console.log(res.data);
 				});
@@ -241,7 +242,10 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 				angular.element('#VLANTable').DataTable().destroy();
 				$scope.Network.VlanNetwork = angular.copy(res.data);
 				angular.element(document).ready(function () {
-					 angular.element('#VLANTable').DataTable();
+					angular.element('#VLANTable').DataTable({
+						aLengthMenu: [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+						iDisplayLength: 25
+					});
 				 })
 				 $scope.NewVLAN={};
 			}, function errorCallback(res){
@@ -257,7 +261,10 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 					angular.element('#VLANTable').DataTable().destroy();
 					$scope.Network.VlanNetwork = angular.copy(res.data);
 					angular.element(document).ready(function () {
-						 angular.element('#VLANTable').DataTable();
+						angular.element('#VLANTable').DataTable({
+							aLengthMenu: [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+							iDisplayLength: 25
+						});
 					 })
 				}, function errorCallback(res){
 					console.log(res);
@@ -270,7 +277,10 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 				angular.element('#VLANTable').DataTable().destroy();
 				$scope.Network.VlanNetwork = angular.copy(res.data);
 				angular.element(document).ready(function () {
-					 angular.element('#VLANTable').DataTable();
+					angular.element('#VLANTable').DataTable({
+						aLengthMenu: [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+						iDisplayLength: 25
+					});
 				 })
 			}, function errorCallback(res){
 				console.log(res);

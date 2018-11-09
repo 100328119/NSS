@@ -9,7 +9,6 @@ nss.controller("NavController", function($scope, $http){
   $http.get('/api/Netdata/all')
     .then(function(res){
       $scope.networks = angular.copy(res.data);
-      console.log($scope.networks);
     });
 
     $http.get('/api/reportdata/all')

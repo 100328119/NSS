@@ -45,6 +45,10 @@ nss.controller("NewSiteController",function($scope,$http,$window){
       });
   };
 
+  $scope.cancel = function(){
+    $window.location.href = '/dashboard';
+  }
+
   //END device minipuplate
   $scope.NewEndDevice = function(){
     $scope.NewEnd =  {};

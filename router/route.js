@@ -92,4 +92,7 @@ router.get('/diagram/:id', function(req, res, nex) {
   res.render('Diagram');
 })
 
+router.get('/contact/', function(req, res, nex) {
+  res.render('contact');
+})
 module.exports = router;

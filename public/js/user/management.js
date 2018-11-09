@@ -86,6 +86,10 @@ nss.controller("UserManagment", function($scope,$http,$location,$window){
            angular.element('#NewUserError').collapse("hide");
            // angular.element('#DuplicateUser').collapse("hide");
            angular.element('#NewUser').modal('hide');
+           $scope.NewUserEmail = '';
+           $scope.NewUseradmin_id = '';
+           $scope.NewPassword = '';
+           $scope.ConfirmPassord = '';
         },function errorCallback(response){
           angular.element('#DuplicateUser').collapse("show");
           angular.element('#NewUser').modal('hide');

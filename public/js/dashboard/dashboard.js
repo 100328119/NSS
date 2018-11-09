@@ -17,7 +17,6 @@ nss.controller("dashController", function($scope,$http,$window){
 
     $http.get('/api/Netdata/vlan')
       .then(function successCallback(res){
-        console.log(res.data);
         $scope.vlans = angular.copy(res.data);
         angular.element(document).ready(function () {
           angular.element('#VlanTable').DataTable({
@@ -41,7 +40,6 @@ nss.controller("dashController", function($scope,$http,$window){
 
       $http.get('/api/Netdata/NetCategoryGroup')
         .then(function successCallback(res){
-          console.log(res.data);
           $scope.BuildChart(res.data);
         }, function errorCallback(err){
            console.log(err);
@@ -52,7 +50,6 @@ nss.controller("dashController", function($scope,$http,$window){
       };
 
       $scope.BuildChart = function(CateData){
-       console.log(CateData)
        new Morris.Donut({
           element: 'NetChart',
           data:CateData
