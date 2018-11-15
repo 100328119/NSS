@@ -38,14 +38,14 @@ nss.controller("diagram", function($scope, $http,$location,$window,$filter){
           $scope.nodes.push({id:$scope.Network.WANs[i].Provider+i, label:$scope.Network.WANs[i].Provider+' '+$scope.Network.WANs[i].WAN_IP, image: DIR + 'wan.png', shape: 'image'});
           id_array.push($scope.Network.WANs[i].Provider+i);
        }
-
      }
+     console.log(id_array);
      for(var i = 0; i < $scope.Network.Net_devices.length;  i++ ){
        if($scope.Network.Net_devices[i].type == 'Router'){
          $scope.nodes.push({id:$scope.Network.Net_devices[i].name, label:$scope.Network.Net_devices[i].name+' '+$scope.Network.Net_devices[i].Loopback, image: DIR + 'router.png', shape: 'image'});
          if($scope.Network.Net_devices[i].Connect_Device == ""){
-           for(var j = 0; j < $scope.Network.WANs.length;  j++ ){
-              $scope.edges.push({from: $scope.Network.Net_devices[i].name, to: $scope.Network.WANs[j].Provider, length: EDGE_LENGTH_MAIN});
+           for(var j = 0; j < id_array.length;  j++ ){
+              $scope.edges.push({from: $scope.Network.Net_devices[i].name, to: id_array[j], length: EDGE_LENGTH_MAIN});
            }
          }else{
            $scope.edges.push({from: $scope.Network.Net_devices[i].name, to: $scope.Network.Net_devices[i].Connect_Device, length: EDGE_LENGTH_MAIN});

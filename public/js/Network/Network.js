@@ -373,9 +373,10 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 			var op_hour = $scope.Newhour.open_date.toLowerCase();
 			$scope.Newhour.date_priority = classifier(op_hour);
 			console.log($scope.Newhour);
-			$http.post('/api/Netdata/operation_hour/', $scope.newhour)
+			$http.post('/api/Netdata/operation_hour/'+$scope.id, $scope.Newhour)
 				.then(function successCallback(res){
 					$scope.Network.operation_hour = angular.copy(res.data);
+					$scope.Newhour = {};
 				}, function errorCallback(res){
 					console.log(res);
 				})

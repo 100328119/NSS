@@ -20,7 +20,7 @@
 			</div>
 			{{/if}}
 		</div>
-		<a href="/diagram/{[{Network.network_info.id}]}" style="margin-right: 50px">Network Diagarm</a>
+		<a href="/diagram/{[{Network.network_info.id}]}" style="margin-right: 50px">Network Diagram</a>
 		<a href="/network/store_image/{[{Network.network_info.id}]}">Floor Plan & Image</a>
 		<br/>
 		<br/>
@@ -131,7 +131,7 @@
 			<div class="card-header">
 				<i class="fa fa-table"></i> Operation Hour
 				{{#if isAuthenticated}}
-				<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#newhour" ><i class="fa fa-plus" aria-hidden="true"></i> Edit</button>
+				<button class="btn btn-primary btn-sm pull-right" type="button" data-toggle="modal" data-target="#newhour" ><i class="fa fa-plus" aria-hidden="true"></i> Add</button>
 				{{/if}}
 				</div>
 				<div class="card-body">
@@ -355,7 +355,7 @@
  <!-- Trigger the END Device modal with a button -->
 
 <div id="NewEndDevice" class="modal fade" role="dialog" >
-  <div class="modal-dialog  modal-lg"  >
+  <div class="modal-dialog  modal-lg modal-dialog-centered"  >
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -428,7 +428,7 @@
 
 <!-- Modal -->
 <div id="EditEndDevice" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -508,7 +508,7 @@
 
 	<!-- Modal -->
 	<div id="myModalDelete" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
+	  <div class="modal-dialog modal-dialog-centered">
 	    <!-- Modal content-->
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -531,7 +531,7 @@
 
 	<!-- Start WAN Modal -->
 	<div id="NewWAN" class="modal fade" role="dialog" >
-	  <div class="modal-dialog  modal-lg"  >
+	  <div class="modal-dialog  modal-lg modal-dialog-centered"  >
 	    <!-- Modal content-->
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -607,7 +607,7 @@
 
 	<!-- Modal -->
 	<div id="EditWAN" class="modal fade" role="dialog">
-	  <div class="modal-dialog modal-lg">
+	  <div class="modal-dialog modal-lg modal-dialog-centered">
 	    <!-- Modal content-->
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -682,7 +682,7 @@
 
 		<!-- Modal -->
 		<div id="DeleteWAN" class="modal fade" role="dialog">
-		  <div class="modal-dialog">
+		  <div class="modal-dialog modal-dialog-centered">
 		    <!-- Modal content-->
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -705,7 +705,7 @@
 
 	<!-- Start Router/Switch -->
 	<div id="NewNetDevice" class="modal fade" role="dialog" >
-		<div class="modal-dialog  modal-lg"  >
+		<div class="modal-dialog  modal-lg modal-dialog-centered"  >
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
@@ -764,7 +764,7 @@
 
 	<!-- Modal -->
 	<div id="EditNetDevice" class="modal fade" role="dialog">
-		<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-lg modal-dialog-centered">
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
@@ -823,7 +823,7 @@
 
 		<!-- Modal -->
 		<div id="DeleteNetDevice" class="modal fade" role="dialog">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-dialog-centered">
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
@@ -847,7 +847,7 @@
 
  	<!-- Start VLAN Modal -->
 	<div id="NewVLAN" class="modal fade" role="dialog" >
-		<div class="modal-dialog  modal-lg"  >
+		<div class="modal-dialog  modal-lg modal-dialog-centered"  >
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
@@ -886,7 +886,7 @@
 
 	<!-- Modal -->
 	<div id="editVlan" class="modal fade" role="dialog">
-		<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-lg modal-dialog-centered">
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
@@ -946,7 +946,7 @@
 		</div>
 
 		<div id="editNetwork" class="modal fade" role="dialog">
-			<div class="modal-dialog modal-lg">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
@@ -1086,7 +1086,7 @@
 
 		<!-- update operation operation -->
 		<div id="newhour" class="modal fade" role="dialog" >
-			<div class="modal-dialog  modal-lg">
+			<div class="modal-dialog  modal-lg modal-dialog-centered">
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
@@ -1133,7 +1133,7 @@
 					</div>
 				</div>
 				<div id="edithour" class="modal fade" role="dialog" >
-					<div class="modal-dialog  modal-lg">
+					<div class="modal-dialog  modal-lg modal-dialog-centered">
 						<!-- Modal content-->
 						<div class="modal-content">
 							<div class="modal-header">
@@ -1180,7 +1180,7 @@
 							</div>
 						</div>
 						<div id="deletehour" class="modal fade" role="dialog" >
-							<div class="modal-dialog  modal-lg">
+							<div class="modal-dialog  modal-lg modal-dialog-centered">
 								<!-- Modal content-->
 								<div class="modal-content">
 									<div class="modal-header">

@@ -118,7 +118,6 @@ Netdata.post('/new', function(req,response,nex){
          qb.insert('update_history',req.body.update_info,(err, res)=>{
            qb.release();
            if(err) return console.error(err);
-
          })
        }else{
          qb.release();
@@ -156,20 +155,30 @@ Netdata.delete('/delete/:id', function(req,response,nex){
        qb.delete('net_device', {Net_id: req.params.id}, (err, res) => {if (err) return console.error(err);});
        qb.delete('wan', {Net_id: req.params.id}, (err, res) => {if (err) return console.error(err);});
        qb.delete('vlannetwork', {Net_id: req.params.id}, (err, res) => {if (err) return console.error(err);});
-       qb.delete('end_device', {Net_id: req.params.id}, (err, res) => {
-          if (err) return console.error(err);
-          qb.delete('network', {id: req.params.id}, (err, res) => {
-            qb.release();
-            if (err){
-              console.error(err);
-              return response.sendStatus(400);
-            }
-            return response.sendStatus(200);
+       qb.delete('operation_hour', {Net_id: req.params.id}, (err, res)=>{if(err) return console.error(err)});
+       qb.select('*').where({net_id:req.params.id}).get('store_image',(err,res)=>{
+         if(err){console.log(err);}
+         let images = JSON.parse(JSON.stringify(res));
+         for(var i = 0; i<images.length; i++){
+           fs.unlinkSync('public/'+images[i].image_path);
+         }
+         qb.delete('store_image',{Net_id:req.params.id},(err,res)=>{if(err){console.log(err)}});
+         qb.delete('end_device', {Net_id: req.params.id}, (err, res) => {
+            if (err) return console.error(err);
+            qb.delete('network', {id: req.params.id}, (err, res) => {
+              qb.release();
+              if (err){
+                console.error(err);
+                return response.sendStatus(400);
+              }
+              return response.sendStatus(200);
+            });
           });
-        });
+       })
      })
   })
 });
+
 
 //---------------------Update history CURD------------------------------//
 Netdata.get('/update_history/:net_id', function(req, response, nex){
@@ -230,8 +239,8 @@ Netdata.put('/update_history/:net_id', function(req, response, nex){
 })
 
 Netdata.delete('/update_history/:net_id/:update_id', function(req, response, nex){
-  console.log(req.params.update_id);
-  console.log(req.params.net_id);
+  // console.log(req.params.update_id);
+  // console.log(req.params.net_id);
     // if(req.isAuthenticated()){
       db.get_connection(qb=>{
         qb.delete('update_history',{id:req.params.update_id}, (err, res)=>{
@@ -706,6 +715,7 @@ Netdata.put('/delete_store_image/:image_id', (req, response, next)=>{
         console.log(err);
         return response.sendStatus(400);
       }
+      console.log(resp);
       fs.unlink('public/'+req.body.image_path, function (err) {
         if (err){
           console.error(err);

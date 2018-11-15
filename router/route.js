@@ -83,10 +83,6 @@ router.get('/tool', function (req, res, nex) {
   res.render('tool');
 });
 
-router.get('/support', function (req, res, nex) {
-  // render support page
-  res.render('support');
-});
 
 router.get('/diagram/:id', function(req, res, nex) {
   res.render('Diagram');
