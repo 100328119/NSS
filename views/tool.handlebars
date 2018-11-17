@@ -37,7 +37,7 @@
             <th>#</th>
             <th>Tool</th>
             <th>Description</th>
-            <th>VDC</th>
+            <th>Primary</th>
             <th>KDC</th>
             <th>Q9</th>
             {{#if isAuthenticated}}
@@ -50,7 +50,7 @@
             <td>{[{$index+1}]}</td>
             <td>{[{tool.name}]}</td>
             <td>{[{tool.description}]}</td>
-            <td><a ng-href="{[{tool.VDC}]}" target="_blank">VDC Link</a></td>
+            <td><a ng-href="{[{tool.VDC}]}" target="_blank">Primary Link</a></td>
             <td><a ng-href="{[{tool.KDC}]}" target="_blank">KDC Link</a></td>
             <td><a ng-href="{[{tool.Q9}]}" target="_blank">Q9 Link</a></td>
             {{#if isAuthenticated}}
@@ -80,8 +80,8 @@
                 <input type="text" class="form-control" id="DeviceName" placeholder="Name" ng-model="newTool.name">
                 <label for="DeviceName"><strong>Description</strong></label>
                 <input type="text" class="form-control" id="DeviceName" placeholder="Description" ng-model="newTool.description">
-                <label for="inputEmail3" ><strong>VDC Link</strong></label>
-                <input type="text" class="form-control" id="inputEmail3" placeholder="VDC Link" ng-model="newTool.VDC">
+                <label for="inputEmail3" ><strong>Primary Link</strong></label>
+                <input type="text" class="form-control" id="inputEmail3" placeholder="Primary Link" ng-model="newTool.VDC">
                 <label for="inputEmail3" class="control-label"><strong>KDC Link</strong></label>
                 <input type="text" class="form-control" id="inputEmail3" placeholder="KDC Link" ng-model="newTool.KDC">
                 <label for="inputEmail3" class="control-label"><strong>Q9 Link</strong></label>
@@ -89,7 +89,7 @@
             </div>
         </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="addTool();">Save</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addTool();">Save</button>
               <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="newTool={}">Close</button>
             </div>
       </div>
@@ -109,8 +109,8 @@
                     <input type="text" class="form-control" id="DeviceName" placeholder="Name" ng-model="selectedItem.name">
                     <label for="DeviceName"><strong>Description</strong></label>
                     <input type="text" class="form-control" id="DeviceName" placeholder="Description" ng-model="selectedItem.description">
-                    <label for="inputEmail3" ><strong>VDC Link</strong></label>
-                    <input type="text" class="form-control" id="inputEmail3" placeholder="VDC Link" ng-model="selectedItem.VDC">
+                    <label for="inputEmail3" ><strong>Primary Link</strong></label>
+                    <input type="text" class="form-control" id="inputEmail3" placeholder="Primary Link" ng-model="selectedItem.VDC">
                     <label for="inputEmail3" class="control-label"><strong>KDC Link</strong></label>
                     <input type="text" class="form-control" id="inputEmail3" placeholder="KDC Link" ng-model="selectedItem.KDC">
                     <label for="inputEmail3" class="control-label"><strong>Q9 Link</strong></label>
@@ -118,7 +118,7 @@
                 </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal" ng-click="editTool();">Save</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="editTool();">Save</button>
                   <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="selectedItem={}">Close</button>
                 </div>
           </div>
@@ -136,7 +136,7 @@
                 <h3 style='color: red'>Confirm to Delete {[{selectedItem.name}]}</h3>
               </div>
               <div class="modal-footer">
-              <button type="button" class="btn btn-danger mr-auto" data-dismiss="modal" ng-click="deleteNet()">Yes</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteNet()">Yes</button>
                 <button type="button" class="btn btn-primary pull-right" data-dismiss="modal"ng-click="selectedItem={}">No</button>
               </div>
             </div>

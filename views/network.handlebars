@@ -286,7 +286,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="Net_Device in Network.Net_devices | filter:{Status:'!-1'}">
+								<tr ng-repeat="Net_Device in Network.Net_devices">
 									<td>{[{Net_Device.type}]}</td>
 									<td>{[{Net_Device.name}]}</td>
 									<td>{[{Net_Device.Loopback}]}</td>
@@ -331,7 +331,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="vlan in Network.VlanNetwork  | filter:{Status:'!-1'}">
+								<tr ng-repeat="vlan in Network.VlanNetwork">
 									<td>{[{vlans[vlan.vlan_id-1].vlan_number}]}</td>
 									<td>{[{vlans[vlan.vlan_id-1].Description}]}</td>
 									<td>{[{vlan.Gateway}]}</td>
@@ -508,7 +508,7 @@
 
 	<!-- Modal -->
 	<div id="myModalDelete" class="modal fade" role="dialog">
-	  <div class="modal-dialog modal-dialog-centered">
+	  <div class="modal-dialog">
 	    <!-- Modal content-->
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -682,7 +682,7 @@
 
 		<!-- Modal -->
 		<div id="DeleteWAN" class="modal fade" role="dialog">
-		  <div class="modal-dialog modal-dialog-centered">
+		  <div class="modal-dialog">
 		    <!-- Modal content-->
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -823,7 +823,7 @@
 
 		<!-- Modal -->
 		<div id="DeleteNetDevice" class="modal fade" role="dialog">
-			<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-dialog">
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
@@ -926,7 +926,7 @@
 
 		<!-- Modal -->
 		<div id="deleteVlan" class="modal fade" role="dialog" >
-			<div class="modal-dialog modal-dialog-center">
+			<div class="modal-dialog">
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
@@ -935,7 +935,7 @@
 					</div>
 					<div class="modal-body">
 						<h3 style='color: red'>Confirm to Delete VLAN</h3>
-						<h3 style='color: red'>{[{selectedVlan_number}]} {[{vlan_description}]}  {[{selectedItem.Gateway}]}</h3>
+						<h3 style='color: red'>{[{vlan_description}]}  {[{selectedItem.Gateway}]}</h3>
 					</div>
 					<div class="modal-footer">
 					<button type="button" class="btn btn-primary " data-dismiss="modal" ng-click="deleteVlan()">Confirm</button>
@@ -1018,7 +1018,7 @@
 						</div>
 					</div>
 	 <div id="DeleteNetwork" class="modal fade" role="dialog" >
-		 <div class="modal-dialog modal-dialog-center">
+		 <div class="modal-dialog">
 			 <!-- Modal content-->
 			 <div class="modal-content">
 				 <div class="modal-header">
@@ -1066,7 +1066,7 @@
   </div>
 </div>
 	<div id="deleteNote" class="modal fade" role="dialog" >
-		<div class="modal-dialog modal-dialog-center">
+		<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
@@ -1180,7 +1180,7 @@
 							</div>
 						</div>
 						<div id="deletehour" class="modal fade" role="dialog" >
-							<div class="modal-dialog  modal-lg modal-dialog-centered">
+							<div class="modal-dialog modal-lg">
 								<!-- Modal content-->
 								<div class="modal-content">
 									<div class="modal-header">
