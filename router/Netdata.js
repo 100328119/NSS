@@ -78,8 +78,6 @@ Netdata.post('/new', function(req,response,nex){
   let VLANs = req.body.VLANs;
   if(req.isAuthenticated()){
     network_info.user_id = req.user.user_id;
-    // req.body.update_info.user_id = req.user.user_id;
-    // console.log(network_info);
   db.get_connection(qb => {
     qb.insert("network", network_info, (err, res)=>{
        if(err) return console.error(err);
@@ -239,9 +237,7 @@ Netdata.put('/update_history/:net_id', function(req, response, nex){
 })
 
 Netdata.delete('/update_history/:net_id/:update_id', function(req, response, nex){
-  // console.log(req.params.update_id);
-  // console.log(req.params.net_id);
-    // if(req.isAuthenticated()){
+    if(req.isAuthenticated()){
       db.get_connection(qb=>{
         qb.delete('update_history',{id:req.params.update_id}, (err, res)=>{
           if(err){
@@ -258,7 +254,7 @@ Netdata.delete('/update_history/:net_id/:update_id', function(req, response, nex
           })
         })
       })
-    // }
+    }
   })
 
 //--------------------end device CRUD------------------------------//
@@ -715,7 +711,6 @@ Netdata.put('/delete_store_image/:image_id', (req, response, next)=>{
         console.log(err);
         return response.sendStatus(400);
       }
-      console.log(resp);
       fs.unlink('public/'+req.body.image_path, function (err) {
         if (err){
           console.error(err);

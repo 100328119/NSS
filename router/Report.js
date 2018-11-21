@@ -14,7 +14,7 @@ report.get('/id', function(req, res,nex){
 
 report.get( "/all", function(req,response,nex){
    db.get_connection(qb=>{
-      qb.select("*").get("report",(err,res)=>{
+      qb.select("*").order_by('id desc').get("report",(err,res)=>{
         qb.release();
         if(err) return response.sendStatus(400);
         response.send(res);
@@ -29,7 +29,6 @@ report.post('/new',upload.array('pdfs'),function(req, response, nex){
     for (let i = 0, len = files.length; i < len; i++) {
       let checkpath = files[i].destination + files[i].originalname;
         if(fs.existsSync(checkpath)){
-          console.log(checkpath+" is already existed");
           fs.unlinkSync(files[i].path);
         }else{
           filter_file.push(files[i]);
@@ -48,7 +47,6 @@ report.post('/new',upload.array('pdfs'),function(req, response, nex){
           report.ReportPath = "uploads/"+filter_file[i].originalname;
           qb.insert("Report",report, (err,res)=>{
               if(err) return  response.sendStatus(400);
-                console.log(res);
               fs.rename(oldpath, newpath, function (err) {
                 if (err) return response.sendStatus(400);
               });
@@ -73,7 +71,7 @@ report.put('/delete/:id', function(req,response,nex){
              console.error(err);
             return response.sendStatus(400);
           }
-          qb.select("*").get("report",(err,res)=>{
+          qb.select("*").order_by('id desc').get("report",(err,res)=>{
             qb.release();
             if (err) return console.error(err);
             return response.send(res);
