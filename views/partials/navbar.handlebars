@@ -21,7 +21,7 @@
         <ul class="sidenav-second-level collapse" id="collapseStore" >
             <!-- Needs to be fix  -->
             <div class="input-group">
-              <input class="form-control" type="text" ng-model="search_net" placeholder="Number, Name, Post Code.." id="SearchInput">
+              <input class="form-control" type="text" ng-model="search_net" placeholder="e.g 002, Cambie, V5Z 3A3.." id="SearchInput">
               <!-- <span class="input-group-btn">
                 <button class="btn btn-primary" type="button">
                   <i class="fa fa-search"></i>
@@ -33,7 +33,7 @@
             <a href="/network/Create/New">Create Network</a>
           </li>
           {{/if}}
-            <li ng-repeat="network in networks |  filter: search_net">
+            <li ng-repeat="network in networks | orderBy: sortNet : true |  filter: search_net ">
               <a href="/network/{[{network.id}]}">{[{network.N_Name}]}</a>
             </li>
         </ul>
@@ -44,7 +44,7 @@
           <span class="nav-link-text">Report</span>
         </a>
         <ul class="sidenav-second-level collapse" id="reports">
-          <input class="form-control" type="text" ng-model="search_report" placeholder="Name, Date..">
+          <input class="form-control" type="text" ng-model="search_report" placeholder="e.g jan2018..">
           {{#if isAuthenticated}}
           <li>
             <a href="/newreport">Create Report</a>

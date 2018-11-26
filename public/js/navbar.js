@@ -17,4 +17,8 @@ nss.controller("NavController", function($scope, $http){
     }, function errorCallback(res){
       console.log(res.data);
     });
+
+    $scope.sortNet = function(network){
+      return parseInt(network.N_Number);
+    }
 });

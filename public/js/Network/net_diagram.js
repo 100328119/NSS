@@ -31,7 +31,7 @@ nss.controller("diagram", function($scope, $http,$location,$window,$filter){
 
      var id_array = [];
      for(var i = 0; i < $scope.Network.WANs.length;  i++ ){
-       if(!id_array.includes($scope.Network.WANs[i].Provider)){
+       if(!id_array.indexOf($scope.Network.WANs[i].Provider)){
           $scope.nodes.push({id:$scope.Network.WANs[i].Provider, label:$scope.Network.WANs[i].Provider+' '+$scope.Network.WANs[i].WAN_IP, image: DIR + 'wan.png', shape: 'image'});
           id_array.push($scope.Network.WANs[i].Provider);
        }else{

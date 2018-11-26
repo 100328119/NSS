@@ -1,0 +1,11 @@
+LocationType	Description
+A	Class A                       
+B	Class B                       
+C	Class C                       
+N	Unassigned                    
+O	Office                        
+R	Training                      
+S	Signature                     
+T	Test Lab                      
+W	Wine Festival                 
+X	Closed                        

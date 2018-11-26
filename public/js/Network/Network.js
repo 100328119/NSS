@@ -31,7 +31,6 @@ nss.controller("myController", function($scope, $http,$location,$window,$filter)
 								iDisplayLength: 25
 							});
 						});
-					console.log($scope.Network);
 			});
 			//get vlan Information
 			$http.get('/api/Netdata/vlan')

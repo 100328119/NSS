@@ -3,7 +3,12 @@ nss.controller("ToolController", function($scope,$http,$window){
   .then(function successCallback(res){
     $scope.Tools = angular.copy(res.data);
     angular.element(document).ready(function () {
-      angular.element('#toolTable').DataTable();
+      angular.element('#toolTable').DataTable(
+        {
+            aLengthMenu: [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+            iDisplayLength: 50
+        }
+      );
     });
   }, function errorCallback(res){
     console.log(res.data);
@@ -11,7 +16,6 @@ nss.controller("ToolController", function($scope,$http,$window){
 
   $scope.selectItem = function(SelectedItem){
     $scope.selectedItem = angular.copy(SelectedItem);
-    console.log(SelectedItem);
   };
 
   $scope.addTool = function(){
@@ -20,7 +24,12 @@ nss.controller("ToolController", function($scope,$http,$window){
       angular.element('#toolTable').DataTable().destroy();
       $scope.Tools = angular.copy(res.data);
       angular.element(document).ready(function () {
-        angular.element('#toolTable').DataTable();
+        angular.element('#toolTable').DataTable(
+          {
+              aLengthMenu: [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+              iDisplayLength: 50
+          }
+        );
       });
     }, function errorCallback(res){
       console.log(res.data);
@@ -34,7 +43,10 @@ nss.controller("ToolController", function($scope,$http,$window){
       $scope.Tools = angular.copy(res.data);
       angular.element('#toolTable').DataTable().destroy();
       angular.element(document).ready(function () {
-        angular.element('#toolTable').DataTable();
+        angular.element('#toolTable').DataTable({
+              aLengthMenu: [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+              iDisplayLength: 50
+           });
       });
     }, function errorCallback(res){
       console.log(res.data);
@@ -48,7 +60,10 @@ nss.controller("ToolController", function($scope,$http,$window){
       angular.element('#toolTable').DataTable().destroy();
       $scope.Tools = angular.copy(res.data);
       angular.element(document).ready(function () {
-        angular.element('#toolTable').DataTable();
+        angular.element('#toolTable').DataTable({
+              aLengthMenu: [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+              iDisplayLength: 50
+           });
       });
     }, function errorCallback(res){
       console.log(res.data);
