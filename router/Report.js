@@ -62,14 +62,12 @@ report.post('/new',upload.array('pdfs'),function(req, response, nex){
 });
 
 report.put('/delete/:id', function(req,response,nex){
-  console.log(req.body);
   db.get_connection(qb=>{
     qb.delete('report', {id: req.params.id}, (err, res) => {
         if (err) return console.error(err);
         fs.unlink('public/'+req.body.ReportPath, function (err) {
           if (err){
              console.error(err);
-            return response.sendStatus(400);
           }
           qb.select("*").order_by('id desc').get("report",(err,res)=>{
             qb.release();

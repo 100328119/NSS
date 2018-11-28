@@ -158,7 +158,13 @@ Netdata.delete('/delete/:id', function(req,response,nex){
          if(err){console.log(err);}
          let images = JSON.parse(JSON.stringify(res));
          for(var i = 0; i<images.length; i++){
-           fs.unlinkSync('public/'+images[i].image_path);
+           try{
+             fs.unlinkSync('public/'+images[i].image_path);
+           }catch(error){
+             console.log(error);
+           }finally{
+             continue;
+           } 
          }
          qb.delete('store_image',{Net_id:req.params.id},(err,res)=>{if(err){console.log(err)}});
          qb.delete('end_device', {Net_id: req.params.id}, (err, res) => {
@@ -714,7 +720,7 @@ Netdata.put('/delete_store_image/:image_id', (req, response, next)=>{
       fs.unlink('public/'+req.body.image_path, function (err) {
         if (err){
           console.error(err);
-          return response.sendStatus(400);
+          // return response.sendStatus(400);
         }
         qb.select("*").where({net_id:req.body.net_id}).get('store_image', (err, res)=>{
           qb.release();
